@@ -1,0 +1,7 @@
+<!ENTITY add_to_evernote "添加至Wiznote">
+<!ENTITY add_to_evernote_tooltip "将选定文本或整个页面作为新笔记添加至 Wiznote">
+
+<!ENTITY contextMenu_clip_this_page "剪辑该页面">
+<!ENTITY contextMenu_clip_selection "剪辑选择">
+<!ENTITY contextMenu_clip_url "剪辑 URL">
+<!ENTITY contextMenu_new_note "新建笔记">

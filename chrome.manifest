@@ -8,3 +8,6 @@ locale webclipper-common en-US chrome/locale/en-US/
 content webclipper chrome/content/
 
 skin webclipper classic/1.0 chrome/skin/
+
+# Firefox main window
+overlay	chrome://browser/content/browser.xul	chrome://webclipper/content/webclipperOverlay.xul
