@@ -1,0 +1,4 @@
+resource wiz_styles chrome/content/common/css/
+resource wiz_images chrome/content/common/images/
+resource wiz_scripts chrome/content/common/libs/
+content webclipper-common chrome/content/common

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE prefwindow SYSTEM "chrome://webclipper-common/locale/about.dtd">
+
+<window class="dialog"
+        title="&about_title;"
+        orient="vertical"
+        autostretch="always"
+        onload="sizeToContent();"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <groupbox align="center" orient="horizontal">
+        <vbox>
+            <text  value="&about_product_name;" style="font-weight: bold; font-size: x-large;"/>
+            <separator class="thin"/>
+            <text value="&label_vendor;" style="font-weight: bold;"/>
+            <text value="&vendor_name;" class="url"
+                  onclick="window.open('http://www.wiz.cn'); window.close();"/>
+            <separator class="thin"/>
+            <text value="&label_product_description;" style="font-weight: bold;"/>
+            <text value="&product_description;"/>
+        </vbox>
+        <spring flex="1"/>
+        <image src="chrome://webclipper-common/skin/webclipper48.png"/>
+    </groupbox>
+
+    <hbox>
+        <spacer flex="1"/>
+        <button label="&close;" oncommand="window.close();"/>
+    </hbox>
+
+</window>
