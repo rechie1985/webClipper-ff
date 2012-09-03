@@ -53,8 +53,8 @@
 
         <!-- 扩展主页的URL。选填。 --> 
         <em:homepageURL>http://www.wiz.cn/</em:homepageURL> 
-        <em:iconURL>chrome://webclipper-common/skin/webclipper48.png</em:iconURL>
-        <em:aboutURL>chrome://webclipper-common/content/about.xul</em:aboutURL>
+        <em:iconURL>chrome://webclipper/skin/logo/wiz48.png</em:iconURL>
+        <em:aboutURL>chrome://webclipper/content/about.xul</em:aboutURL>
         <!-- New in Gecko 2 (Firefox 4): unpacking is required for XPCOM binary components -->
         <em:unpack>true</em:unpack>
     </Description>             

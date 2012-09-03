@@ -1,4 +1,10 @@
-resource wiz_styles chrome/content/common/css/
-resource wiz_images chrome/content/common/images/
-resource wiz_scripts chrome/content/common/libs/
-content webclipper-common chrome/content/common
+locale webclipper zh-CN chrome/locale/zh-CN/
+locale webclipper-common zh-CN chrome/locale/zh-CN/
+locale webclipper zh-TW chrome/locale/zh-TW/
+locale webclipper-common zh-TW chrome/locale/zh-TW/
+locale webclipper en-US chrome/locale/en-US/
+locale webclipper-common en-US chrome/locale/en-US/
+
+content webclipper chrome/content/
+
+skin webclipper classic/1.0 chrome/skin/
