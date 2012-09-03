@@ -1,3 +1,3 @@
-var evernote_doAction = function( popupSrc, clipType ) {
+var wiznote_doAction = function( popupSrc, clipType ) {
 	alert('doAction');
 }

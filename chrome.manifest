@@ -1,13 +1,10 @@
-locale webclipper zh-CN chrome/locale/zh-CN/
-locale webclipper-common zh-CN chrome/locale/zh-CN/
-locale webclipper zh-TW chrome/locale/zh-TW/
-locale webclipper-common zh-TW chrome/locale/zh-TW/
-locale webclipper en-US chrome/locale/en-US/
-locale webclipper-common en-US chrome/locale/en-US/
-
 content webclipper chrome/content/
+
+locale webclipper zh-CN chrome/locale/zh-CN/
+locale webclipper zh-TW chrome/locale/zh-TW/
+locale webclipper en-US chrome/locale/en-US/
 
 skin webclipper classic/1.0 chrome/skin/
 
 # Firefox main window
-overlay	chrome://browser/content/browser.xul	chrome://webclipper/content/webclipperOverlay.xul
+overlay	chrome://browser/content/browser.xul chrome://webclipper/content/webclipperOverlay.xul

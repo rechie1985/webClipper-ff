@@ -1,23 +1,24 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<script type="text/javascript" src="chrome://content/lib/FFWizEntry.js"></script>
         
-<!DOCTYPE prefwindow SYSTEM "chrome://webclipper3-common/locale/webclipperOverlay.dtd">
+<!DOCTYPE prefwindow SYSTEM "chrome://webclipper/locale/webclipperOverlay.dtd">
 
 <overlay id="webclipperOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script type="application/x-javascript" src="chrome://global/content/nsUserSettings.js" />
+  <script type="text/javascript" src="chrome://content/lib/FFWizEntry.js"></script>
 
     <!-- This is for the toolbar in Web -->
     <toolbarpalette id="BrowserToolbarPalette">
-        <toolbarbutton id="webclipper-button" label="&add_to_evernote;"
+        <toolbarbutton id="webclipper-button" label="&add_to_wiznote;"
                        class="toolbarbutton-1 chromeclass-toolbar-additional"
-                       tooltiptext="&add_to_evernote_tooltip;"
-                       oncommand="evernote_doAction( null );">
+                       tooltiptext="&add_to_wiznote_tooltip;"
+                       oncommand="wiznote_doAction( null );">
             <stack>
                 <image class="toolbarbutton-icon" left="0" top="0"/>
                 <label value="1234" top="13" left="5" right="0" class="big toolbar-value"/>
                 <label value="4321" top="10" left="5" right="0" class="small toolbar-value"/>
             </stack>
-            <label class="toolbarbutton-text" crop="right" value="&add_to_evernote;"/>
+            <label class="toolbarbutton-text" crop="right" value="&add_to_wiznote;"/>
 
         </toolbarbutton>
     </toolbarpalette>
@@ -26,8 +27,8 @@
     <menupopup id="menu_ToolsPopup">
         <menuseparator id="webclipper-menu-sep"/>
         <menuitem id="webclipper-menu"
-                  label="&add_to_evernote;"
-                  oncommand="evernote_doAction( null );"/>
+                  label="&add_to_wiznote;"
+                  oncommand="wiznote_doAction( null );"/>
 
     </menupopup>
 
@@ -35,21 +36,26 @@
     <popup id="contentAreaContextMenu">
         <menuseparator id="webclipper-contextmenu-sep"/>
         <menuitem id="webclipper-contextmenu-item"
-                  label="&add_to_evernote;"
-                  oncommand="evernote_doAction( document.popupNode, 'CLIP_ACTION_FULL_PAGE' );"/>
-        <menu id="webclipper-contextmenu" label="&add_to_evernote;">
+                  label="&add_to_wiznote;"
+                  oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_FULL_PAGE' );"/>
+        <menu id="webclipper-contextmenu" label="&add_to_wiznote;">
             <menupopup id="webclipper-contextmenu-popup">
                 <menuitem id="webclipper-contextmenu-popup-clippage"
                           label="&contextMenu_clip_this_page;"
-                          oncommand="evernote_doAction( document.popupNode, 'CLIP_ACTION_FULL_PAGE' );"/>
+                          oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_FULL_PAGE' );"/>
                 <menuitem id="webclipper-contextmenu-popup-clipsel"
                           label="&contextMenu_clip_selection;"
-                          oncommand="evernote_doAction( document.popupNode, 'CLIP_ACTION_SELECTION' );"/>
+                          oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_SELECTION' );"/>
                 <menuitem id="webclipper-contextmenu-popup-clipurl"
                           label="&contextMenu_clip_url;"
-                          oncommand="evernote_doAction( document.popupNode, 'CLIP_ACTION_URL' );"/>
-                <menuseparator id="webclipper-contextmenu-popup-sep"/>
+                          oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_URL' );"/>
+                <menuseparator id="webclipper-contextmenu-popup-sep"/>v
             </menupopup>
         </menu>
     </popup>
+
+
+    <stringbundleset id="stringbundleset">
+        <stringbundle id="wiznote_i18n" src="chrome://webclipper/locale/webclipper.properties"/>
+    </stringbundleset>
 </overlay>
