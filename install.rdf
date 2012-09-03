@@ -27,7 +27,7 @@
             <Description>
                 <em:locale>en-US</em:locale>
                 <em:name>Wiznote Web Clipper</em:name> 
-                <em:description>Provides a button and context menus to easily add a selection or an entire page to Evernote</em:description> 
+                <em:description>Provides a button and context menus to easily add a selection or an entire page to Wiz</em:description> 
                 <em:creator>Wiz corp.</em:creator> 
             </Description>
         </em:localized>
@@ -36,16 +36,16 @@
             <Description>
                 <em:locale>zh-CN</em:locale>
                 <em:name>Wiznote Web Clipper</em:name> 
-                <em:description>中文简体Provides a button and context menus to easily add a selection or an entire page to Evernote</em:description> 
+                <em:description>提供按钮和上下文菜单，以便将选择内容和整个页面保存为知笔记</em:description> 
                 <em:creator>Wiz corp.</em:creator> 
             </Description>
         </em:localized>
 
         <em:localized>
             <Description>
-                <em:locale>zh-TWS</em:locale>
+                <em:locale>zh-TW</em:locale>
                 <em:name>Wiznote Web Clipper</em:name> 
-                <em:description>中文繁体Provides a button and context menus to easily add a selection or an entire page to Evernote</em:description> 
+                <em:description>提供按鈕和上下文菜單，以便將選擇內容和整個頁面保存為知筆記</em:description> 
                 <em:creator>Wiz corp.</em:creator> 
             </Description>
         </em:localized>
