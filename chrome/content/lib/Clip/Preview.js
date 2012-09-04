@@ -1,6 +1,7 @@
-function ContentPreview() {"use strict";
+Wiz.ContentPreview = function() {"use strict";
 
 	var contentVeil = new ContentVeil();
+	var pageInfo = new PageInfo();
 
 
 	function buildUrlElement() {
@@ -69,7 +70,7 @@ function ContentPreview() {"use strict";
 		removePreviewLegend();
 	}
 
-	function previewArticle(showHelp) {
+	function previewArticle() {
 
 		clear();
 		previewElement = null;
@@ -389,8 +390,5 @@ function ContentPreview() {"use strict";
 	// Public API:
 	this.getArticleElement = getArticleElement;
 	this.looksInteresting = looksInteresting;
-
-	Object.preventExtensions(this);
+	this.previewUrl = previewURl();
 }
-
-var contentPreview = new ContentPreview();

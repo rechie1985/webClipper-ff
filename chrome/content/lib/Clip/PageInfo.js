@@ -305,6 +305,3 @@ function PageInfo() {"use strict";
 	this.getSelection = getSelection;
 	this.getSelectionFrame = getSelectionFrame;
 }
-
-var pageInfo = new PageInfo();
-

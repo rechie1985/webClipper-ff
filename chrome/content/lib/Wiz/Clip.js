@@ -17,5 +17,8 @@ Wiz.Clipper.prototype.clipFullpage = function() {
 }
 
 Wiz.Clipper.prototype.clipUrl = function() {
-	alert(this._tab.location.href);
+	alert("clip");
+	alert(Wiz.ContentPreview);
+	var contentPreview = new Wiz.ContentPreview();
+	alert(contentPreview);
 }
