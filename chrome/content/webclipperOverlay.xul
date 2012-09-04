@@ -5,7 +5,10 @@
 
 <overlay id="webclipperOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" src="chrome://global/content/nsUserSettings.js" />
-  <script type="text/javascript" src="chrome://webclipper/content/lib/FFWizEntry.js"></script>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Wiz.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Clip.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ClipManager.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/FFWizEntry.js"/>
 
     <!-- This is for the toolbar in Web -->
     <toolbarpalette id="BrowserToolbarPalette">
