@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-        
+<?xml-stylesheet href="chrome://webclipper/skin/style/webclipperOverlay.css" ?>
 <!DOCTYPE prefwindow SYSTEM "chrome://webclipper/locale/webclipperOverlay.dtd">
 
 <overlay id="webclipperOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
@@ -35,9 +35,6 @@
     <!-- This is for the context menu -->
     <popup id="contentAreaContextMenu">
         <menuseparator id="webclipper-contextmenu-sep"/>
-        <menuitem id="webclipper-contextmenu-item"
-                  label="&add_to_wiznote;"
-                  oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_FULL_PAGE' );"/>
         <menu id="webclipper-contextmenu" label="&add_to_wiznote;">
             <menupopup id="webclipper-contextmenu-popup">
                 <menuitem id="webclipper-contextmenu-popup-clippage"
@@ -49,7 +46,7 @@
                 <menuitem id="webclipper-contextmenu-popup-clipurl"
                           label="&contextMenu_clip_url;"
                           oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_URL' );"/>
-                <menuseparator id="webclipper-contextmenu-popup-sep"/>v
+                <menuseparator id="webclipper-contextmenu-popup-sep"/>
             </menupopup>
         </menu>
     </popup>

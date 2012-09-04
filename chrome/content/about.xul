@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<!DOCTYPE prefwindow SYSTEM "chrome://webclipper-common/locale/about.dtd">
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://webclipper/locale/about.dtd">
 
 <window class="dialog"
         title="&about_title;"
@@ -21,7 +22,7 @@
             <text value="&product_description;"/>
         </vbox>
         <spring flex="1"/>
-        <image src="chrome://webclipper/skin/logo/wiz48.png"/>
+        <image src="chrome://webclipper/skin/images/logo/wiz48.png"/>
     </groupbox>
 
     <hbox>
