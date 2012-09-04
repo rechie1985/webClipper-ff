@@ -17,8 +17,14 @@ Wiz.Clipper.prototype.clipFullpage = function() {
 }
 
 Wiz.Clipper.prototype.clipUrl = function() {
-	alert("clip");
-	alert(Wiz.ContentPreview);
-	var contentPreview = new Wiz.ContentPreview();
-	alert(contentPreview);
+		var veil = this._tab.document.createElement("canvas");
+		var context = veil.getContext('2d');
+		var body = this._tab.document.body;
+		alert(body);
+		alert(context);
+	try{
+		this._contentPreview = new Wiz.ContentPreview(this._tab);
+	} catch(err) {
+		alert("clip url error : " + err);
+	}
 }

@@ -1,10 +1,16 @@
-function ContentVeil() {"use strict";
-
+function ContentVeil(tab) {"use strict";
+	var tab = tab;
+	var doc = tab.document;
 	// @TODO: save() and restore() aren't properly used here, so if we do things like add transforms in founctions,
 	// we probably break other functions' notion of how to render things.
-
-	var veil = document.createElement("canvas");
-	var context = veil.getContext('2d');
+	try{
+		var veil = doc.createElement("canvas");
+		alert(veil);
+		var context = veil.getContext('2d');
+		alert(context);
+	} catch(err) {
+		alert(err);
+	}
 
 	var defaultFill = "rgba(0, 0, 0, 0.7)";
 	var defaultStroke = "rgba(255, 255, 0, 0.7)";
@@ -43,8 +49,8 @@ function ContentVeil() {"use strict";
 	}
 
 	function blank() {
-		veil.height = window.innerHeight;
-		veil.width = window.innerWidth;
+		veil.height = tab.innerHeight;
+		veil.width = tab.innerWidth;
 
 		var oldFillStyle = context.fillStyle;
 		context.fillStyle = defaultFill;
@@ -54,7 +60,7 @@ function ContentVeil() {"use strict";
 
 	function show() {
 		if (!veil.parentNode) {
-			document.documentElement.appendChild(veil);
+			doc.documentElement.appendChild(veil);
 		}
 	}
 
@@ -92,8 +98,8 @@ function ContentVeil() {"use strict";
 
 		// Save this info.
 		currentlyShownRect = rect;
-		currentRectOffsetTop = document.body.scrollTop;
-		currentRectOffsetLeft = document.body.scrollLeft;
+		currentRectOffsetTop = doc.body.scrollTop;
+		currentRectOffsetLeft = doc.body.scrollLeft;
 		currentlyStatic = staticView;
 
 		// We expand the rectangle for two reasons.
@@ -165,11 +171,11 @@ function ContentVeil() {"use strict";
 			revealRect(mutableRect, true);
 
 			if (scrollTo) {
-				var left = mutableRect.left - (window.innerWidth / 2);
-				var top = mutableRect.top - (window.innerHeight / 2);
+				var left = mutableRect.left - (tab.innerWidth / 2);
+				var top = mutableRect.top - (tab.innerHeight / 2);
 				//Evernote.Scroller.scrollTo(left, top, 120, 20);
 				//console.log("scroll to: [%d, %d]", left, top);
-				window.scrollBy(left, top);
+				tab.scrollBy(left, top);
 			}
 
 			hideElements("embed", element);
@@ -182,7 +188,7 @@ function ContentVeil() {"use strict";
 	}
 
 	function hideElements(tagName, exceptInElement) {
-		var els = document.getElementsByTagName(tagName);
+		var els = doc.getElementsByTagName(tagName);
 		for (var i = 0; i < els.length; i++) {
 			els[i].enSavedVisibility = els[i].style.visibility;
 			els[i].style.visibility = "hidden";
@@ -192,7 +198,7 @@ function ContentVeil() {"use strict";
 
 	function showElements(tagName, inElement) {
 		if (!inElement) {
-			inElement = document;
+			inElement = doc;
 		}
 		var els = inElement.getElementsByTagName(tagName);
 		for (var i = 0; i < els.length; i++) {
@@ -204,7 +210,7 @@ function ContentVeil() {"use strict";
 	}
 
 	// If we're currently showing a rectangle, and it's not static, we'll redraw on scroll.
-	window.addEventListener("scroll", function(e) {
+	tab.addEventListener("scroll", function(e) {
 		if (currentlyShownRect && !currentlyStatic) {
 			var rect = {
 				top : currentlyShownRect.top,
@@ -215,8 +221,8 @@ function ContentVeil() {"use strict";
 				height : currentlyShownRect.height
 			};
 
-			var vert = document.body.scrollTop - currentRectOffsetTop;
-			var horiz = document.body.scrollLeft - currentRectOffsetLeft;
+			var vert = doc.body.scrollTop - currentRectOffsetTop;
+			var horiz = doc.body.scrollLeft - currentRectOffsetLeft;
 
 			if (!vert && !horiz) {
 				return;

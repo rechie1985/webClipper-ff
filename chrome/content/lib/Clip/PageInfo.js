@@ -1,5 +1,7 @@
-function PageInfo() {"use strict";
+function PageInfo(tab) {"use strict";
 
+	var tab = tab;
+	var doc = tab.document;
 	// This is a map of hostnames (for hostnames that begin with 'www.', the 'www.' will be stripped off first, so don't
 	// include it in your lookup string) to CSS selectors. When we try and locate an article in a page, we'll see if we
 	// can find the doamin for the page in this list, and if so, we'll try and find an element that matches the given
@@ -27,10 +29,10 @@ function PageInfo() {"use strict";
 
 	var useFoundImage = ["xkcd.com"],
 	// These are the items we're trying to collect. This first block is trivial.
-	    containsImages = Boolean(document.getElementsByTagName("img").length > 0),
-        documentWidth = document.width, documentHeight = document.height,
-        url = document.location.href,
-        documentLength = document.body.textContent.length,
+	    containsImages = Boolean(doc.getElementsByTagName("img").length > 0),
+        documentWidth = doc.width, documentHeight = doc.height,
+        url = doc.location.href,
+        documentLength = doc.body.textContent.length,
 	// These take slightly more work and are initialized only when requested.
 	    article = null,
         articleBoundingClientRect = null,
@@ -45,9 +47,9 @@ function PageInfo() {"use strict";
 
 	// Experimental recognition of 'image' pages (like photo sites and comics).
 	function findImage() {
-		var imgs = document.getElementsByTagName("img"), biggest = null, biggestArea = 0;
+		var imgs = doc.getElementsByTagName("img"), biggest = null, biggestArea = 0;
 		for (var i = 0; i < imgs.length; i++) {
-			var style = window.getComputedStyle(imgs[i]),
+			var style = tab.getComputedStyle(imgs[i]),
                 width = style.width.replace(/[^0-9.-]/g, ""),
                 height = style.height.replace(/[^0-9.-]/g, ""), area = width * height;
 			if (!biggest || area > biggestArea) {
@@ -78,7 +80,7 @@ function PageInfo() {"use strict";
 			// See if we should special-case this.
 			var host = getHostname();
 			if (specialCases[host]) {
-				var candidate = document.querySelector(specialCases[host]);
+				var candidate = doc.querySelector(specialCases[host]);
 				if (candidate) {
 					article = candidate;
 					articleBoundingClientRect = article.getBoundingClientRect();
@@ -92,9 +94,9 @@ function PageInfo() {"use strict";
 			// If it's not a special case, see if it's a single image.
 			if (!article) {
 				var imageTypes = ['jpeg', 'jpg', 'gif', 'png'];
-				var urlExtension = document.location.href.replace(/^.*\.(\w+)$/, "$1");
+				var urlExtension = doc.location.href.replace(/^.*\.(\w+)$/, "$1");
 				if (urlExtension && (imageTypes.indexOf(urlExtension) != -1)) {
-					var candidate = document.querySelector("body > img");
+					var candidate = doc.querySelector("body > img");
 					if (candidate) {
 						article = candidate;
 						articleBoundingClientRect = article.getBoundingClientRect();
@@ -130,7 +132,7 @@ function PageInfo() {"use strict";
 
 			// If we still didn't find an article, let's see if maybe it's in a frame.
 			if (!article) {
-				if (document.body.nodeName.toLowerCase() == "frameset") {
+				if (doc.body.nodeName.toLowerCase() == "frameset") {
 					documentIsFrameset = true;
 					var frame = findBiggestFrame();
 					if (frame && frame.contentDocument && frame.contentDocument.documentElement) {
@@ -147,7 +149,7 @@ function PageInfo() {"use strict";
 	}
 
 	function findBiggestFrame() {
-		var frames = document.getElementsByTagName("frame");
+		var frames = doc.getElementsByTagName("frame");
 		var candidate = null;
 		var candidateSize = 0;
 		for (var i = 0; i < frames.length; i++) {
@@ -163,7 +165,7 @@ function PageInfo() {"use strict";
 	}
 
 	function getHostname() {
-		var match = document.location.href.match(/^.*?:\/\/(www\.)?(.*?)(\/|$)/);
+		var match = doc.location.href.match(/^.*?:\/\/(www\.)?(.*?)(\/|$)/);
 		if (match) {
 			return match[2];
 		}
@@ -194,18 +196,18 @@ function PageInfo() {"use strict";
 	function getSelection() {
 
 		// First we check our main window and return a selection if that has one.
-		var selection = window.getSelection();
+		var selection = tab.getSelection();
 		if (selection && selection.rangeCount && !selection.isCollapsed) {
 			return selection;
 		}
 
 		// Then we'll try our frames and iframes.
 		var docs = [];
-		var iframes = document.getElementsByTagName("iframe");
+		var iframes = doc.getElementsByTagName("iframe");
 		for (var i = 0; i < iframes.length; i++) {
 			docs.push(iframes[i]);
 		}
-		var frames = document.getElementsByTagName("frame");
+		var frames = doc.getElementsByTagName("frame");
 		for (var i = 0; i < frames.length; i++) {
 			docs.push(frames[i]);
 		}
@@ -255,7 +257,7 @@ function PageInfo() {"use strict";
 			return selection.getRangeAt(0).cloneContents().textContent.substr(0, MAX_LEN);
 		}
 
-		return getText(document.body, "", MAX_LEN);
+		return getText(doc.body, "", MAX_LEN);
 	}
 
 	// Note: you must call getSelection() first to populate this field!
@@ -264,7 +266,7 @@ function PageInfo() {"use strict";
 	}
 
 	function checkClearly() {
-		var clearlyDoc = document.querySelector("iframe#readable_iframe");
+		var clearlyDoc = doc.querySelector("iframe#readable_iframe");
 		if (clearlyDoc)
 			clearlyDoc = clearlyDoc.contentDocument;
 		if (clearlyDoc)
@@ -290,7 +292,7 @@ function PageInfo() {"use strict";
 			url : url,
 			selection : (isSelected !== null),
 			selectionIsInFrame : selectionIsInFrame,
-			documentLength : document.body.textContent.length,
+			documentLength : doc.body.textContent.length,
 			articleBoundingClientRect : articleBoundingClientRect,
 			article : (article != null),
 			recommendationText : getRecommendationText(),

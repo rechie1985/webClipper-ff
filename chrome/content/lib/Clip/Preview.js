@@ -1,11 +1,11 @@
-Wiz.ContentPreview = function() {"use strict";
-
-	var contentVeil = new ContentVeil();
-	var pageInfo = new PageInfo();
-
+Wiz.ContentPreview = function(tab) {"use strict";
+	var tab = tab;
+	var doc = tab.document;
+	var contentVeil = new ContentVeil(window);
+	var pageInfo = new PageInfo(window);
 
 	function buildUrlElement() {
-		var urlEl = document.createElement("div");
+		var urlEl = tab.document.createElement("div");
 		urlEl.id = "wizPreviewContainer";
 		urlEl.className = "wizPreviewContainer wizPreviewUrlContainer";
 		return urlEl;
@@ -15,11 +15,11 @@ Wiz.ContentPreview = function() {"use strict";
 
 	function showUrlElement() {
 		if (!urlElement.parentNode) {
-			document.documentElement.appendChild(urlElement);
+			doc.documentElement.appendChild(urlElement);
 		}
 
-		// Make sure we're centered in the window.
-		var elStyle = window.getComputedStyle(urlElement, '');
+		// Make sure we're centered in the tab.
+		var elStyle = tab.getComputedStyle(urlElement, '');
 		var w = parseInt(elStyle.getPropertyValue("width"));
 		var h = parseInt(elStyle.getPropertyValue("height"));
 		if (w && h) {
@@ -36,7 +36,7 @@ Wiz.ContentPreview = function() {"use strict";
 
 	// @TODO: This is fairly incomplete.
 	function getFavIconUrl() {
-		var links = document.getElementsByTagName("link");
+		var links = doc.getElementsByTagName("link");
 		var i;
 		for ( i = 0; i < links.length; i++) {
 			if (links[i].rel) {
@@ -47,15 +47,15 @@ Wiz.ContentPreview = function() {"use strict";
 				}
 			}
 		}
-		console.log("Couldn't get a favicon for " + document.location.href);
+		console.log("Couldn't get a favicon for " + doc.location.href);
 	}
 
 	function previewUrl(title, url, favIconUrl) {
 		clear();
 		contentVeil.reset();
 		contentVeil.show();
-		title = title ? title : window.document.title;
-		url = url ? url : window.location.href;
+		title = title ? title : tab.document.title;
+		url = url ? url : tab.location.href;
 		favIconUrl = favIconUrl ? favIconUrl : getFavIconUrl();
 		urlElement.innerHTML = GlobalUtils.createUrlClipContent(title, url, favIconUrl);
 		showUrlElement();
@@ -115,7 +115,7 @@ Wiz.ContentPreview = function() {"use strict";
 		}
 		// This is the parent of our 'HTML' tag, but has no tag itself. There's no reason it's ever more interesting than
 		// the HTML element.
-		if (candidate === window.document) {
+		if (candidate === tab.document) {
 			return false;
 		}
 
@@ -162,8 +162,8 @@ Wiz.ContentPreview = function() {"use strict";
 	function previewFullPage() {
 
 		var borderWidth = 14;
-		var w = window.innerWidth;
-		var h = window.innerHeight;
+		var w = tab.innerWidth;
+		var h = tab.innerHeight;
 
 		var rect = {
 			bottom : (h - borderWidth),
@@ -390,5 +390,5 @@ Wiz.ContentPreview = function() {"use strict";
 	// Public API:
 	this.getArticleElement = getArticleElement;
 	this.looksInteresting = looksInteresting;
-	this.previewUrl = previewURl();
+	this.previewUrl = previewURl;
 }
