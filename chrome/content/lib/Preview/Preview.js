@@ -36,7 +36,7 @@ Wiz.ContentPreview = function(tab) {"use strict";
 		var w = parseInt(elStyle.getPropertyValue("width"));
 		var h = parseInt(elStyle.getPropertyValue("height"));
 		if (w && h) {
-			urlElement.style.marginLeft = (0 - w / 2) + "px";
+			// urlElement.style.marginLeft = (0 - w / 2) + "px";
 			urlElement.style.marginTop = (0 - h / 2) + "px";
 		}
 		setElementStyle(urlElement,{"position":"fixed", "padding":"20px", "top":"50%", "left":"45%","z-index":"2147483647" });

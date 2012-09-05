@@ -50,7 +50,7 @@
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Wiz.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ScriptLoader.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/loader/ClipPreviewLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Clip.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ClipManager.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/Clip.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/ClipManager.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/FFWizEntry.js"/>
 </overlay>
