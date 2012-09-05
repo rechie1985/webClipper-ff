@@ -1,8 +1,12 @@
 Wiz.Remote = function() {
+	this.initialize();
+}
+
+Wiz.Remote.prototype.initialize() {
 	this.initCommon();
 }
 
-Wiz.Remote.initCommon() {
+Wiz.Remote.prototype.initCommon() {
 	var data = {};
 	data.client_type = "web3";
 	data.api_version = 3;
@@ -38,6 +42,23 @@ Wiz.Remote.prototype.getAllCategory = function(callSuccess, callError) {
 Wiz.Remote.prototype.getAllTag = function(callSuccess, callError) {
 	if(this.data.token) {
 		xmlrpc(Wiz.XMLRPC_URL, Wiz.API.GET_AllTAGS, [this.data], callSuccess, callError)
+	}
+}
+
+Wiz.Remote.prototype.postDocument = function(docInfo, callSuccess, callError) {
+		if(this.data.token) {
+		var regexp = /%20/g, 
+			  title = docInfo.title, 
+			  category = docInfo.category, 
+			  comment = docInfo.comment, 
+			  body = docInfo.content;
+			  
+		if (comment && comment.trim() != '') {
+			body = comment + '<hr>' + body;
+		}
+		var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(token).replace(regexp,  '+') 
+									+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
+		ajax(Wiz.POST_DOCUMENT_URL, sending, callSuccess, callError);
 	}
 }
 

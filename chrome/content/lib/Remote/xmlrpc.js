@@ -26,9 +26,15 @@
  * given a single JS Object representing the server's response.
  */
 var xmlrpc = function(server, method, params, callback, callErr, callFinal) {
+
+    var sending = xmlrpc.writeCall(method, params);
+    ajax(server, sending, callback, callErr, callFinal);
+};
+
+var ajax = function(server, sending, callback, callErr, callFinal) {
     if (callErr == null)
         callErr = alert;
-	var request = window.XMLHttpRequest ? new XMLHttpRequest()
+    var request = window.XMLHttpRequest ? new XMLHttpRequest()
         : new ActiveXObject("MSXML2.XMLHTTP.3.0");
     request.open("POST", server, true);
     request.onreadystatechange = function() {
@@ -68,10 +74,8 @@ var xmlrpc = function(server, method, params, callback, callErr, callFinal) {
         catch (err) {
         }
     };
-
-    var sending = xmlrpc.writeCall(method, params);
     request.send(sending);
-};
+}
 
 xmlrpc.writeCall = function(method, params) {
 	console.log(params);

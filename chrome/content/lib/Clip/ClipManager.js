@@ -8,8 +8,8 @@ Wiz.ClipManager = function() {
 
 Wiz.ClipManager.prototype.initialize = fucntion() {
 	this._clipper = new Wiz.ContentClipper();
-	this._sender = new Wiz.ClipSender();
-	this._notificator = new Wiz.ClipNotificator();
+	this._notificator = new Wiz.ClipNotificator(this);
+	this._sender = new Wiz.ClipSender(this);
 	this._tab = content;
 }
 
