@@ -10,6 +10,7 @@ Wiz.ClipManager.prototype.initialize = fucntion() {
 	this._clipper = new Wiz.ContentClipper();
 	this._sender = new Wiz.ClipSender();
 	this._notificator = new Wiz.ClipNotificator();
+	this._tab = content;
 }
 
 Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType){
@@ -21,17 +22,39 @@ Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType)
 	} else {
 		switch(contextMenuClipType) {
 		case "CLIP_ACTION_FULL_PAGE" :
-			clipper.contenxtMenuClipFullpage();
+			this.contenxtMenuClipFullpage();
 			break;
 		case "CLIP_ACTION_SELECTION" :
-			clipper.contenxtMenuClipSelection();
+			this.contenxtMenuClipSelection();
 			break;
 		case "CLIP_ACTION_URL" :
-			clipper.contenxtMenuClipUrl();
+			this.contenxtMenuClipUrl();
 			break;
 		}
 	}
 }
+Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function() {
+	var docContent = this._clipper.getFullpageHTML(this._tab);
+	var doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	this.postDocument(doc);
+}
+
+Wiz.ClipManager.prototype.contenxtMenuClipSelection = function() {
+	doc.content = this._clipper.getSelectedHTML(this._tab);
+	var doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	this.postDocument(doc);
+}
+
+Wiz.ClipManager.prototype.contenxtMenuClipUrl = function() {
+	doc.content = this._tab.location.href;
+	var doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	this.postDocument(doc);
+}
+
+Wiz.ClipManager.prototype.postDocument = function(doc) {
+	this._sender.postDocument(doc.getDocInfo);			
+}
+
 
 Wiz.ClipManager.prototype.getClipper = function() {
 	if(!this._clipper) {
