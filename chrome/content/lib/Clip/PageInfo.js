@@ -108,7 +108,7 @@ function PageInfo(tab) {"use strict";
 			if (!article) {
 				var ex = new ExtractContentJS.LayeredExtractor();
 				ex.addHandler(ex.factory.getHandler('Heuristics'));
-				var res = ex.extract(document);
+				var res = ex.extract(doc);
 				if (res.isSuccess) {
 					var current = res.content.asNode();
 					while ((current.nodeType !== Node.ELEMENT_NODE) && current.parentNode) {

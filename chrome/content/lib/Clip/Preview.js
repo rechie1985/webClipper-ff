@@ -1,14 +1,27 @@
 Wiz.ContentPreview = function(tab) {"use strict";
 	var tab = tab;
 	var doc = tab.document;
-	var contentVeil = new ContentVeil(window);
-	var pageInfo = new PageInfo(window);
+	var contentVeil = new ContentVeil(tab);
+	var pageInfo = new PageInfo(tab);
+	var previewElement = null;
 
 	function buildUrlElement() {
 		var urlEl = tab.document.createElement("div");
 		urlEl.id = "wizPreviewContainer";
 		urlEl.className = "wizPreviewContainer wizPreviewUrlContainer";
 		return urlEl;
+	}
+
+	function setElementStyle(elem, styles) {
+		if ( !(elem instanceof Element) ) {
+        	return;
+  	  	}
+	    var style = elem.style;
+	    for ( var key in styles ) {
+	        if ( typeof styles[ key ] == "string" ) {
+	            style.setProperty( key, styles[ key ] );
+	        }
+	    }
 	}
 
 	var urlElement = buildUrlElement();
@@ -26,6 +39,7 @@ Wiz.ContentPreview = function(tab) {"use strict";
 			urlElement.style.marginLeft = (0 - w / 2) + "px";
 			urlElement.style.marginTop = (0 - h / 2) + "px";
 		}
+		setElementStyle(urlElement,{"position":"fixed", "padding":"20px", "top":"50%", "left":"45%","z-index":"2147483647" });
 	}
 
 	function hideUrlElement() {
@@ -67,7 +81,6 @@ Wiz.ContentPreview = function(tab) {"use strict";
 		contentVeil.reset();
 		contentVeil.hide();
 		hideUrlElement();
-		removePreviewLegend();
 	}
 
 	function previewArticle() {
@@ -390,5 +403,7 @@ Wiz.ContentPreview = function(tab) {"use strict";
 	// Public API:
 	this.getArticleElement = getArticleElement;
 	this.looksInteresting = looksInteresting;
-	this.previewUrl = previewURl;
+	this.previewUrl = previewUrl;
+	this.previewSelection = previewSelection;
+	this.previewArticle = previewArticle;
 }

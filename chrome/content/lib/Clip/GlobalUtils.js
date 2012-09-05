@@ -98,7 +98,7 @@ var GlobalUtils = {};
 
   GlobalUtils.createUrlClipContent = function(title, url, favIcoUrl) {
     var titleAttr = (title) ? GlobalUtils.escapeXML(title) : "";
-    var style = "font-size: 12pt; line-height: 18px; display: inline;";
+    var style = "font-size: 12pt; line-height: 18px; display: inline; background : white; border: 1px solid blue;";
     var content = "<a title=\"" + titleAttr + "\" style=\"" + style + "\" href=\"" + url + "\">" + url + "</a>";
     if (favIcoUrl && !BAD_FAV_ICON_URLS[favIcoUrl.toLowerCase()]) {
       var imgStyle = "display:inline;border: none; width: 16px; height: 16px; padding: 0px; margin: 0px 8px -2px 0px;";

@@ -8,3 +8,7 @@ skin webclipper classic/1.0 chrome/skin/
 
 # Firefox main window
 overlay	chrome://browser/content/browser.xul chrome://webclipper/content/webclipperOverlay.xul
+
+# create overlays on the browser window and the “customize toolbar” window.
+style chrome://browser/content/browser.xul chrome://webclipper/skin/style/webclipperOverlay.css
+style chrome://global/content/customizeToolbar.xul chrome://webclipper/skin/style/webclipperOverlay.css

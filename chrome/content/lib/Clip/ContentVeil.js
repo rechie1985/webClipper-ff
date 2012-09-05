@@ -3,14 +3,8 @@ function ContentVeil(tab) {"use strict";
 	var doc = tab.document;
 	// @TODO: save() and restore() aren't properly used here, so if we do things like add transforms in founctions,
 	// we probably break other functions' notion of how to render things.
-	try{
-		var veil = doc.createElement("canvas");
-		alert(veil);
-		var context = veil.getContext('2d');
-		alert(context);
-	} catch(err) {
-		alert(err);
-	}
+	var veil = doc.createElement("canvas");
+	var context = veil.getContext('2d');
 
 	var defaultFill = "rgba(0, 0, 0, 0.7)";
 	var defaultStroke = "rgba(255, 255, 0, 0.7)";
@@ -37,7 +31,7 @@ function ContentVeil(tab) {"use strict";
 		veil.style.position = "fixed";
 		veil.style.top = "0px";
 		veil.style.left = "0px";
-		veil.style.zIndex = "9999999999999990";
+		veil.style.zIndex = "2147483640";
 
 		context.fillStyle = defaultFill;
 		context.strokeStyle = defaultStroke;
@@ -240,7 +234,6 @@ function ContentVeil(tab) {"use strict";
 			revealRect(rect, true);
 		}
 	});
-	veil.addEventListener("click", hide);
 	// Public API:
 	this.reset = reset;
 	this.show = show;

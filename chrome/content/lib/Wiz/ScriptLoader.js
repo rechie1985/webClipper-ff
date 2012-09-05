@@ -1,4 +1,4 @@
-//"use strict";
+"use strict";
 
 Wiz.ScriptLoader = {
     _jsLoader : null,
