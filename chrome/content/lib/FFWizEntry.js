@@ -9,6 +9,12 @@ function initOverlay() {
 }
 
 function contextPopupShowing(evt) {
+
+    var i18n = document.getElementById("wiznote_i18n"); 
+    if(i18n) {
+    	Wiz.I18N.setStringBundle(i18n.stringBundle);
+    }
+
 	var pageMenuitem = document.getElementById("webclipper-contextmenu-popup-clippage");
 	var selectionMenuitem = document.getElementById("webclipper-contextmenu-popup-clipsel");
 	var urlMenuitem = document.getElementById("webclipper-contextmenu-popup-clipurl");

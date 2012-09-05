@@ -5,6 +5,16 @@
 <!DOCTYPE prefwindow SYSTEM "chrome://webclipper/locale/webclipperOverlay.dtd">
 
 <overlay id="webclipperOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Wiz.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/I18N.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ScriptLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/UtilLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/PreviewLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/ClipLoader.js"/>
+
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/Clip.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/ClipManager.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/FFWizEntry.js"/>
 
     <!-- This is for the toolbar in Web -->
     <toolbarpalette id="BrowserToolbarPalette">
@@ -47,10 +57,4 @@
     <stringbundleset id="stringbundleset">
         <stringbundle id="wiznote_i18n" src="chrome://webclipper/locale/webclipper.properties"/>
     </stringbundleset>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Wiz.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ScriptLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/ClipPreviewLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/Clip.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/ClipManager.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/FFWizEntry.js"/>
 </overlay>

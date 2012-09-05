@@ -1,61 +1,4 @@
-'use strict';
-var Base64 = {
-	// private property
-	_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-	// public method for encoding
-	encode : function(input) {
-		var output = "";
-		var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-		var i = 0;
 
-		input = Base64._utf8_encode(input);
-
-		while (i < input.length) {
-
-			chr1 = input.charCodeAt(i++);
-			chr2 = input.charCodeAt(i++);
-			chr3 = input.charCodeAt(i++);
-
-			enc1 = chr1 >> 2;
-			enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-			enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-			enc4 = chr3 & 63;
-
-			if (isNaN(chr2)) {
-				enc3 = enc4 = 64;
-			} else if (isNaN(chr3)) {
-				enc4 = 64;
-			}
-
-			output = output + this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) + this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
-
-		}
-
-		return output;
-	},
-	// private method for UTF-8 encoding
-	_utf8_encode : function(string) {
-		string = string.replace(/\r\n/g, "\n");
-		var utftext = "";
-		for (var n = 0; n < string.length; n++) {
-			var c = string.charCodeAt(n);
-
-			if (c < 128) {
-				utftext += String.fromCharCode(c);
-			} else if ((c > 127) && (c < 2048)) {
-				utftext += String.fromCharCode((c >> 6) | 192);
-				utftext += String.fromCharCode((c & 63) | 128);
-			} else {
-				utftext += String.fromCharCode((c >> 12) | 224);
-				utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-				utftext += String.fromCharCode((c & 63) | 128);
-			}
-
-		}
-
-		return utftext;
-	}
-}
 
 function wiz_base64Encode(str) {
 	var base64str = Base64.encode(str);
@@ -229,7 +172,6 @@ function wiz_getSelected(win) {
 		var source_url = wiz_base64Encode(win.location.href);
 		var source_html = "";
 		var frame_url = source_url;
-		//var winsel = win.getSelection();
 		var winsel = contentPreview.getArticleElement();
 		if (winsel == null || winsel.toString() == "") {
 			var activeFrame = wiz_getActiveFrame(win);
@@ -242,46 +184,13 @@ function wiz_getSelected(win) {
 			params = "";
 			return params;
 		} else {
-			//var docFragment = winsel.getRangeAt(0).cloneContents();
-			//var docFragment = winsel.innerHTML;
-			//var myp = window.document.createElement("<div>" + docFragment + "</Div>");
 			var source_html = winsel.innerHTML;
 			if (source_html == null)
 				source_html = "";
-			//source_html = wiz_base64Encode(source_html); ;
-			//params += "param-surl='" + frame_url + "' ";
-			//params += "param-shtml='" + source_html + "' ";
 			params = source_html;
 		}
 	}
 	return params;
-}
-
-function launchClientClipper(info) {
-	var params = wiz_collectAllFrames(window);
-	//params = params + wiz_getSelected(window);
-
-	params = wiz_getSelected(window);
-	info.params = params;
-	requestSaveDoc(info);
-}
-
-function launchClientClipperFullPage(info) {
-	info.params = getFullpageHTML();
-	requestSaveDoc(info);
-}
-
-function launchClientClipperSelection(info) {
-	var params = getSelectedHTML();
-	info.params = params;
-	requestSaveDoc(info);
-}
-
-function launchClientClipperUrl(info) {
-	var url = '<a href="' + window.location.href + '">' + window.location.href + '</a>';
-	var params = url;
-	info.params = params;
-	requestSaveDoc(info);
 }
 
 function getFullpageHTML() {
