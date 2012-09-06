@@ -11,7 +11,9 @@ Wiz.Remote.prototype.initCommon = function() {
 	this._data = {};
 	this._data.client_type = "web3";
 	this._data.api_version = 3;
-	this._data.token = "4bfa5d60-3306-4d52-b099-c75cb7868b0d";
+    this._data.program_type = "normal";
+	this._data.token = "0bdefc98-4eeb-40f1-aef7-53df4ec07ec4";
+    this._data.kb_guid = "325a4734-66d1-11e1-a992-00237def97cc";
 }
 
 Wiz.Remote.prototype.clientLogin = function(username, password, rememberMe, callSuccess, callError) {
@@ -48,19 +50,25 @@ Wiz.Remote.prototype.getAllTag = function(callSuccess, callError) {
 }
 
 Wiz.Remote.prototype.postDocument = function(docInfo, callSuccess, callError) {
-	alert("post");
 	if (this._data.token) {
-		var regexp = /%20/g, 
-			title = docInfo.title, 
-			category = docInfo.category, 
-			comment = docInfo.comment, 
+		// var regexp = /%20/g, 
+		// 	title = docInfo.title, 
+		// 	category = docInfo.category, 
+		var comment = docInfo.comment, 
 			body = docInfo.content;
 		if (comment && comment.trim() != '') {
 			body = comment + '<hr>' + body;
 		}
-		var sending = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(this._data.token).replace(regexp,  '+') 
-									+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
-		ajax(Wiz.POST_DOCUMENT_URL, sending, callSuccess, callError);
+		var simplePostDataParams = this._data;
+        simplePostDataParams.document_guid = docInfo.guid;
+        simplePostDataParams.document_title = docInfo.title;
+        simplePostDataParams.document_body = body;
+        simplePostDataParams.document_category = docInfo.category;
+        simplePostDataParams.document_data = "";
+        simplePostDataParams.dt_modified = new Date();
+   		alert(body);
+        xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.DOCUMENT_POSTSIMPLE, [simplePostDataParams], callSuccess, callError);
+
 	}
 }
 

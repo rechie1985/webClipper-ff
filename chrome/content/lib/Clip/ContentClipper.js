@@ -13,7 +13,7 @@ Wiz.ContentClipper.prototype.getSelectedHTML = function(win) {
 		var range = selection.getRangeAt(0);
 		var html = range.commonAncestorContainer.ownerDocument.createElement("div");
 		html.appendChild(range.cloneContents());
-		return document.querySelector("html").innerHTML;
+		return doc.querySelector("html").innerHTML;
 	} else {
 		return "";
 	}
@@ -22,7 +22,7 @@ Wiz.ContentClipper.prototype.getSelectedHTML = function(win) {
 Wiz.ContentClipper.prototype.getFullpageHTML = function(win) {
 	var doc = win.document;
 	var base = "<base href='" + win.location.protocol + "//" + win.location.host + "'/>";
-	var page_content = doc.getElementsByTagName("html")[0];
+	var page_content = doc.getElementsByTagName("html")[0].innerHTML;
 	//TODO去除script标签
 	var index = page_content.indexOf("<head>");
 	var fullpage = page_content.substring(0, index + 6) + base + page_content.substring(index + 6);
@@ -66,7 +66,7 @@ Wiz.ContentClipper.prototype.getActiveFrame = function(win) {
 		}
 		if (activeFrame != null)
 			return activeFrame;
-		activeFrame = getActiveFrame(frame);
+		activeFrame = this.getActiveFrame(frame);
 		//
 		if (activeFrame != null)
 			return activeFrame;
@@ -77,7 +77,7 @@ Wiz.ContentClipper.prototype.getActiveFrame = function(win) {
 var g_frameNameIndex = 0;
 
 Wiz.ContentClipper.prototype.prepareFrameNodes = function(win) {
-	var frameNodes = getFrameNodes(win);
+	var frameNodes = this.getFrameNodes(win);
 	if (frameNodes == null)
 		return;
 	for (var i = 0; i < frameNodes.length; i++) {
@@ -96,7 +96,7 @@ Wiz.ContentClipper.prototype.prepareFrames = function(win) {
 		return;
 	}
 	//
-	prepareFrameNodes(win);
+	this.prepareFrameNodes(win);
 	//
 	var frames = win.frames;
 	if (frames == null)
@@ -105,13 +105,13 @@ Wiz.ContentClipper.prototype.prepareFrames = function(win) {
 	for (var i = 0; i < frames.length; i++) {
 		var frame = frames[i];
 		//
-		prepareFrames(frame);
+		this.prepareFrames(frame);
 	}
 }
 
 Wiz.ContentClipper.prototype.prepareAllFrames = function(win) {
 	g_frameNameIndex = 0;
-	prepareFrames(win);
+	this.prepareFrames(win);
 }
 
 var g_frameFilesIndex = 0;
@@ -126,7 +126,7 @@ Wiz.ContentClipper.prototype.collectFrames = function(win) {
 		return "";
 	}
 
-	var frameNodes = getFrameNodes(win);
+	var frameNodes = this.getFrameNodes(win);
 
 	if (frameNodes == null)
 		return "";
@@ -150,11 +150,11 @@ Wiz.ContentClipper.prototype.collectFrames = function(win) {
 			var frameDoc = frameNode.contentDocument;
 
 			if (frameDoc != null) {
-				params += g_frameFilesIndex + "_FrameURL='" + base64Encode(frameDoc.URL) + "' ";
+				params += g_frameFilesIndex + "_FrameURL='" + this.base64Encode(frameDoc.URL) + "' ";
 				params += g_frameFilesIndex + "_FrameName='" + name + "' ";
 				params += g_frameFilesIndex + "_FrameID='" + id + "' ";
 				params += g_frameFilesIndex + "_FrameExtName='" + extName + "' ";
-				var source_html = base64Encode(frameDoc.documentElement.innerHTML);
+				var source_html = this.base64Encode(frameDoc.documentElement.innerHTML);
 				params += g_frameFilesIndex + "_FrameHtml='" + source_html + "' ";
 				g_frameFilesIndex++;
 			}
@@ -164,7 +164,7 @@ Wiz.ContentClipper.prototype.collectFrames = function(win) {
 	var frames = win.frames;
 	for (var i = 0; i < frames.length; i++) {
 		var frame = frames[i];
-		params += collectFrames(frame);
+		params += this.collectFrames(frame);
 	}
 	return params;
 }
@@ -172,13 +172,13 @@ Wiz.ContentClipper.prototype.collectFrames = function(win) {
 Wiz.ContentClipper.prototype.collectAllFrames = function(win) {//
 	var params = "";
 	if ( typeof (win) == "object") {
-		var source_url = base64Encode(win.location.href);
-		var source_title = base64Encode(win.document.title);
+		var source_url = this.base64Encode(win.location.href);
+		var source_title = this.base64Encode(win.document.title);
 		var source_html = "";
 
-		prepareAllFrames(win);
+		this.prepareAllFrames(win);
 		//
-		var source_html = base64Encode(win.document.documentElement.innerHTML);
+		var source_html = this.base64Encode(win.document.documentElement.innerHTML);
 		params = "param-location='" + source_url + "' ";
 		params += "param-title='" + source_title + "' ";
 
@@ -188,7 +188,7 @@ Wiz.ContentClipper.prototype.collectAllFrames = function(win) {//
 		params += g_frameFilesIndex + "_FrameHtml='" + source_html + "' ";
 
 		g_frameFilesIndex++;
-		params += collectFrames(win);
+		params += this.collectFrames(win);
 		var frame_fcount = g_frameFilesIndex;
 		params = "param-fcount='" + frame_fcount + "' " + params;
 	}
