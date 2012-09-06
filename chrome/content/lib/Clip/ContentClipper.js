@@ -195,6 +195,14 @@ Wiz.ContentClipper.prototype.collectAllFrames = function(win) {//
 	return params;
 }
 
+Wiz.ContentClipper.prototype.openPopup = function () {
+	var params = {};
+	params.i18n = Wiz.I18N;
+	params.preview = Wiz.preview;
+	params.clipManager = Wiz.clipManager;
+	window.openDialog( "chrome://webclipper/content/FFPopup.xul", "adsfasdf",
+                       "chrome, titlebar=no, left=100px, top=100px, resizable=no", params );
+}
 
 
 

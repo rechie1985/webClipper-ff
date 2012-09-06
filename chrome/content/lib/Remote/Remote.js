@@ -12,8 +12,8 @@ Wiz.Remote.prototype.initCommon = function() {
 	this._data.client_type = "web3";
 	this._data.api_version = 3;
     this._data.program_type = "normal";
-	this._data.token = "0bdefc98-4eeb-40f1-aef7-53df4ec07ec4";
-    this._data.kb_guid = "325a4734-66d1-11e1-a992-00237def97cc";
+	this._data.token = "56a9ead4-a5d1-4a84-9c9d-48c7b23d09f5";
+    this._data.kb_guid = "eebe89be-f745-11e0-b608-4e446a4829f4";
 }
 
 Wiz.Remote.prototype.clientLogin = function(username, password, rememberMe, callSuccess, callError) {

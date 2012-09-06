@@ -7,7 +7,7 @@ if (typeof Wiz == "undefined") {
 		_remote : null
     };
 
-    Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";
+    Wiz.SERVICE_URL = "http://127.0.0.1:8800/wiz";
     Wiz.XMLRPC_URL = Wiz.SERVICE_URL + "/xmlrpc";
     Wiz.POST_DOCUMENT_URL = Wiz.SERVICE_URL + "/a/web/post?";
     Wiz.EXTENSIOD_ID = "wizbrother@wiz.cn";

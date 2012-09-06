@@ -17,7 +17,7 @@ Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType)
 	//if not contextMenu clicked, show preview and the popup
 	if (!contextMenuClipType) { 
 		//TODO 不应该是直接显示预览,openDialog和预览应该同时进行
-		clipper.doClipPreview();
+		this._clipper.openPopup();
 	} else {
 		switch (contextMenuClipType) {
 		case "CLIP_ACTION_FULL_PAGE":
@@ -35,7 +35,7 @@ Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType)
 Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function() {
 	var docContent = this._clipper.collectAllFrames(this._tab),
 		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
-  	alert(typeof docContent);
+	this.postDocument(doc);
 };
 
 Wiz.ClipManager.prototype.contenxtMenuClipSelection = function() {
