@@ -1,8 +1,9 @@
+"use strict";
 Wiz.ContentClipper = function() {
 	this.initialize();
 }
 
-Wiz.ContentClipper.prototype.initialize = funciton() {
+Wiz.ContentClipper.prototype.initialize = function() {
 }
 
 Wiz.ContentClipper.prototype.getSelectedHTML = function(win) {

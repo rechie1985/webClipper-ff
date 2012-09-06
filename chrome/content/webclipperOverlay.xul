@@ -7,11 +7,13 @@
 <overlay id="webclipperOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Wiz.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/I18N.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Constant.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ScriptLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/UtilLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/PreviewLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/RemoteLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/loader/ClipLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/UtilLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/ModalLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/PreviewLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/RemoteLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/ClipLoader.js"/> 
 
   <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/Clip.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/ClipManager.js"/>

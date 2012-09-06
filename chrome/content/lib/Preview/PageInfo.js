@@ -1,3 +1,4 @@
+"use strict";
 function PageInfo(tab) {"use strict";
 
 	var tab = tab;

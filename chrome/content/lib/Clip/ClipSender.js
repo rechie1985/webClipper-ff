@@ -1,14 +1,14 @@
+"use strict";
 Wiz.ClipSender = function(clipManager) {
 	this._clipManager = clipManager;
 	this.initialize();
 }
 
 Wiz.ClipSender.prototype.initialize = function() {
-	this._remote = new Wiz.Remote();
 }
 
 Wiz.ClipSender.prototype.postDocument = function(docInfo) {
-	this._remote.postDocument(docInfo, this.callbackSuccess, this.callbackErrot);
+	Wiz.remote.postDocument(docInfo, this.callbackSuccess, this.callbackErrot);
 }
 
 

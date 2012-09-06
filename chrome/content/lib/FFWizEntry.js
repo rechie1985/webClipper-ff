@@ -1,19 +1,21 @@
+"use strict";
 var wiznote_doAction = function( popupSrc, clipType ) {
-	Wiz.ClipManager.startClip( popupSrc, clipType );
+	Wiz.clipManager.startClip( popupSrc, clipType );
 }
 
 
 function initOverlay() {
-  var menu = document.getElementById("contentAreaContextMenu");
-  menu.addEventListener("popupshowing", contextPopupShowing, false);
+	var menu = document.getElementById("contentAreaContextMenu");
+	menu.addEventListener("popupshowing", contextPopupShowing, false);
 }
 
 function contextPopupShowing(evt) {
 
-    var i18n = document.getElementById("wiznote_i18n"); 
-    if(i18n) {
-    	Wiz.I18N.setStringBundle(i18n.stringBundle);
-    }
+	var i18n = document.getElementById("wiznote_i18n"); 
+	if(i18n) {
+		Wiz.I18N.setStringBundle(i18n.stringBundle);
+	}
+	Wiz.init(content);
 
 	var pageMenuitem = document.getElementById("webclipper-contextmenu-popup-clippage");
 	var selectionMenuitem = document.getElementById("webclipper-contextmenu-popup-clipsel");

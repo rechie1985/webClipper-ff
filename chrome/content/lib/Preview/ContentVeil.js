@@ -1,3 +1,4 @@
+"use strict";
 function ContentVeil(tab) {"use strict";
 	var tab = tab;
 	var doc = tab.document;
