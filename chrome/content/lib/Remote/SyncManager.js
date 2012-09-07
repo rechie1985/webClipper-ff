@@ -2,4 +2,4 @@
 
 Wiz.SyncManager = function() {
 	
-}
+};

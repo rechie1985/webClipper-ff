@@ -5,17 +5,16 @@ var wiznote_doAction = function( popupSrc, clipType ) {
 
 
 function initOverlay() {
+	var i18n = document.getElementById("wiznote_i18n"); 
+	if(i18n) {
+		Wiz.i18n.setStringBundle(i18n.stringBundle);
+	}
+	Wiz.init(content);
 	var menu = document.getElementById("contentAreaContextMenu");
 	menu.addEventListener("popupshowing", contextPopupShowing, false);
 }
 
 function contextPopupShowing(evt) {
-
-	var i18n = document.getElementById("wiznote_i18n"); 
-	if(i18n) {
-		Wiz.I18N.setStringBundle(i18n.stringBundle);
-	}
-	Wiz.init(content);
 
 	var pageMenuitem = document.getElementById("webclipper-contextmenu-popup-clippage");
 	var selectionMenuitem = document.getElementById("webclipper-contextmenu-popup-clipsel");

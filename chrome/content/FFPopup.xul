@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="chrome://webclipper3/skin/webclipperOverlay.css" type="text/css"?>
-<?xml-stylesheet href="chrome://webclipper3-common/content/css/evernote.css" type="text/css"?>
 
-<panel id="webclipperPopup" title="title;" orient="vertical" autostretch="always"
+<panel id="webclipperPopup" title="title" orient="vertical" autostretch="always"
        buttons=","
        defaultButton=","
        shadow="true"
@@ -14,8 +12,8 @@
     <![CDATA[
 
         function init() {
-            window.frames[ 0 ].overlay = window;
-            window.frames[ 0 ].overlayContentContainer = document.getElementById( "popupContent" );
+            window.frames[0].overlay = window;
+            window.frames[0].overlayContentContainer = document.getElementById( "popupContent" );
         }
 
     ]]>

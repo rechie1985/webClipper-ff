@@ -1,5 +1,5 @@
 "use strict";
-Wiz.I18N = {
+Wiz.i18n = {
 	_stringBundle : null,
 	getMessage : function(key) {
 		if(this._stringBundle) {

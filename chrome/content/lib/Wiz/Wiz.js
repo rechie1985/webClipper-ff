@@ -63,7 +63,7 @@ Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructo
         childConstructor.prototype.constructor = childConstructor;
         childConstructor.prototype.parent = parentClassOrObject;
         childConstructor.constructor.parent = parentClassOrObject;
-    }
+    } 
 
     if ( includeConstructorDefs ) {
         for ( var i in parentClassOrObject.prototype.constructor ) {
@@ -74,7 +74,7 @@ Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructo
         }
     }
     return childConstructor;
-}
+};
 
 Wiz.__defineGetter__("clipManager", Wiz.getClipManager);
 Wiz.__defineGetter__("preview", Wiz.getPreview);

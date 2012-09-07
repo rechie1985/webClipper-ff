@@ -23,8 +23,6 @@ function ClipPageControl() {
 		}, 500);
 	}
 
-	//监听截取信息事件
-	chrome.extension.onConnect.addListener(messageListener);
 
 	function messageListener(port) {
 		var name = port.name;
@@ -36,7 +34,7 @@ function ClipPageControl() {
 			}
 			break;
 		case 'PageClipFailure':
-			var pageClipFailure = chrome.i18n.getMessage('pageClipFailure');
+			// var pageClipFailure = chrome.i18n.getMessage('pageClipFailure');
 			PopupView.showClipFailure(pageClipFailure);
 			break;
 		}
@@ -51,11 +49,7 @@ function ClipPageControl() {
 
 	function changeSubmitTypehandler(evt) {
 		var selectedOption = $('option:selected', '#submit-type'),
-			cmd = selectedOption.attr('id'),
-			port = chrome.extension.connect({
-				name: 'preview'
-			});
-		port.postMessage(cmd);
+			cmd = selectedOption.attr('id');
 
 		//改变页面显示
 		PopupView.changeSubmitDisplayByType();
@@ -91,15 +85,6 @@ function ClipPageControl() {
 	 */
 
 	function requestPageStatus() {
-		chrome.windows.getCurrent(function (win) {
-			chrome.tabs.getSelected(win.id, function (tab) {
-				chrome.tabs.sendMessage(tab.id, {
-					name: 'getInfo'
-				}, function (params) {
-					initSubmitGroup(params);
-				});
-			});
-		});
 	}
 
 	//初始化剪辑页面信息
@@ -122,17 +107,11 @@ function ClipPageControl() {
 
 
 	function initLogoutLink() {
-		var logoutText = chrome.i18n.getMessage('logout');
 		$('#header_user').show();
 		$('#logout_control').html(logoutText).bind('click', cmdLogout);
 	}
 
 	function cmdLogout() {
-		Cookie.removeCookies(cookieUrl, cookieName, function () {
-			chrome.extension.connect({
-				name: 'logout'
-			});
-		});
 		window.close();
 	}
 
@@ -141,15 +120,6 @@ function ClipPageControl() {
 	 */
 
 	function requestTitle() {
-		chrome.windows.getCurrent(function (win) {
-			chrome.tabs.getSelected(win.id, function (tab) {
-				var title = tab.title;
-				if (!title) {
-					return;
-				}
-				setTitle(title);
-			});
-		});
 	}
 
 	function setTitle(title) {
@@ -181,7 +151,7 @@ function ClipPageControl() {
 		if (visible) {
 			PopupView.hideCategoryLoading();
 		} else {
-			var categoryLoadingMsg = chrome.i18n.getMessage('category_loading');
+			// var categoryLoadingMsg = chrome.i18n.getMessage('category_loading');
 			PopupView.showCategoryLoading(categoryLoadingMsg);
 		}
 	}
@@ -233,27 +203,7 @@ function ClipPageControl() {
 
 	function requestCategory() {
 		$('#category_info').bind('click', changeCategoryLoadingStatus);
-		var port = chrome.extension.connect({
-			name: 'requestCategory'
-		});
-		port.onMessage.addListener(function (msg) {
-			//错误处理
-			var value = $('#wiz_note_category').val();
-			localStorage['category'] = msg.categories;
-			parseWizCategory(msg.categories);
-		});
 	}
-
-
-	function requestToken() {
-		var port = chrome.extension.connect({
-			name: 'requestToken'
-		});
-		port.onMessage.addListener(function (token) {
-			initUserLink(token);
-		});
-	}
-
 
 	function keyDownHandler(evt) {
 		var target = evt.target,
@@ -275,9 +225,6 @@ function ClipPageControl() {
 		var info = {
 			direction: opCmd
 		};
-		chrome.extension.connect({
-			name: 'onkeydown'
-		}).postMessage(info);
 	}
 
 	function getNudgeOp(key, evt) {
@@ -334,18 +281,6 @@ function ClipPageControl() {
 				category: category,
 				comment: comment
 			};
-		chrome.windows.getCurrent(function (win) {
-			chrome.tabs.getSelected(win.id, function (tab) {
-				chrome.tabs.sendRequest(tab.id, {
-					name: 'preview',
-					op: 'submit',
-					info: docInfo,
-					type: type
-				}, function (params) {
-					window.close();
-				});
-			});
-		});
 	}
 
 	function initUserLink(token) {

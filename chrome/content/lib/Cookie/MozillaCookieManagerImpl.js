@@ -3,31 +3,31 @@ Wiz.MozillaCookieManagerImpl = function MozillaCookieManagerImpl() {
 	this.__defineGetter__("ioService", this.getIoService);
 	this.__defineGetter__("cookieManagerService", this.getCookieManagerService);
 };
-Wiz.inherit( Wiz.MozillaCookieManagerImpl, Wiz.CookieManagerImpl, true );
+Wiz.inherit(Wiz.MozillaCookieManagerImpl, Wiz.CookieManagerImpl, true);
 
 Wiz.MozillaCookieManagerImpl.prototype._ioSrv = null;
 Wiz.MozillaCookieManagerImpl.prototype._cookieManagerSrv = null;
 
-Wiz.MozillaCookieManagerImpl.prototype.set = function(url, cookie) {
+Wiz.MozillaCookieManagerImpl.prototype.set = function (url, cookie) {
 	try {
-		var cookieURI = (typeof url == 'string') ? this.ioService.newURI( url, null, null ) : null,
+		var cookieURI = (typeof url === 'string') ? this.ioService.newURI(url, null, null) : null,
 			cookieString = cookie.name + "=" + cookie.value + ";";
-		cookieString = (cookie.expires) ? (cookieString + "expires=" +  cookie.expires + ";"): cookieString;
-		this.cookieManagerService.setCookieString(cookieUri, null, cookieString, null);
-	} catch(err) {
-
+		cookieString = (cookie.expires) ? (cookieString + "expires=" +  cookie.expires + ";") : cookieString;
+		this.cookieManagerService.setCookieString(cookieURI, null, cookieString, null);
+	} catch (err) {
+		//TODO
 	}
 };
 
-Wiz.MozillaCookieManagerImpl.prototype.get = function(url, name) {
+Wiz.MozillaCookieManagerImpl.prototype.get = function (url, name) {
 	try {
-	    var cookies = [ ];
-	    var uri = (url) ? this.ioService.newURI( url, null, null ) : null;
+	    var cookies = [ ],
+	    	uri = (url) ? this.ioService.newURI(url, null, null) : null;
 
-	    for ( var e = this.cookieManagerService.enumerator; e.hasMoreElements(); ) {
+	    for (var e = this.cookieManagerService.enumerator; e.hasMoreElements(); ) {
 	        var cookie = e.getNext().QueryInterface( Components.interfaces.nsICookie );
-	        if ( url && cookie.host = uri.host && cookie.name == name ) {
-	            cookies.push( new Evernote.Cookie( cookie ) );
+	        if ( url && cookie.host == uri.host && cookie.name == name ) {
+	            cookies.push( new Wiz.Cookie( cookie ) );
 	        }
 	    }
 	} catch(err) {
@@ -44,7 +44,7 @@ Wiz.MozillaCookieManagerImpl.prototype.getAll = function(url) {
 	    for ( var e = this.cookieManagerService.enumerator; e.hasMoreElements(); ) {
 	        var cookie = e.getNext().QueryInterface( Components.interfaces.nsICookie );
 	        if ( !url || uri.host == cookie.host ) {
-	            cookies.push( new Evernote.Cookie( cookie ) );
+	            cookies.push( new Wiz.Cookie( cookie ) );
 	        }
 	    }
 	} catch(err) {
@@ -72,7 +72,7 @@ Wiz.MozillaCookieManagerImpl.prototype.removeAll = function(url) {
 		this._cookieManagerSrv.removeAll();
 	} else {
 		var cookies = this.getAll( url );
-        or ( var i = 0; i < cookies.length; i++ ) {
+        for ( var i = 0; i < cookies.length; i++ ) {
             this.remove( cookies[ i ].name, url );
         }
 	}
