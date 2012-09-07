@@ -11,6 +11,8 @@ function wiz_initFFPopup() {
 	})
 
 	initPopupPage();
+	window.sizeToContent();
+	window.overlay.sizeToContent();
 
 	function initPopupPage() {
 		$('#waiting-label').html(Wiz.i18n.getMessage('popup_wating'));
