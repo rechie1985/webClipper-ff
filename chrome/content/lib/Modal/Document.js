@@ -61,6 +61,14 @@ Wiz.Document.createContextMenuDoc = function (tab, content) {
 	return doc;
 }
 
+Wiz.Document.create = function (docInfo) {
+	var doc = new Wiz.Document();
+	doc.title = docInfo.title;
+	doc.category = docInfo.category;
+	doc.comment = docInfo.comment;
+	return doc;
+}
+
 Wiz.Document.genGuid = function () {
     function S4 () {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);

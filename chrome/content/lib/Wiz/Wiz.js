@@ -4,13 +4,15 @@ if (typeof Wiz == "undefined") {
     var Wiz = {
 		_clipManager : null,
 		_preview : null,
-		_remote : null
+		_remote : null,
+        _cookieManager : null
     };
 
-    Wiz.SERVICE_URL = "http://127.0.0.1:8800/wiz";
+    Wiz.SERVICE_URL = "http://service.wiz.cn/wiz";
     Wiz.XMLRPC_URL = Wiz.SERVICE_URL + "/xmlrpc";
     Wiz.POST_DOCUMENT_URL = Wiz.SERVICE_URL + "/a/web/post?";
     Wiz.EXTENSIOD_ID = "wizbrother@wiz.cn";
+    Wiz.AUTHENTICATION_NAME = 'wiz_auth';
 }
 
 Wiz.init = function (tab) {
@@ -49,6 +51,32 @@ Wiz.setRemote = function (remote) {
 	this._remote = remote;
 };
 
+Wiz.getAuthCookie = function () {
+    var cookie = Wiz.cookieManager.get(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+    if (cookie) {
+        return cookie;
+    } 
+    return null;
+};
+
+Wiz.removeAuthCookie = function () {
+    Wiz.cookieManager.remove(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+}
+
+Wiz.getCookieManager = function () {
+    if (!this._cookieManager) {
+        this._cookieManager = new Wiz.CookieManager();
+    }
+    return this._cookieManager;
+};
+
+Wiz.getToken = function () {
+    if (!this._remote) {
+        return null;
+    }
+    return this._remote.getToken();
+}
+
 Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructorDefs) {
 	if ( parentClassOrObject.constructor == Function ) {
         // Normal Inheritance
@@ -79,3 +107,4 @@ Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructo
 Wiz.__defineGetter__("clipManager", Wiz.getClipManager);
 Wiz.__defineGetter__("preview", Wiz.getPreview);
 Wiz.__defineGetter__("remote", Wiz.getRemote);
+Wiz.__defineGetter__("cookieManager", Wiz.getCookieManager);

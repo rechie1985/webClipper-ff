@@ -17,6 +17,7 @@ Wiz.MozillaCookieManagerImpl.prototype.set = function (url, cookie) {
 	} catch (err) {
 		//TODO
 	}
+	return '';
 };
 
 Wiz.MozillaCookieManagerImpl.prototype.get = function (url, name) {
@@ -65,6 +66,7 @@ Wiz.MozillaCookieManagerImpl.prototype.remove = function(url, name) {
     catch ( e ) {
     	//TODO
     }
+    return '';
 };
 
 Wiz.MozillaCookieManagerImpl.prototype.removeAll = function(url) {
@@ -76,6 +78,7 @@ Wiz.MozillaCookieManagerImpl.prototype.removeAll = function(url) {
             this.remove( cookies[ i ].name, url );
         }
 	}
+	return '';
 };
 
 Wiz.MozillaCookieManagerImpl.prototype.getIoService = function () {
@@ -83,7 +86,6 @@ Wiz.MozillaCookieManagerImpl.prototype.getIoService = function () {
 		this._ioSrv = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService);
 	}
 	return this._ioSrv;
-
 };
 
 Wiz.MozillaCookieManagerImpl.prototype.getCookieManagerService = function () {
