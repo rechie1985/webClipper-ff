@@ -27,7 +27,7 @@ Wiz.LoginControl.prototype.autoLogin = function (cookie) {
 		split_count = info.indexOf('*md5'),
 		user_id = info.substring(0, split_count),
 		password = info.substring(split_count + 1);
-	this.login(user_id, password, true, Wiz.LoginControl.onLoginSuccess, Wiz.LoginControl.onLoginError);
+	this.login(user_id, password, true, $.proxy(this.onLoginSuccess, this), $.proxy(this.onLoginError, this));
 };
 
 Wiz.LoginControl.prototype.login = function (user_id, password, isRememberMe, onSuccess, onError) {
@@ -41,7 +41,7 @@ Wiz.LoginControl.prototype.doLogin = function () {
 	var user_id = $('#user_id').val(),
 		password = 'md5.' + hex_md5($('#password').val()),
 		isRememberMe = $('#keep_passoword').val();
-	this.login(user_id, password, isRememberMe, Wiz.LoginControl.onLoginSuccess, Wiz.LoginControl.onLoginError);
+	this.login(user_id, password, isRememberMe, $.proxy(this.onLoginSuccess, this), $.proxy(this.onLoginError, this));
 };
 
 Wiz.LoginControl.prototype.loginSubmit = function () {
@@ -84,10 +84,10 @@ Wiz.LoginControl.prototype.initCreateAccountLink = function () {
 	});
 };
 
-Wiz.LoginControl.onLoginSuccess = function (respJson) {
-	Wiz.PopupView.showNotePage();
+Wiz.LoginControl.prototype.onLoginSuccess = function (respJson) {
+	this._popup.showAndInitNotePage();
 };
 
-Wiz.LoginControl.onLoginError = function (err) {
+Wiz.LoginControl.prototype.onLoginError = function (err) {
 	alert(err);
 };

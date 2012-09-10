@@ -201,7 +201,7 @@ function PageInfo(tab) {"use strict";
 		if (selection && selection.rangeCount && !selection.isCollapsed) {
 			return selection;
 		}
-
+		var doc = tab.document;
 		// Then we'll try our frames and iframes.
 		var docs = [];
 		var iframes = doc.getElementsByTagName("iframe");
@@ -278,13 +278,13 @@ function PageInfo(tab) {"use strict";
 		}
 	}
 
-	function getInfoRequestHandler(request, sender, sendResponse) {
+	function getPageClipInfo() {
 		// Initialize these values if they haven't been already.
-		findArticle();
+		// findArticle();
 
 		var isSelected = getSelection();
 
-		checkClearly();
+		// checkClearly();
 
 		var response = {
 			containsImages : containsImages,
@@ -293,18 +293,18 @@ function PageInfo(tab) {"use strict";
 			url : url,
 			selection : (isSelected !== null),
 			selectionIsInFrame : selectionIsInFrame,
-			documentLength : doc.body.textContent.length,
+			// documentLength : doc.body.textContent.length,
 			articleBoundingClientRect : articleBoundingClientRect,
 			article : (article != null),
-			recommendationText : getRecommendationText(),
+			// recommendationText : getRecommendationText(),
 			documentIsFrameset : documentIsFrameset
 		};
-		sendResponse(response);
+		return response;
 	}
 
 	// Public API:
-	// this.readyRequestHandler = readyRequestHandler
 	this.getDefaultArticle = getDefaultArticle;
 	this.getSelection = getSelection;
 	this.getSelectionFrame = getSelectionFrame;
+	this.getPageClipInfo = getPageClipInfo;
 }

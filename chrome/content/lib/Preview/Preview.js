@@ -401,10 +401,16 @@ Wiz.ContentPreview = function(tab) {"use strict";
 		}
 	}
 
+	function getClipInfo() {
+		return pageInfo.getPageClipInfo();
+	}
+
 	// Public API:
 	this.getArticleElement = getArticleElement;
 	this.looksInteresting = looksInteresting;
 	this.previewUrl = previewUrl;
 	this.previewSelection = previewSelection;
 	this.previewArticle = previewArticle;
+	this.getClipInfo = getClipInfo;
+	this.clear = clear;
 }

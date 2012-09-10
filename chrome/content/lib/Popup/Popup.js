@@ -12,8 +12,10 @@ Wiz.FFPopup.prototype._preview = null;
 Wiz.FFPopup.prototype._loginCtrl = null;
 Wiz.FFPopup.prototype._notePageCtrl = null;
 Wiz.FFPopup.prototype._remote = null;
+Wiz.FFPopup.prototype._tab = null;
 
 Wiz.FFPopup.prototype.initialize = function (params) {
+	this._tab = window.overlay;
 	this._clipManager = params.clipManager;
 	this._preview = params.preview;
 	this._loginCtrl = new Wiz.LoginControl(this);
@@ -60,11 +62,24 @@ Wiz.FFPopup.prototype.startPopup = function () {
 	}
 };
 
+Wiz.FFPopup.prototype.showAndInitNotePage = function () {
+	Wiz.PopupView.showNotePage();
+	this._notePageCtrl.initialize();
+};
+
 Wiz.FFPopup.prototype.closePopup = function () {
+	this._preview.clear();
 	window.close();
 };
 
 Wiz.FFPopup.prototype.logout = function () {
 	Wiz.removeAuthCookie();
 	this.closePopup();
+}
+
+Wiz.FFPopup.prototype.getClipInfo = function () {
+	if (this._preview) {
+		return this._preview.getClipInfo();
+	}
+	return null;
 }

@@ -4,7 +4,7 @@
 'use strict';
 Wiz.NotePageControl = function (popup) {
 	this._popup = popup;
-	$('wiz_clip_detail').bind('show', this.initialize);
+	$('wiz_clip_detail').show($.proxy(this.initialize, this));
 };
 
 Wiz.NotePageControl.prototype._popup = null;
@@ -31,27 +31,43 @@ Wiz.NotePageControl.prototype.changeSubmitTypehandler = function (evt) {
 	var selectedOption = $('option:selected', '#submit-type'),
 		cmd = selectedOption.attr('id');
 	//改变页面显示
-	PopupView.changeSubmitDisplayByType();
+	Wiz.PopupView.changeSubmitDisplayByType();
 };
 
 
 Wiz.NotePageControl.prototype.initSubmitGroup = function () {
+	var clipPageResponse = this._popup.getClipInfo(),
+		clipArticle = clipPageResponse.article,
+		clipSelection = clipPageResponse.selection;
+	if (clipSelection == true) {
+		$('#submit-type')[0].options[1].selected = true;
+	} else if (clipArticle == true) {
+		$('#submit-type')[0].options[0].selected = true;
+	} else {
+		$('#submit-type')[0].options[2].selected = true;
+	}
+
+	//用户没有选择时，禁止选择该'保存选择'
+	if (clipSelection == false) {
+		$('#submit-type option[id="selection"]').attr('disabled', '');
+	}
+
+	//用户有选择或者不可以智能提取时，禁止选择'保存文章'
+	if (clipArticle == false || clipSelection == true) {
+		$('#submit-type option[id="article"]').attr('disabled', '');
+	}
+	var type = $('#submit-type').val();
+	$('#note_submit').html(type);
 };
 
 Wiz.NotePageControl.prototype.initNotePageInfo = function(evt) {
-	PopupView.hideCreateDiv();
-	this.initLogoutLink();
-	this.requestPageStatus();
-	this.requestTitle();
-	this.initDefaultCategory();
-	this.requestToken();
-	var categoryStr = localStorage['category'];
-	//如果本地未保存文件夹信息，需要发送请求加载
-	if (categoryStr) {
-		this.parseWizCategory();
-	} else {
-		this.requestCategory();
-	}
+	// Wiz.PopupView.hideCreateDiv();
+	// this.initLogoutLink();
+	// this.requestTitle();
+	// this.initDefaultCategory();
+	// this.requestCategory();
+	this.initSubmitGroup();
+	//TODO save category
 };
 
 Wiz.NotePageControl.prototype.initLogoutLink = function () {
@@ -72,48 +88,41 @@ Wiz.NotePageControl.prototype.setTitle = function (title) {
 };
 
 Wiz.NotePageControl.prototype.initDefaultCategory = function () {
-	var lastCategory = localStorage['last-category'];
-	if (lastCategory) {
-		var array = lastCategory.split('*'),
-			displayName = array[0],
-			location = array[1];
-		$('#category_info').html(displayName).attr('location', location);
-	}
-}
+};
 
 
 Wiz.NotePageControl.prototype.changeCategoryLoadingStatus = function () {
 	var visible = this.isCategoryLoading();
 	if (visible) {
-		PopupView.hideCategoryLoading();
+		Wiz.PopupView.hideCategoryLoading();
 	} else {
 		var categoryLoadingMsg = Wiz.i18n.getMessage('category_loading');
-		PopupView.showCategoryLoading(categoryLoadingMsg);
+		Wiz.PopupView.showCategoryLoading(categoryLoadingMsg);
 	}
-}
+};
 
 Wiz.NotePageControl.prototype.isCategoryLoading = function () {
 	var visible = $('#category_loading').is(':visible');
 	return visible;
-}
+};
 Wiz.NotePageControl.prototype.parseWizCategory = function (categoryStr) {
 
 	initZtree();
 	var visible = this.isCategoryLoading();
 	if (visible) {
 		//用户已经点击展开文件夹树，此时，需要直接显示文件夹树即可
-		PopupView.showCategoryTreeFromLoading(500);
+		Wiz.PopupView.showCategoryTreeFromLoading(500);
 	}
 	$('#category_info').unbind('click');
 	$('#category_info').click(switchCategoryTreeVisible);
-}
+};
 
-Wiz.NotePageControl.prototype.initZtree = function () {
-	var categoryString = localStorage['category'];
-	var ztreeJson = ztreeControl.parseDate(categoryString);
+Wiz.NotePageControl.prototype.initZtree = function (categoryString) {
+	var ztreeControl = new ZtreeController(),
+		ztreeJson = ztreeControl.parseDate(categoryString);
 	ztreeControl.setNodes(ztreeJson);
 	ztreeControl.initTree('ztree');
-}
+};
 
 
 Wiz.NotePageControl.prototype.switchCategoryTreeVisible = function() {
@@ -123,15 +132,15 @@ Wiz.NotePageControl.prototype.switchCategoryTreeVisible = function() {
 	} else {
 		$('#ztree_container').show(500);
 	}
-}
+};
 
 Wiz.NotePageControl.prototype.requestCategory = function() {
 	$('#category_info').bind('click', this.changeCategoryLoadingStatus);
-}
+};
 
 Wiz.NotePageControl.prototype.noteSubmit = function () {
 	this.requestSubmit();
-}
+};
 
 Wiz.NotePageControl.prototype.requestSubmit = function () {
 	var type = $('option:selected', '#submit-type').attr('id'),
@@ -143,11 +152,10 @@ Wiz.NotePageControl.prototype.requestSubmit = function () {
 			category: category,
 			comment: comment
 		};
-}
+};
 
 Wiz.NotePageControl.prototype.initUserLink = function (token) {
-	var user_id = localStorage['wiz-clip-auth'];
-	$('#header_username').html('(' + user_id + ')').bind('click', function (evt) {
-		window.open(mainUrl + '/?t=' + token);
-	});
-}
+	// $('#header_username').html('(' + user_id + ')').bind('click', function (evt) {
+	// 	window.open(mainUrl + '/?t=' + token);
+	// });
+};
