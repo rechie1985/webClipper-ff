@@ -54,15 +54,11 @@ Wiz.FFPopup.prototype.startPopup = function () {
 	var authCookie = Wiz.getAuthCookie();
 	Wiz.PopupView.localizePopup();
 	if(authCookie && authCookie.value) {
-		this._loginCtrl.autoLogin();
+		this._loginCtrl.autoLogin(authCookie);
 	} else {
 		Wiz.PopupView.showLogin();
 	}
 };
-
-Wiz.FFPopup.prototype.showNotePage = function () {
-	Wiz.PopupView.showNotePage();
-}
 
 Wiz.FFPopup.prototype.closePopup = function () {
 	window.close();

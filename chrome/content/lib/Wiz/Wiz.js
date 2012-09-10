@@ -8,7 +8,7 @@ if (typeof Wiz == "undefined") {
         _cookieManager : null
     };
 
-    Wiz.SERVICE_URL = "http://service.wiz.cn/wiz";
+    Wiz.SERVICE_URL = "http://127.0.0.1:8800/wiz";
     Wiz.XMLRPC_URL = Wiz.SERVICE_URL + "/xmlrpc";
     Wiz.POST_DOCUMENT_URL = Wiz.SERVICE_URL + "/a/web/post?";
     Wiz.EXTENSIOD_ID = "wizbrother@wiz.cn";
@@ -52,12 +52,23 @@ Wiz.setRemote = function (remote) {
 };
 
 Wiz.getAuthCookie = function () {
-    var cookie = Wiz.cookieManager.get(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
-    if (cookie) {
-        return cookie;
+    var cookies = Wiz.cookieManager.get(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+    if (cookies && cookies.length > 0) {
+        return cookies[0];
     } 
     return null;
 };
+
+Wiz.saveAuthCookie = function (value, isRememberMe) {
+    if (!this._cookieManager) {
+        this._cookieManager = new Wiz.CookieManager();
+    }
+    if(isRememberMe) {
+        this._cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
+    } else {
+        this._cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value);
+    }
+}
 
 Wiz.removeAuthCookie = function () {
     Wiz.cookieManager.remove(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);

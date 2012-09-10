@@ -2,10 +2,12 @@
 Wiz.MozillaCookieManagerImpl = function MozillaCookieManagerImpl() {
 	this.__defineGetter__("ioService", this.getIoService);
 	this.__defineGetter__("cookieManagerService", this.getCookieManagerService);
+	this.__defineGetter__("cookieService", this.getCookieService);
 };
 Wiz.inherit(Wiz.MozillaCookieManagerImpl, Wiz.CookieManagerImpl, true);
 
 Wiz.MozillaCookieManagerImpl.prototype._ioSrv = null;
+Wiz.MozillaCookieManagerImpl.prototype._cookieSrv = null;
 Wiz.MozillaCookieManagerImpl.prototype._cookieManagerSrv = null;
 
 Wiz.MozillaCookieManagerImpl.prototype.set = function (url, cookie) {
@@ -13,9 +15,9 @@ Wiz.MozillaCookieManagerImpl.prototype.set = function (url, cookie) {
 		var cookieURI = (typeof url === 'string') ? this.ioService.newURI(url, null, null) : null,
 			cookieString = cookie.name + "=" + cookie.value + ";";
 		cookieString = (cookie.expires) ? (cookieString + "expires=" +  cookie.expires + ";") : cookieString;
-		this.cookieManagerService.setCookieString(cookieURI, null, cookieString, null);
+		this.cookieService.setCookieString(cookieURI, null, cookieString, null);
 	} catch (err) {
-		//TODO
+		alert('Mozilla Set Cookie Error: ' + err);
 	}
 	return '';
 };
@@ -32,7 +34,7 @@ Wiz.MozillaCookieManagerImpl.prototype.get = function (url, name) {
 	        }
 	    }
 	} catch(err) {
-		//TODO 
+		alert('Mozilla Get Cookie Error: ' + err);
 	}
     return cookies;
 };
@@ -49,7 +51,7 @@ Wiz.MozillaCookieManagerImpl.prototype.getAll = function(url) {
 	        }
 	    }
 	} catch(err) {
-		//TODO 
+		alert('Mozilla Get All Cookie Error: ' + err);
 	}
     return cookies;
 };
@@ -64,7 +66,7 @@ Wiz.MozillaCookieManagerImpl.prototype.remove = function(url, name) {
         this.cookieManagerService.remove( domain, name, path, false );
     }
     catch ( e ) {
-    	//TODO
+		alert('Mozilla Remove Cookie Error: ' + err);
     }
     return '';
 };
@@ -94,3 +96,10 @@ Wiz.MozillaCookieManagerImpl.prototype.getCookieManagerService = function () {
 	}
 	return this._cookieManagerSrv;
 };
+
+Wiz.MozillaCookieManagerImpl.prototype.getCookieService = function () {
+	if (!this._cookieSrv) {
+		this._cookieSrv = Components.classes["@mozilla.org/cookieService;1"].getService(Components.interfaces.nsICookieService);
+	}
+	return this._cookieSrv;		
+}

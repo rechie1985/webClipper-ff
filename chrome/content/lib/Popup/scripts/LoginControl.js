@@ -27,7 +27,7 @@ Wiz.LoginControl.prototype.autoLogin = function (cookie) {
 		split_count = info.indexOf('*md5'),
 		user_id = info.substring(0, split_count),
 		password = info.substring(split_count + 1);
-	this.login(user_id, password, true, this.onLoginSuccess, this.onLoginError);
+	this.login(user_id, password, true, Wiz.LoginControl.onLoginSuccess, Wiz.LoginControl.onLoginError);
 };
 
 Wiz.LoginControl.prototype.login = function (user_id, password, isRememberMe, onSuccess, onError) {
@@ -41,7 +41,7 @@ Wiz.LoginControl.prototype.doLogin = function () {
 	var user_id = $('#user_id').val(),
 		password = 'md5.' + hex_md5($('#password').val()),
 		isRememberMe = $('#keep_passoword').val();
-	this.login(user_id, password, isRememberMe, this.onLoginSuccess, this.onLoginError);
+	this.login(user_id, password, isRememberMe, Wiz.LoginControl.onLoginSuccess, Wiz.LoginControl.onLoginError);
 };
 
 Wiz.LoginControl.prototype.loginSubmit = function () {
@@ -78,17 +78,16 @@ Wiz.LoginControl.prototype.checkPassword = function () {
 	}
 	return true;
 };
-
-Wiz.LoginControl.prototype.onLoginSuccess = function (respJson) {
-	this._popup.showNotePage();
-};
-
-Wiz.LoginControl.prototype.onLoginError = function (err) {
-	alert(err);
-};
-
 Wiz.LoginControl.prototype.initCreateAccountLink = function () {
 	$('#create_acount').html(Wiz.i18n.getMessage('create_account_link')).bind('click', function(evt) {
 		window.open('http://service.wiz.cn/wizkm/a/signup');
 	});
+};
+
+Wiz.LoginControl.onLoginSuccess = function (respJson) {
+	Wiz.PopupView.showNotePage();
+};
+
+Wiz.LoginControl.onLoginError = function (err) {
+	alert(err);
 };

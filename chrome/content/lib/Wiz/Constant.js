@@ -1,6 +1,7 @@
 Wiz.Default = {
 	DOC_CATEGORY : "/My Notes/",
-	DOC_TITLE : "no title"
+	DOC_TITLE : "no title",
+	COOKIE_EXPIRE_SEC : 14 * 24 * 60 * 60
 };
 
 Wiz.Api = {

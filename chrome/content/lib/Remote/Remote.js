@@ -25,20 +25,18 @@ Wiz.Remote.prototype.getToken = function () {
 
 Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, callSuccess, callError) {
 	this._data.user_id = username;
-	this._data.password = 'md5.' + hex_md5(password);
-	if (rememberMe) {
-		//TODO 保存用户名密码
-	}
+	this._data.password = password;
 	var success = function(respJson) {
+		Wiz.saveAuthCookie(username + '*' + password ,rememberMe);	
 		this._data.token = respJson.token;
 		callSuccess(respJson);
 	}
-	xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [this.data], success, callError);
+	xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [this._data], $.proxy(success, this), callError);
 };
 
 Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
 	if (this._data.token) {
-		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_KEEPALIVE, [this.data], callSuccess, callError);
+		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_KEEPALIVE, [this._data], callSuccess, callError);
 	} else {
 		//TODO need to autoLogin
 	}
@@ -46,13 +44,13 @@ Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
 
 Wiz.Remote.prototype.getAllCategory = function (callSuccess, callError) {
 	if (this._data.token) {
-		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllCATEGORIES, [this.data], callSuccess, callError)
+		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllCATEGORIES, [this._data], callSuccess, callError)
 	}
 };
 
 Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
 	if (this._data.token) {
-		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllTAGS, [this.data], callSuccess, callError)
+		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllTAGS, [this._data], callSuccess, callError)
 	}
 };
 
