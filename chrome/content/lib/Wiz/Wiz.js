@@ -5,7 +5,8 @@ if (typeof Wiz == "undefined") {
 		_clipManager : null,
 		_preview : null,
 		_remote : null,
-        _cookieManager : null
+        _cookieManager : null,
+        _context : null
     };
 
     Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";

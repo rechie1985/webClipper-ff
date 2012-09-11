@@ -19,6 +19,6 @@
     ]]>
   </script>
     <iframe src="chrome://webclipper/content/FFPopup.html" type="content"
-            style="-moz-box-shadow: 6px 6px 12px #888; box-shadow:3px 3px 5px #888; background-color: white; -moz-window-shadow : default; width: 576px; height: 380px; padding: 5px; margin: 5px; overflow: hidden;"
+            style="-moz-box-shadow: 6px 6px 12px #888; box-shadow:3px 3px 5px #888; background-color: white; -moz-window-shadow : default; width: 500px; height: 280px; padding: 5px; margin: 5px; overflow: hidden;"
             id="popupContent"/>
 </panel>
