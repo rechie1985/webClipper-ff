@@ -280,11 +280,11 @@ function PageInfo(tab) {"use strict";
 
 	function getPageClipInfo() {
 		// Initialize these values if they haven't been already.
-		// findArticle();
+		findArticle();
 
 		var isSelected = getSelection();
 
-		// checkClearly();
+		checkClearly();
 
 		var response = {
 			containsImages : containsImages,

@@ -147,21 +147,6 @@ function ContentVeil(tab) {"use strict";
 				height : rect.height,
 			}
 
-			//      console.log("[outlineElement]top: %d, bottom: %d, left: %d, right: %d, width: %d, height: %d",
-			//              rect.top, rect.bottom, rect.left, rect.right, rect.width, rect.height);
-			//      console.log("innerWidth: %d, innerHeight: %d", window.innerWidth, window.innerHeight);
-			//      console.log("scrollTop: %d, scrollLeft: %d", document.body.scrollTop, document.body.scrollLeft);
-
-			//      var BORDER_MIN = 7;
-			//      if (mutableRect.left < BORDER_MIN) {
-			//        mutableRect.width -= BORDER_MIN - mutableRect.left;
-			//        mutableRect.left = BORDER_MIN;
-			//      }
-			//      if (mutableRect.top < BORDER_MIN) {
-			//        mutableRect.height -= BORDER_MIN - mutableRect.top;
-			//        mutableRect.top = BORDER_MIN;
-			//      }
-
 			reset();
 			revealRect(mutableRect, true);
 
@@ -192,6 +177,7 @@ function ContentVeil(tab) {"use strict";
 	}
 
 	function showElements(tagName, inElement) {
+		var doc = tab.document;
 		if (!inElement) {
 			inElement = doc;
 		}

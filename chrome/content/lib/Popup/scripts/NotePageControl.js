@@ -15,9 +15,9 @@ Wiz.NotePageControl.prototype.initialize = function () {
 };
 
 Wiz.NotePageControl.prototype.initNotePageListener = function () {
-	$('#submit-type').change(this.changeSubmitTypehandler);
-	$('#note_submit').click(this.noteSubmit);
-	$('#comment-info').focus(this.resizeCommentHeight);
+	$('#submit-type').change($.proxy(this.changeSubmitTypehandler, this));
+	$('#note_submit').click($.proxy(this.noteSubmit, this));
+	$('#comment-info').focus($.proxy(this.resizeCommentHeight, this));
 };
 
 Wiz.NotePageControl.prototype.resizeCommentHeight = function (evt) {
@@ -30,6 +30,7 @@ Wiz.NotePageControl.prototype.resizeCommentHeight = function (evt) {
 Wiz.NotePageControl.prototype.changeSubmitTypehandler = function (evt) {
 	var selectedOption = $('option:selected', '#submit-type'),
 		cmd = selectedOption.attr('id');
+	this._popup.switchPreview(cmd);
 	//改变页面显示
 	Wiz.PopupView.changeSubmitDisplayByType();
 };
@@ -61,12 +62,14 @@ Wiz.NotePageControl.prototype.initSubmitGroup = function () {
 };
 
 Wiz.NotePageControl.prototype.initNotePageInfo = function(evt) {
-	// Wiz.PopupView.hideCreateDiv();
-	// this.initLogoutLink();
-	// this.requestTitle();
-	// this.initDefaultCategory();
-	// this.requestCategory();
+	Wiz.PopupView.hideCreateDiv();
+
+	this.initLogoutLink();
+	this.initDefaultCategory();
 	this.initSubmitGroup();
+
+	this.requestTitle();
+	this.requestCategory();
 	//TODO save category
 };
 
@@ -81,6 +84,8 @@ Wiz.NotePageControl.prototype.cmdLogout = function () {
 };
 
 Wiz.NotePageControl.prototype.requestTitle = function () {
+	var title = this._popup.getTitle();
+	this.setTitle(title);
 };
 
 Wiz.NotePageControl.prototype.setTitle = function (title) {

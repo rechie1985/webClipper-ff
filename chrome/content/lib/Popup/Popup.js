@@ -15,12 +15,12 @@ Wiz.FFPopup.prototype._remote = null;
 Wiz.FFPopup.prototype._tab = null;
 
 Wiz.FFPopup.prototype.initialize = function (params) {
-	this._tab = window.overlay;
+	this._tab = params.content;
 	this._clipManager = params.clipManager;
-	this._preview = params.preview;
+	this._preview = new Wiz.ContentPreview(params.content);
+	this._remote = params.remote;
 	this._loginCtrl = new Wiz.LoginControl(this);
 	this._notePageCtrl = new Wiz.NotePageControl(this);
-	this._remote = new Wiz.Remote();
 };
 
 Wiz.FFPopup.prototype.getClipManager = function () {
@@ -64,22 +64,54 @@ Wiz.FFPopup.prototype.startPopup = function () {
 
 Wiz.FFPopup.prototype.showAndInitNotePage = function () {
 	Wiz.PopupView.showNotePage();
+	this._preview.previewArticle();
 	this._notePageCtrl.initialize();
 };
 
 Wiz.FFPopup.prototype.closePopup = function () {
 	this._preview.clear();
+	this._preview = null;
+	this._tab = null;
+	this._remote = null;
+	this._loginCtrl = null;
+	this._clipManager = null;
+	this._notePageCtrl = null;
 	window.close();
 };
 
 Wiz.FFPopup.prototype.logout = function () {
 	Wiz.removeAuthCookie();
 	this.closePopup();
-}
+};
 
 Wiz.FFPopup.prototype.getClipInfo = function () {
 	if (this._preview) {
 		return this._preview.getClipInfo();
 	}
 	return null;
+};
+
+Wiz.FFPopup.prototype.getTitle = function () {
+	if (this._tab) {
+		return this._tab.document.title;
+	}
+}
+
+Wiz.FFPopup.prototype.switchPreview = function (previewType) {
+	if (previewType) {
+		switch(previewType) {
+		case 'article' :
+			this._preview.previewArticle();
+			break;
+		case 'selection' : 
+			this._preview.previewSelection();
+			break;
+		case 'fullPage' :
+			this._preview.previewFullPage();
+			break;
+		case 'url' : 
+			this._preview.previewUrl();
+			break;
+		}
+	}
 }

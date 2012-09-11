@@ -68,11 +68,11 @@ Wiz.saveAuthCookie = function (value, isRememberMe) {
     } else {
         this._cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value);
     }
-}
+};
 
 Wiz.removeAuthCookie = function () {
     Wiz.cookieManager.remove(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
-}
+};
 
 Wiz.getCookieManager = function () {
     if (!this._cookieManager) {
@@ -86,7 +86,7 @@ Wiz.getToken = function () {
         return null;
     }
     return this._remote.getToken();
-}
+};
 
 Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructorDefs) {
 	if ( parentClassOrObject.constructor == Function ) {

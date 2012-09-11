@@ -407,6 +407,7 @@ Wiz.ContentPreview = function(tab) {"use strict";
 
 	// Public API:
 	this.getArticleElement = getArticleElement;
+	this.previewFullPage = previewFullPage;
 	this.looksInteresting = looksInteresting;
 	this.previewUrl = previewUrl;
 	this.previewSelection = previewSelection;

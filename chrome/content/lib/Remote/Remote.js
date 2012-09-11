@@ -1,19 +1,21 @@
 "use strict";
 Wiz.Remote = function () {
 	this.initialize();
+	this.__defineGetter__('token', this.getToken);
 };
+
+Wiz.Remote.prototype._data = null;
 
 Wiz.Remote.prototype.initialize = function () {
 	this.initCommon();
 };
 
 Wiz.Remote.prototype.initCommon = function () {
-	this._data = {};
-	this._data.client_type = "web3";
-	this._data.api_version = 3;
-    this._data.program_type = "normal";
-	this._data.token = "56a9ead4-a5d1-4a84-9c9d-48c7b23d09f5";
-    this._data.kb_guid = "eebe89be-f745-11e0-b608-4e446a4829f4";
+	this._data = {
+		'client_type' : 'web3',
+		'api_version' : 3,
+	    'program_type' : 'normal'
+	};
 };
 
 Wiz.Remote.prototype.getToken = function () {
@@ -21,7 +23,7 @@ Wiz.Remote.prototype.getToken = function () {
 		return null;
 	}
 	return this._data.token;
-}
+};
 
 Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, callSuccess, callError) {
 	this._data.user_id = username;
@@ -55,6 +57,7 @@ Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
 };
 
 Wiz.Remote.prototype.postDocument = function (docInfo, callSuccess, callError) {
+	alert(this._data.token);
 	if (this._data.token) {
 		// var regexp = /%20/g, 
 		// 	title = docInfo.title, 
