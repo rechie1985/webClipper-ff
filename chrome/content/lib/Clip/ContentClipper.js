@@ -196,19 +196,15 @@ Wiz.ContentClipper.prototype.collectAllFrames = function(win) {//
 };
 
 Wiz.ContentClipper.prototype.openPopup = function () {
-	this.getToolbarPosition();
-	var params = {};
+	var popupPosition = new Wiz.PopupPositioner("webclipper-toolbar-button", 500, 300).getPosition(),
+		params = {};
 	params.i18n = Wiz.i18n;
 	params.content = content;
 	params.clipManager = Wiz.clipManager;
 	params.clipManager = Wiz.remote;
 	window.openDialog( "chrome://webclipper/content/FFPopup.xul", "",
-                       "chrome, titlebar=no, left=700px, top=100px, resizable=no", params );
+                       "chrome, titlebar=no, left=" + popupPosition.left + ", top=" + popupPosition.top + ", resizable=no", params );
 };
-
-Wiz.ContentClipper.prototype.getToolbarPosition = function () {
-}
-
 
 
 
