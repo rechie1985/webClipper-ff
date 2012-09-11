@@ -16,7 +16,6 @@ Wiz.ClipManager.prototype.initialize = function() {
 Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType) {
 	//if not contextMenu clicked, show preview and the popup
 	var token = Wiz.context.token;
-	alert(token);
 	if (!contextMenuClipType || typeof token === 'undefined' || token === null) { 
 		//TODO 不应该是直接显示预览,openDialog和预览应该同时进行
 		this._clipper.openPopup();
@@ -35,7 +34,7 @@ Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType)
 	}
 };
 Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function() {
-	var docContent = this._clipper.collectAllFrames(this._tab),
+	var docContent = this._clipper.getFullpageHTML(this._tab),
 		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
 	this.postDocument(doc);
 };
@@ -47,8 +46,7 @@ Wiz.ClipManager.prototype.contenxtMenuClipSelection = function() {
 };
 
 Wiz.ClipManager.prototype.contenxtMenuClipUrl = function() {
-	var url = this._tab.location.href,
-		docContent = "<a href='" + url + "'>" + url + "</a>",
+	var docContent = this.getUrlBody(this._tab),
 		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
 	this.postDocument(doc);
 };
@@ -56,6 +54,12 @@ Wiz.ClipManager.prototype.contenxtMenuClipUrl = function() {
 Wiz.ClipManager.prototype.postDocument = function(doc) {
 	this._sender.postDocument(doc.getDocInfo());
 };
+
+Wiz.ClipManager.prototype.getUrlBody = function (tab) {
+	var url = this._tab.location.href,
+		docContent = "<a href='" + url + "'>" + url + "</a>";
+	return docContent;
+}
 
 
 Wiz.ClipManager.prototype.getClipper = function() {
@@ -77,4 +81,25 @@ Wiz.ClipManager.prototype.getSender = function() {
 		this._sender = new Wiz.ClipSender();
 	}
 	return this._sender;
+};
+
+Wiz.ClipManager.prototype.getClipDocumentBody = function (type) {
+	var body = null;
+	switch (type) {
+	case 'article':
+		body = this._clipper.collectAllFrames(this._tab);
+		break;
+	case 'selection':
+		body = this._clipper.getSelectedHTML(this._tab);
+		break;
+	case 'fullPage':
+		body = this._clipper.getFullpageHTML(this._tab);
+		break;
+	case 'url':
+		body = this.getUrlBody(this._tab);
+		break;
+	default : 
+		body = "";
+	return body;
+	}
 };

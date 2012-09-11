@@ -16,7 +16,7 @@ Wiz.FFPopup.prototype._tab = null;
 
 Wiz.FFPopup.prototype.initialize = function (params) {
 	this._tab = params.content;
-	this._clipManager = params.clipManager;
+	this._clipManager = new Wiz.ClipManager();
 	this._preview = new Wiz.ContentPreview(params.content);
 	this._remote = params.remote;
 	this._loginCtrl = new Wiz.LoginControl(this);
@@ -70,7 +70,6 @@ Wiz.FFPopup.prototype.showAndInitNotePage = function () {
 
 Wiz.FFPopup.prototype.closePopup = function () {
 	this._preview.clear();
-	this._preview = null;
 	this._tab = null;
 	this._remote = null;
 	this._loginCtrl = null;
@@ -95,7 +94,7 @@ Wiz.FFPopup.prototype.getTitle = function () {
 	if (this._tab) {
 		return this._tab.document.title;
 	}
-}
+};
 
 Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 	if (previewType) {
@@ -114,4 +113,15 @@ Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 			break;
 		}
 	}
+};
+
+Wiz.FFPopup.prototype.getDocBody = function (type) {
+	if (this._clipManager) {
+		return this._clipManager.getClipDocumentBody(type);
+	}
+	return "";
+}
+
+Wiz.FFPopup.prototype.postDocument = function (docInfo) {
+	this._remote.postDocument(docInfo, function(){alert('success');}, function(err){alert(err);});
 }

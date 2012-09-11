@@ -152,11 +152,16 @@ Wiz.NotePageControl.prototype.requestSubmit = function () {
 		title = $('#wiz_note_title').val(),
 		category = $('#category_info').attr('location'),
 		comment = $('#comment-info').val(),
+		selectedOption = $('option:selected', '#submit-type'),
+		cmd = selectedOption.attr('id'),
+		content = this._popup.getDocBody(cmd),
 		docInfo = {
 			title: title,
 			category: category,
-			comment: comment
+			comment: comment,
+			content: content
 		};
+	this._popup.postDocument(docInfo);
 };
 
 Wiz.NotePageControl.prototype.initUserLink = function (token) {

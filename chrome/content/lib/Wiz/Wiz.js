@@ -59,6 +59,11 @@ Wiz.getContext = function () {
     return this._context;
 }
 
+Wiz.setContext = function (context) {
+    this._context = context;
+}
+
+
 Wiz.setRemote = function (remote) {
 	this._remote = remote;
 };
