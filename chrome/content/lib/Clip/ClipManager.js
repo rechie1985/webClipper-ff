@@ -15,7 +15,8 @@ Wiz.ClipManager.prototype.initialize = function() {
 
 Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType) {
 	//if not contextMenu clicked, show preview and the popup
-	var token = Wiz.getToken();
+	var token = Wiz.context.token;
+	alert(token);
 	if (!contextMenuClipType || typeof token === 'undefined' || token === null) { 
 		//TODO 不应该是直接显示预览,openDialog和预览应该同时进行
 		this._clipper.openPopup();

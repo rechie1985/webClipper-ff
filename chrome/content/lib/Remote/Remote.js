@@ -1,7 +1,6 @@
 "use strict";
 Wiz.Remote = function () {
 	this.initialize();
-	this.__defineGetter__('token', this.getToken);
 };
 
 Wiz.Remote.prototype._data = null;
@@ -17,27 +16,20 @@ Wiz.Remote.prototype.initCommon = function () {
 	    'program_type' : 'normal'
 	};
 };
-
-Wiz.Remote.prototype.getToken = function () {
-	if (!this._data) {
-		return null;
-	}
-	return this._data.token;
-};
-
 Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, callSuccess, callError) {
 	this._data.user_id = username;
 	this._data.password = password;
 	var success = function(respJson) {
 		Wiz.saveAuthCookie(username + '*' + password ,rememberMe);	
 		this._data.token = respJson.token;
+		Wiz.context.token = respJson.token;
 		callSuccess(respJson);
 	}
 	xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [this._data], $.proxy(success, this), callError);
 };
 
 Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
-	if (this._data.token) {
+	if (Wiz.context.token ) {
 		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_KEEPALIVE, [this._data], callSuccess, callError);
 	} else {
 		//TODO need to autoLogin
@@ -45,20 +37,20 @@ Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
 };
 
 Wiz.Remote.prototype.getAllCategory = function (callSuccess, callError) {
-	if (this._data.token) {
+	if (Wiz.context.token ) {
 		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllCATEGORIES, [this._data], callSuccess, callError)
 	}
 };
 
 Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
-	if (this._data.token) {
+	if (Wiz.context.token ) {
 		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllTAGS, [this._data], callSuccess, callError)
 	}
 };
 
 Wiz.Remote.prototype.postDocument = function (docInfo, callSuccess, callError) {
-	alert(this._data.token);
-	if (this._data.token) {
+	alert(Wiz.context.token );
+	if (Wiz.context.token) {
 		// var regexp = /%20/g, 
 		// 	title = docInfo.title, 
 		// 	category = docInfo.category, 

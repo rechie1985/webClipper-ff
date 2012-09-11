@@ -17,8 +17,12 @@ if (typeof Wiz == "undefined") {
 }
 
 Wiz.init = function (tab) {
-	this._clipManager = new Wiz.ClipManager();
-	this._remote = new Wiz.Remote();
+    if (!this._clipManager) {
+	   this._clipManager = new Wiz.ClipManager();
+    }
+    if (!this._remote) {
+	   this._remote = new Wiz.Remote();
+    }
 };
 Wiz.getClipManager = function () {
 	if (!this._clipManager) {
@@ -47,6 +51,13 @@ Wiz.getRemote = function () {
 	}
 	return this._remote;
 };
+
+Wiz.getContext = function () {
+    if (!this._context) {
+        this._context = new Wiz.Context();
+    }
+    return this._context;
+}
 
 Wiz.setRemote = function (remote) {
 	this._remote = remote;
@@ -82,13 +93,6 @@ Wiz.getCookieManager = function () {
     return this._cookieManager;
 };
 
-Wiz.getToken = function () {
-    if (!this._remote) {
-        return null;
-    }
-    return this._remote.getToken();
-};
-
 Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructorDefs) {
 	if ( parentClassOrObject.constructor == Function ) {
         // Normal Inheritance
@@ -120,3 +124,4 @@ Wiz.__defineGetter__("clipManager", Wiz.getClipManager);
 Wiz.__defineGetter__("preview", Wiz.getPreview);
 Wiz.__defineGetter__("remote", Wiz.getRemote);
 Wiz.__defineGetter__("cookieManager", Wiz.getCookieManager);
+Wiz.__defineGetter__("context", Wiz.getContext)
