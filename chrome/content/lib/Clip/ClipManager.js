@@ -10,14 +10,12 @@ Wiz.ClipManager.prototype.initialize = function() {
 	this._clipper = new Wiz.ContentClipper();
 	this._notificator = new Wiz.ClipNotificator(this);
 	this._sender = new Wiz.ClipSender(this);
-	this._tab = content;
+	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
-
 Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType) {
 	//if not contextMenu clicked, show preview and the popup
 	var token = Wiz.context.token;
-	if (!contextMenuClipType || typeof token === 'undefined' || token === null) { 
-		//TODO 不应该是直接显示预览,openDialog和预览应该同时进行
+	if (!contextMenuClipType || typeof token === 'undefined' || token === null) {
 		this._clipper.openPopup();
 	} else {
 		switch (contextMenuClipType) {
@@ -55,7 +53,7 @@ Wiz.ClipManager.prototype.postDocument = function(doc) {
 	this._sender.postDocument(doc.getDocInfo());
 };
 
-Wiz.ClipManager.prototype.getUrlBody = function (tab) {
+Wiz.ClipManager.prototype.getUrlBody = function () {
 	var url = this._tab.location.href,
 		docContent = "<a href='" + url + "'>" + url + "</a>";
 	return docContent;
@@ -100,6 +98,6 @@ Wiz.ClipManager.prototype.getClipDocumentBody = function (type) {
 		break;
 	default : 
 		body = "";
-	return body;
 	}
+	return body;
 };

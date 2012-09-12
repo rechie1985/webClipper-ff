@@ -85,7 +85,10 @@ Wiz.ContentPreview = function(tab) {"use strict";
 	}
 
 	function previewArticle() {
-
+		if (pageInfo.getSelection()) {
+			previewSelection();
+			return ;
+		}
 		clear();
 		previewElement = null;
 
@@ -332,73 +335,6 @@ Wiz.ContentPreview = function(tab) {"use strict";
 			}
 		}
 		contentVeil.show();
-	}
-
-	// This handles incoming requests from other extension pages.
-	function messageHandler(request, sender, sendResponse) {
-		console.log("Msg Received: " + request.name + " " + request.op);
-		if (!request.name || !request.op || (request.name !== "preview")) {
-			return;
-			// Not an appropriate message.
-		}
-		switch (request.op) {
-			case "clear":
-				clear();
-				break;
-			case "article":
-				if (pageInfo.getSelection()) {
-					console.log("preview selection active");
-					previewSelection();
-				} else {
-					//if (request.args && request.args.showHelp) {
-					previewArticle(true);
-				}
-				break;
-			case "fullPage":
-				previewFullPage();
-				break;
-			case "selection":
-				previewSelection();
-				break;
-			case "url":
-				if (request.args) {
-					previewUrl(request.args.title, request.args.url, request.args.favIconUrl);
-				} else {
-					previewUrl();
-				}
-				break;
-			case "submit" :
-				noteSubmitByType(request.type, request.info);
-				break;
-			default:
-				console.warn("Received invalid Preview message with 'op=" + request.op + "'.");
-		}
-		sendResponse({});
-	}
-
-	function noteSubmitByType(type, info) {
-		switch(type) {
-			case "article" :
-				launchClientClipper(info);
-				clear();
-				break;
-			case "fullPage" :
-				launchClientClipperFullPage(info);
-				clear();
-				break;
-			case "selection" :
-				// if (previewElement) {
-					// launchClientClipper(info);
-					// break;
-				// }
-				launchClientClipperSelection(info);
-				clear();
-				break;
-			case "url" :
-				launchClientClipperUrl(info);
-				clear();
-				break;
-		}
 	}
 
 	function getClipInfo() {

@@ -18,10 +18,13 @@ if (typeof Wiz == "undefined") {
 
 Wiz.init = function (tab) {
     if (!this._clipManager) {
-	   this._clipManager = new Wiz.ClipManager();
+        this._clipManager = new Wiz.ClipManager();
     }
     if (!this._remote) {
-	   this._remote = new Wiz.Remote();
+        this._remote = new Wiz.Remote();
+    }
+    if (!this._cookieManager) {
+        this._cookieManager = new Wiz.CookieManager();
     }
 };
 Wiz.getClipManager = function () {
@@ -69,7 +72,7 @@ Wiz.setRemote = function (remote) {
 };
 
 Wiz.getAuthCookie = function () {
-    var cookies = Wiz.cookieManager.get(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+    var cookies = this.cookieManager.get(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
     if (cookies && cookies.length > 0) {
         return cookies[0];
     } 
@@ -77,18 +80,24 @@ Wiz.getAuthCookie = function () {
 };
 
 Wiz.saveAuthCookie = function (value, isRememberMe) {
-    if (!this._cookieManager) {
-        this._cookieManager = new Wiz.CookieManager();
-    }
     if(isRememberMe) {
-        this._cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
+        this.cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
     } else {
-        this._cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value);
+        this.cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value);
     }
 };
 
+Wiz.saveTokenCookie = function (token) {
+    Wiz.cookieManager.set(Wiz.SERVICE_URL, 'auth-token', token, Wiz.Default.TOKEN_EXPIRE_SEC);
+};
+
+Wiz.getTokenCookie = function () {
+    var cookie = Wiz.cookieManager.get(Wiz.SERVICE_URL, 'auth-token');  
+    return cookie;
+}
+
 Wiz.removeAuthCookie = function () {
-    Wiz.cookieManager.remove(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+    this.cookieManager.remove(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
 };
 
 Wiz.getCookieManager = function () {
@@ -129,4 +138,4 @@ Wiz.__defineGetter__("clipManager", Wiz.getClipManager);
 Wiz.__defineGetter__("preview", Wiz.getPreview);
 Wiz.__defineGetter__("remote", Wiz.getRemote);
 Wiz.__defineGetter__("cookieManager", Wiz.getCookieManager);
-Wiz.__defineGetter__("context", Wiz.getContext)
+Wiz.__defineGetter__("context", Wiz.getContext);

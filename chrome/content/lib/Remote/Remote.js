@@ -20,12 +20,11 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 	this._data.user_id = username;
 	this._data.password = password;
 	var success = function(respJson) {
-		Wiz.saveAuthCookie(username + '*' + password ,rememberMe);	
-		this._data.token = respJson.token;
-		Wiz.context.token = respJson.token;
+		Wiz.saveAuthCookie(username + '*' + password ,rememberMe);
+		Wiz.saveTokenCookie(respJson.token);
 		callSuccess(respJson);
 	}
-	xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [this._data], $.proxy(success, this), callError);
+	xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [this._data], success, callError);
 };
 
 Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
@@ -68,5 +67,20 @@ Wiz.Remote.prototype.postDocument = function (docInfo, callSuccess, callError) {
         simplePostDataParams.dt_modified = new Date();
         xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.DOCUMENT_POSTSIMPLE, [simplePostDataParams], callSuccess, callError);
 	}
+};
+
+/**
+ * 自动登陆处理
+ * @param  {[type]} cookie      [保存在cookie中的auth信息]
+ * @param  {[type]} callSuccess [description]
+ * @param  {[type]} callError   [description]
+ * @return {[type]}             [description]
+ */
+Wiz.Remote.prototype.autoLogin = function (cookie, callSuccess, callError) {
+	var info = cookie.value,
+		split_count = info.indexOf('*md5'),
+		user_id = info.substring(0, split_count),
+		password = info.substring(split_count + 1);
+	this.clientLogin(user_id, password, true, callSuccess, callError);
 };
 

@@ -201,7 +201,7 @@ Wiz.ContentClipper.prototype.openPopup = function () {
 	params.i18n = Wiz.i18n;
 	params.content = content;
 	params.clipManager = Wiz.clipManager;
-	params.clipManager = Wiz.remote;
+	params.remote = Wiz.remote;
 	window.openDialog( "chrome://webclipper/content/FFPopup.xul", "",
                        "chrome, titlebar=no, left=" + popupPosition.left + ", top=" + popupPosition.top + ", resizable=no", params );
 };
