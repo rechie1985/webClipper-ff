@@ -36,7 +36,7 @@ Wiz.CookieManager.prototype.createCookieObj = function (name, value, expires) {
 		'value' : value
 	};
 	if (expires) {
-		cookieObj.expires = expires;
+		cookieObj.expires = Wiz.Cookie.getExpiresDate(expires);
 	}
 	return new Wiz.Cookie(cookieObj);
 };

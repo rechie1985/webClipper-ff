@@ -77,7 +77,7 @@ Wiz.NotePageControl.prototype.initNotePageInfo = function(evt) {
 Wiz.NotePageControl.prototype.initLogoutLink = function () {
 	var logoutText = Wiz.i18n.getMessage('logout');
 	$('#header_user').show();
-	$('#logout_control').html(logoutText).bind('click', this.cmdLogout);
+	$('#logout_control').html(logoutText).bind('click', $.proxy(this.cmdLogout, this));
 };
 
 Wiz.NotePageControl.prototype.cmdLogout = function () {

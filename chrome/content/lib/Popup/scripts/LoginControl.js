@@ -40,7 +40,7 @@ Wiz.LoginControl.prototype.doLogin = function () {
 
 	var user_id = $('#user_id').val(),
 		password = 'md5.' + hex_md5($('#password').val()),
-		isRememberMe = $('#keep_passoword').val();
+		isRememberMe = $('#keep_passoword').attr('checked');
 	this.login(user_id, password, isRememberMe, $.proxy(this.onLoginSuccess, this), $.proxy(this.onLoginError, this));
 };
 

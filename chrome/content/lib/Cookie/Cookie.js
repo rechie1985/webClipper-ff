@@ -18,3 +18,8 @@ Wiz.Cookie.prototype.initialize = function (obj) {
 		}
 	}
 };
+Wiz.Cookie.getExpiresDate = function (expiresSec) {
+	var now = new Date();
+	now.setSeconds(now.getSeconds() + expiresSec);
+	return now;
+}

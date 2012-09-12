@@ -8,7 +8,7 @@ if (typeof Wiz == "undefined") {
         _cookieManager : null,
         _context : null
     };
-
+    Wiz.AUTH_COOKIE_URL = 'http://service.wiz.cn/web';
     Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";
     Wiz.XMLRPC_URL = Wiz.SERVICE_URL + "/xmlrpc";
     Wiz.POST_DOCUMENT_URL = Wiz.SERVICE_URL + "/a/web/post?";
@@ -72,7 +72,7 @@ Wiz.setRemote = function (remote) {
 };
 
 Wiz.getAuthCookie = function () {
-    var cookies = this.cookieManager.get(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+    var cookies = this.cookieManager.get(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME);
     if (cookies && cookies.length > 0) {
         return cookies[0];
     } 
@@ -81,18 +81,18 @@ Wiz.getAuthCookie = function () {
 
 Wiz.saveAuthCookie = function (value, isRememberMe) {
     if(isRememberMe) {
-        this.cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
+        this.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
     } else {
-        this.cookieManager.set(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME, value);
+        this.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME, value);
     }
 };
 
 Wiz.saveTokenCookie = function (token) {
-    Wiz.cookieManager.set(Wiz.SERVICE_URL, 'auth-token', token, Wiz.Default.TOKEN_EXPIRE_SEC);
+    Wiz.cookieManager.set(Wiz.AUTH_COOKIE_URL, 'auth-token', token, Wiz.Default.TOKEN_EXPIRE_SEC);
 };
 
 Wiz.getTokenCookie = function () {
-    var cookie = Wiz.cookieManager.get(Wiz.SERVICE_URL, 'auth-token');  
+    var cookie = Wiz.cookieManager.get(Wiz.AUTH_COOKIE_URL, 'auth-token');  
     if (cookie && cookie.length > 0) {
         return cookie[0];
     }
