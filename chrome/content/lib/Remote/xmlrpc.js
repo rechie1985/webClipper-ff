@@ -50,8 +50,9 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
 
                 var ret = null;
                 try {
-                    if (request.responseXML)
+                    if (request.responseXML) {
                         ret = xmlrpc.parseResponse(request.responseXML);
+                    }
                     else
                         throw request.responseText;
                 } catch (err) {

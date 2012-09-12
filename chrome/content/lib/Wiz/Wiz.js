@@ -97,10 +97,13 @@ Wiz.getTokenCookie = function () {
         return cookie[0];
     }
     return null;
-}
+};
+Wiz.removeTokenCookie = function () {
+    var cookie = Wiz.cookieManager.get(Wiz.AUTH_COOKIE_URL, 'auth-token');  
+};
 
 Wiz.removeAuthCookie = function () {
-    this.cookieManager.remove(Wiz.SERVICE_URL, Wiz.AUTHENTICATION_NAME);
+    this.cookieManager.remove(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME);
 };
 
 Wiz.getCookieManager = function () {

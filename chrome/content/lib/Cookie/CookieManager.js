@@ -25,11 +25,17 @@ Wiz.CookieManager.prototype.get = function (url, name) {
 
 Wiz.CookieManager.prototype.remove = function (url, name) {
 	if (this._impl) {
-		this._impl.remove(url);
+		this._impl.remove(url, name);
 	}
 	return true;
 };
 
+Wiz.CookieManager.prototype.removeAll = function () {
+	if (this._impl) {
+		this._impl.removeAll();
+	}
+	return true;
+};
 Wiz.CookieManager.prototype.createCookieObj = function (name, value, expires) {
 	var cookieObj = {
 		'name' : name,

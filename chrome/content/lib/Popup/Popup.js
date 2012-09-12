@@ -75,12 +75,11 @@ Wiz.FFPopup.prototype.closePopup = function () {
 	this._loginCtrl = null;
 	this._clipManager = null;
 	this._notePageCtrl = null;
-	Wiz.removeAuthCookie();
 	window.close();
 };
 
 Wiz.FFPopup.prototype.logout = function () {
-	Wiz.removeAuthCookie();
+	Wiz.cookieManager.removeAll();
 	this.closePopup();
 };
 
