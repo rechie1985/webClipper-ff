@@ -120,8 +120,13 @@ Wiz.FFPopup.prototype.getDocBody = function (type) {
 		return this._clipManager.getClipDocumentBody(type);
 	}
 	return "";
-}
+};
+
+Wiz.FFPopup.prototype.requestCategory = function (callSuccess, callError) {
+	this._remote.getAllCategory(callSuccess, callError);
+};
 
 Wiz.FFPopup.prototype.postDocument = function (docInfo) {
 	this._remote.postDocument(docInfo, function(){alert('success');}, function(err){alert(err);});
-}
+};
+

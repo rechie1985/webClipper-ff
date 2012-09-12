@@ -8,11 +8,9 @@ Wiz.Document = function () {
 //set default category
 Wiz.Document.prototype._category = Wiz.Default.DOC_CATEGORY;
 Wiz.Document.prototype._title = Wiz.Default.DOC_TITLE;
-Wiz.Document.prototype._guid = null;
 
 
 Wiz.Document.prototype.initialize = function () {
-	this._guid = Wiz.Document.genGuid();
 };
 
 //get document info , use to post document.
@@ -21,7 +19,6 @@ Wiz.Document.prototype.getDocInfo = function () {
 	docInfo.title = this._title;
 	docInfo.category = this._category;
 	docInfo.content = this._content;
-	docInfo.guid = this._guid;
 	return docInfo;
 };
 Wiz.Document.prototype.setDocTitle = function (docTitle) {
@@ -56,7 +53,7 @@ Wiz.Document.prototype.getDocCategory = function () {
 }
 Wiz.Document.createContextMenuDoc = function (tab, content) {
 	var doc = new Wiz.Document();
-	doc.title = tab.title;
+	doc.title = tab.document.title;
 	doc.content = content;
 	return doc;
 }

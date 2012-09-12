@@ -14,8 +14,8 @@ Wiz.ClipManager.prototype.initialize = function() {
 };
 Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType) {
 	//if not contextMenu clicked, show preview and the popup
-	var token = Wiz.context.token;
-	if (!contextMenuClipType || typeof token === 'undefined' || token === null) {
+	var cookie = Wiz.getTokenCookie();
+	if (!contextMenuClipType || !cookie || !cookie.value) {
 		this._clipper.openPopup();
 	} else {
 		switch (contextMenuClipType) {

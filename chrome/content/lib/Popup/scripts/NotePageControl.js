@@ -18,6 +18,7 @@ Wiz.NotePageControl.prototype.initNotePageListener = function () {
 	$('#submit-type').change($.proxy(this.changeSubmitTypehandler, this));
 	$('#note_submit').click($.proxy(this.noteSubmit, this));
 	$('#comment-info').focus($.proxy(this.resizeCommentHeight, this));
+	$('#category_info').click($.proxy(this.changeCategoryLoadingStatus, this));
 };
 
 Wiz.NotePageControl.prototype.resizeCommentHeight = function (evt) {
@@ -112,14 +113,14 @@ Wiz.NotePageControl.prototype.isCategoryLoading = function () {
 };
 Wiz.NotePageControl.prototype.parseWizCategory = function (categoryStr) {
 
-	initZtree();
+	this.initZtree(categoryStr);
 	var visible = this.isCategoryLoading();
 	if (visible) {
 		//用户已经点击展开文件夹树，此时，需要直接显示文件夹树即可
 		Wiz.PopupView.showCategoryTreeFromLoading(500);
 	}
 	$('#category_info').unbind('click');
-	$('#category_info').click(switchCategoryTreeVisible);
+	$('#category_info').click($.proxy(this.switchCategoryTreeVisible, this));
 };
 
 Wiz.NotePageControl.prototype.initZtree = function (categoryString) {
@@ -140,7 +141,12 @@ Wiz.NotePageControl.prototype.switchCategoryTreeVisible = function() {
 };
 
 Wiz.NotePageControl.prototype.requestCategory = function() {
-	$('#category_info').bind('click', this.changeCategoryLoadingStatus);
+	this._popup.requestCategory($.proxy(this.requestCategorySuccess, this));
+};
+
+//加载目录成功回调函数
+Wiz.NotePageControl.prototype.requestCategorySuccess = function (resp) {
+	this.parseWizCategory(resp.categories);
 };
 
 Wiz.NotePageControl.prototype.noteSubmit = function () {
