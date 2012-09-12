@@ -18,6 +18,9 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 	if (!contextMenuClipType || !cookie || !cookie.value) {
 		this._clipper.openPopup();
 	} else {
+		if (this._notificator) {
+			this._notificator.showNotification();
+		}
 		switch (contextMenuClipType) {
 		case "CLIP_ACTION_FULL_PAGE":
 			this.contenxtMenuClipFullpage();
@@ -82,6 +85,9 @@ Wiz.ClipManager.prototype.getSender = function () {
 };
 
 Wiz.ClipManager.prototype.getClipDocumentBody = function (type, preview) {
+	if (this._notificator) {
+		this._notificator.showNotification();
+	}
 	var body = null;
 	switch (type) {
 	case 'article':

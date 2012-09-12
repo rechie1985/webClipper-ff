@@ -151,6 +151,7 @@ Wiz.NotePageControl.prototype.requestCategorySuccess = function (resp) {
 
 Wiz.NotePageControl.prototype.noteSubmit = function () {
 	this.requestSubmit();
+	this._popup.closePopup();
 };
 
 Wiz.NotePageControl.prototype.requestSubmit = function () {
