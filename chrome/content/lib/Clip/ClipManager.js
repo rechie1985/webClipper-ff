@@ -6,13 +6,13 @@ Wiz.ClipManager = function() {
 	this.initialize();
 };
 
-Wiz.ClipManager.prototype.initialize = function() {
+Wiz.ClipManager.prototype.initialize = function () {
 	this._clipper = new Wiz.ContentClipper();
 	this._notificator = new Wiz.ClipNotificator(this);
 	this._sender = new Wiz.ClipSender(this);
 	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
-Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType) {
+Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType) {
 	//if not contextMenu clicked, show preview and the popup
 	var cookie = Wiz.getTokenCookie();
 	if (!contextMenuClipType || !cookie || !cookie.value) {
@@ -31,25 +31,25 @@ Wiz.ClipManager.prototype.startClip = function(rootElement, contextMenuClipType)
 		}
 	}
 };
-Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function() {
+Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
 	var docContent = this._clipper.getFullpageHTML(this._tab),
 		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
 	this.postDocument(doc);
 };
 
-Wiz.ClipManager.prototype.contenxtMenuClipSelection = function() {
+Wiz.ClipManager.prototype.contenxtMenuClipSelection = function () {
 	var docContent = this._clipper.getSelectedHTML(this._tab),
 		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
 	this.postDocument(doc);
 };
 
-Wiz.ClipManager.prototype.contenxtMenuClipUrl = function() {
+Wiz.ClipManager.prototype.contenxtMenuClipUrl = function () {
 	var docContent = this.getUrlBody(this._tab),
 		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
 	this.postDocument(doc);
 };
 
-Wiz.ClipManager.prototype.postDocument = function(doc) {
+Wiz.ClipManager.prototype.postDocument = function (doc) {
 	this._sender.postDocument(doc.getDocInfo());
 };
 
@@ -57,24 +57,24 @@ Wiz.ClipManager.prototype.getUrlBody = function () {
 	var url = this._tab.location.href,
 		docContent = "<a href='" + url + "'>" + url + "</a>";
 	return docContent;
-}
+};
 
 
-Wiz.ClipManager.prototype.getClipper = function() {
+Wiz.ClipManager.prototype.getClipper = function () {
 	if (!this._clipper) {
 		this._clipper = new Wiz.ContentClipper();
 	}
 	return this._clipper;
 };
 
-Wiz.ClipManager.prototype.getNotificator = function() {
+Wiz.ClipManager.prototype.getNotificator = function () {
 	if (!this._notificator) {
 		this._notificator = new Wiz.ClipNotificator();
 	}
 	return this._notificator;
 };
 
-Wiz.ClipManager.prototype.getSender = function() {
+Wiz.ClipManager.prototype.getSender = function () {
 	if (!this._sender) {
 		this._sender = new Wiz.ClipSender();
 	}
