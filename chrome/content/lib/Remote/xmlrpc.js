@@ -37,6 +37,7 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
     var request = window.XMLHttpRequest ? new XMLHttpRequest()
         : new ActiveXObject("MSXML2.XMLHTTP.3.0");
     request.open("POST", server, true);
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.onreadystatechange = function() {
         if (request.readyState != 4)
             return; // TODO: callbacks?

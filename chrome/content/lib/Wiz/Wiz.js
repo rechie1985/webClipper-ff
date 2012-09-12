@@ -93,7 +93,10 @@ Wiz.saveTokenCookie = function (token) {
 
 Wiz.getTokenCookie = function () {
     var cookie = Wiz.cookieManager.get(Wiz.SERVICE_URL, 'auth-token');  
-    return cookie;
+    if (cookie && cookie.length > 0) {
+        return cookie[0];
+    }
+    return null;
 }
 
 Wiz.removeAuthCookie = function () {

@@ -13,7 +13,7 @@ Wiz.ContentClipper.prototype.getSelectedHTML = function(win) {
 		var range = selection.getRangeAt(0);
 		var html = range.commonAncestorContainer.ownerDocument.createElement("div");
 		html.appendChild(range.cloneContents());
-		return doc.querySelector("html").innerHTML;
+		return html.innerHTML;
 	} else {
 		return "";
 	}
