@@ -12,6 +12,7 @@ Wiz.LoginControl.prototype._remote = null;
 Wiz.LoginControl.prototype.initialize = function () {
 	this._remote = this._popup.remote;
 	this.bindForm();
+	this.initCreateAccountLink();
 };
 
 Wiz.LoginControl.prototype.bindForm = function () {
@@ -78,8 +79,12 @@ Wiz.LoginControl.prototype.checkPassword = function () {
 	}
 	return true;
 };
+
 Wiz.LoginControl.prototype.initCreateAccountLink = function () {
-	$('#create_acount').html(Wiz.i18n.getMessage('create_account_link')).bind('click', function(evt) {
+	var createAccount = $('#create_acount');
+	createAccount.html(Wiz.i18n.getMessage('create_account_link'));
+	createAccount.show();
+	createAccount.bind('click', function (evt) {
 		window.open('http://service.wiz.cn/wizkm/a/signup');
 	});
 };
@@ -89,5 +94,5 @@ Wiz.LoginControl.prototype.onLoginSuccess = function (respJson) {
 };
 
 Wiz.LoginControl.prototype.onLoginError = function (err) {
-	alert(err);
+	Wiz.PopupView.showLoginError(err);
 };

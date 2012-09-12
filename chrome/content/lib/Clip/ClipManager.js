@@ -81,11 +81,11 @@ Wiz.ClipManager.prototype.getSender = function() {
 	return this._sender;
 };
 
-Wiz.ClipManager.prototype.getClipDocumentBody = function (type) {
+Wiz.ClipManager.prototype.getClipDocumentBody = function (type, preview) {
 	var body = null;
 	switch (type) {
 	case 'article':
-		body = this._clipper.collectAllFrames(this._tab);
+		body = this._clipper.getSelected(this._tab, preview);
 		break;
 	case 'selection':
 		body = this._clipper.getSelectedHTML(this._tab);

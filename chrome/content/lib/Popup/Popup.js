@@ -116,8 +116,8 @@ Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 };
 
 Wiz.FFPopup.prototype.getDocBody = function (type) {
-	if (this._clipManager) {
-		return this._clipManager.getClipDocumentBody(type);
+	if (this._clipManager && this._preview) {
+		return this._clipManager.getClipDocumentBody(type, this._preview);
 	}
 	return "";
 };

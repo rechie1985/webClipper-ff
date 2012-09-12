@@ -42,8 +42,8 @@ Wiz.PopupView = {
 	showLogin : function ()
 	{
 		$("#waiting").hide();
-		$("#wiz_login").show();
 		$("#wiz_clip_detail").hide();
+		$("#wiz_login").show();
 	},
 	showNotePage : function ()
 	{

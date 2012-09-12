@@ -3,6 +3,7 @@ Wiz.ContentClipper = function() {
 	this.initialize();
 };
 
+
 Wiz.ContentClipper.prototype.initialize = function() {
 };
 
@@ -194,6 +195,35 @@ Wiz.ContentClipper.prototype.collectAllFrames = function(win) {//
 	}
 	return params;
 };
+
+Wiz.ContentClipper.prototype.getSelected = function (win, preview) {
+	this.collectAllFrames(win);
+	var params = "";
+	if ( typeof (win) == "object") {
+		var source_url = this.base64Encode(win.location.href);
+		var source_html = "";
+		var frame_url = source_url;
+		//var winsel = win.getSelection();
+		var winsel = preview.getArticleElement();
+		if (winsel == null || winsel.toString() == "") {
+			var activeFrame = this.getActiveFrame(win);
+			if (activeFrame != null) {
+				winsel = activeFrame.getSelection();
+				frame_url = this.base64Encode(activeFrame.location.href);
+			}
+		}
+		if (winsel == null || winsel == "") {
+			params = "";
+			return params;
+		} else {
+			var source_html = winsel.innerHTML;
+			if (source_html == null)
+				source_html = "";
+			params = source_html;
+		}
+	}
+	return params;
+}
 
 Wiz.ContentClipper.prototype.openPopup = function () {
 	var popupPosition = new Wiz.PopupPositioner("webclipper-toolbar-button", 500, 300).getPosition(),
