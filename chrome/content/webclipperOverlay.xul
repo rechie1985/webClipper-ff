@@ -9,9 +9,10 @@
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/WizContext.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/I18N.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Constant.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/PrefStorage/PrefStorage.js"></script>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/PopupPosition.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ScriptLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/LoggerLoader.js"/>
+  <script type="text/javascript" src="chrome://webclipper/content/lib/PrefStorage/PrefStorage.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/ModalLoader.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/CookieLoader.js"/>
   <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/UtilLoader.js"/>

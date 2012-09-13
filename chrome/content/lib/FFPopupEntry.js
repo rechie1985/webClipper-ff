@@ -3,6 +3,7 @@ function wiz_initFFPopup() {
 	var params = window.overlay.arguments[0];
 	var FFpopup = new Wiz.FFPopup(params);
 	Wiz.i18n = params.i18n;
+    Wiz.logger.error('123123');
 	window.focus();
 
 	$(window).blur(function () {

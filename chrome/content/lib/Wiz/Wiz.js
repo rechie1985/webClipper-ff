@@ -8,7 +8,8 @@ if (typeof Wiz == "undefined") {
         _cookieManager : null,
         _context : null,
         _notificator : null,
-        _preferenceStorage : null
+        _preferenceStorage : null,
+        _loggerManager : null
     };
     Wiz.AUTH_COOKIE_URL = 'http://service.wiz.cn/web';
     Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";
@@ -127,6 +128,13 @@ Wiz.getNotificator = function () {
     return this._notificator;
 };
 
+Wiz.getLoggerManager = function () {
+    if (!this._loggerManager) {
+        this._loggerManager = new Wiz.LoggerManager();
+    }
+    return this._loggerManager;
+};
+
 Wiz.inherit = function (childConstructor, parentClassOrObject, includeConstructorDefs) {
 	if ( parentClassOrObject.constructor == Function ) {
         // Normal Inheritance
@@ -161,3 +169,4 @@ Wiz.__defineGetter__("cookieManager", Wiz.getCookieManager);
 Wiz.__defineGetter__("context", Wiz.getContext);
 Wiz.__defineGetter__("notificator", Wiz.getNotificator);
 Wiz.__defineGetter__("prefStorage", Wiz.getPrefereceStorage);
+Wiz.__defineGetter__("logger", Wiz.getLoggerManager);
