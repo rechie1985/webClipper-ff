@@ -168,6 +168,8 @@ Wiz.NotePageControl.prototype.requestSubmit = function () {
 			comment: comment,
 			content: content
 		};
+
+	Wiz.notificator.showClipping(title);
 	this._popup.postDocument(docInfo);
 };
 

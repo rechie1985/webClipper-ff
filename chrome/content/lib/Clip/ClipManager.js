@@ -1,14 +1,13 @@
 "use strict";
 Wiz.ClipManager = function() {
 	this.__defineGetter__("sender", this.getSender);
-	this.__defineGetter__("notificator", this.getNotificator);
 	this.__defineGetter__("clipper", this.getClipper);
+	this.__defineGetter__("tab", this.getClipper);
 	this.initialize();
 };
 
 Wiz.ClipManager.prototype.initialize = function () {
 	this._clipper = new Wiz.ContentClipper();
-	this._notificator = new Wiz.ClipNotificator(this);
 	this._sender = new Wiz.ClipSender(this);
 	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
@@ -18,9 +17,6 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 	if (!contextMenuClipType || !cookie || !cookie.value) {
 		this._clipper.openPopup();
 	} else {
-		if (this._notificator) {
-			this._notificator.showNotification();
-		}
 		switch (contextMenuClipType) {
 		case "CLIP_ACTION_FULL_PAGE":
 			this.contenxtMenuClipFullpage();
@@ -69,14 +65,9 @@ Wiz.ClipManager.prototype.getClipper = function () {
 	}
 	return this._clipper;
 };
-
-Wiz.ClipManager.prototype.getNotificator = function () {
-	if (!this._notificator) {
-		this._notificator = new Wiz.ClipNotificator();
-	}
-	return this._notificator;
+Wiz.ClipManager.prototype.getTab = function () {
+	return this._tab;
 };
-
 Wiz.ClipManager.prototype.getSender = function () {
 	if (!this._sender) {
 		this._sender = new Wiz.ClipSender();
@@ -85,9 +76,6 @@ Wiz.ClipManager.prototype.getSender = function () {
 };
 
 Wiz.ClipManager.prototype.getClipDocumentBody = function (type, preview) {
-	if (this._notificator) {
-		this._notificator.showNotification();
-	}
 	var body = null;
 	switch (type) {
 	case 'article':

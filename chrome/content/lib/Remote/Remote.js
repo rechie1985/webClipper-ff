@@ -77,10 +77,15 @@ Wiz.Remote.prototype.postDocument = function (docInfo, callSuccess, callError) {
 		if (!category) {
 			category = '/My Notes/';
 		}
+
+		var error = function (err) {
+			alert(typeof err);
+			callError(err);
+		}
 		
 		var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(token).replace(regexp,  '+') 
 							+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
-		ajax(Wiz.POST_DOCUMENT_URL, requestData, callSuccess, callError);				
+		ajax(Wiz.POST_DOCUMENT_URL, requestData, callSuccess, error);				
 		// var comment = docInfo.comment, 
 		// 	body = docInfo.content;
 		// if (comment && comment.trim() != '') {

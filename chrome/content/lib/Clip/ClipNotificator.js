@@ -4,6 +4,7 @@ Wiz.ClipNotificator = function(clipManager) {
 	this._clipManager = clipManager;
 	this.__defineGetter__('alertsService', this.getAlertService);
 };
+
 Wiz.ClipNotificator.prototype._alertsService = null;
 Wiz.ClipNotificator.prototype._clipManager = null;
 
@@ -12,13 +13,29 @@ Wiz.ClipNotificator.prototype.initialize = function () {
 		this._alertsService = this.getAlertService();
 	}
 };
-Wiz.ClipNotificator.prototype.showNotification = function () {
+
+Wiz.ClipNotificator.prototype.showNotification = function (notifiImage, notifiTitle, notifiMsg) {
 	if (this._alertsService) {
-		this._alertsService.showAlertNotification(null, 'title', 'notification content');
+		this._alertsService.showAlertNotification(notifiImage, notifiTitle, notifiMsg);
 	}
 };
-Wiz.ClipNotificator.prototype.getWaitContainer = function () {
 
+Wiz.ClipNotificator.prototype.showClipping = function (docTitle) {
+	var clippingImageUrl = 'chrome://webclipper/skin/images/scissors.png',
+		clippingTitle = Wiz.i18n.getMessage('clipResult_clipping');
+	this.showNotification(clippingImageUrl, clippingTitle, docTitle);
+};
+
+Wiz.ClipNotificator.prototype.showError = function (errorMsg) {
+	var errorImageUrl = 'chrome://webclipper/skin/images/warning.png',
+		errorTitle = Wiz.i18n.getMessage('clipResult_error');
+	this.showNotification(errorImageUrl, errorTitle, errorMsg);
+};
+
+Wiz.ClipNotificator.prototype.showClipSuccess = function (docTitle) {
+	var clippingImageUrl = 'chrome://webclipper/skin/images/check.png',
+		clippingTitle = Wiz.i18n.getMessage('clipResult_success');
+	this.showNotification(clippingImageUrl, clippingTitle, docTitle);
 };
 
 Wiz.ClipNotificator.prototype.getAlertService = function () {
