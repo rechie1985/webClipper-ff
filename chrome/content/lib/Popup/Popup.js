@@ -127,12 +127,6 @@ Wiz.FFPopup.prototype.requestCategory = function (callSuccess, callError) {
 };
 
 Wiz.FFPopup.prototype.postDocument = function (docInfo) {
-	var success = function () {
-		Wiz.notificator.showClipSuccess(docInfo.title);
-	}
-	var error = function (err) {
-		Wiz.notificator.showError(err);
-	}
-	this._remote.postDocument(docInfo, success, error);
+	this._remote.postDocument(docInfo);
 };
 

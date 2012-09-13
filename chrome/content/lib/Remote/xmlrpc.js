@@ -53,8 +53,9 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
                     if (request.responseXML) {
                         ret = xmlrpc.parseResponse(request.responseXML);
                     }
-                    else
+                    else{
                         throw request.responseText;
+                    }
                 } catch (err) {
                     err.message = "xmlrpc: " + err.message;
                     callErr(err);

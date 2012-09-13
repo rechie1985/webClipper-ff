@@ -61,7 +61,7 @@ Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
 	}
 };
 
-Wiz.Remote.prototype.postDocument = function (docInfo, callSuccess, callError) {
+Wiz.Remote.prototype.postDocument = function (docInfo) {
 	var token = this.getToken();
 	if (token !== null) {
 		var regexp = /%20/g, 
@@ -79,26 +79,20 @@ Wiz.Remote.prototype.postDocument = function (docInfo, callSuccess, callError) {
 		}
 
 		var error = function (err) {
-			alert(typeof err);
-			callError(err);
+			try {
+				var respJson = JSON.parse(err);
+				Wiz.notificator.showClipSuccess(docInfo.title);
+			} catch (err) {
+				Wiz.notificator.showError(err);
+			}
+		}
+		var success = function () {
+			Wiz.notificator.showClipSuccess(docInfo.title);
 		}
 		
 		var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(token).replace(regexp,  '+') 
 							+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
-		ajax(Wiz.POST_DOCUMENT_URL, requestData, callSuccess, error);				
-		// var comment = docInfo.comment, 
-		// 	body = docInfo.content;
-		// if (comment && comment.trim() != '') {
-		// 	body = comment + '<hr>' + body;
-		// }
-		// var simplePostDataParams = this.getPostObj;
-  //       simplePostDataParams.document_guid = docInfo.guid;
-  //       simplePostDataParams.document_title = docInfo.title;
-  //       simplePostDataParams.document_body = body;
-  //       simplePostDataParams.document_category = docInfo.category;
-  //       simplePostDataParams.document_data = "";
-  //       simplePostDataParams.dt_modified = new Date();
-  //       xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.DOCUMENT_POSTSIMPLE, [simplePostDataParams], callSuccess, callError);
+		ajax(Wiz.POST_DOCUMENT_URL, requestData, success, error);				
 	}
 };
 
