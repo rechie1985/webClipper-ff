@@ -1,3 +1,7 @@
+/**
+ * 用来存放简单的配置，如：当前用户、用户当前选项的内容(暂未添加)
+ */
+'use strict';
 Wiz.PrefStorage = function () {
 	this.__defineGetter__('prefService', this.getPrefService);
 	this.initialize();
@@ -10,26 +14,60 @@ Wiz.PrefStorage.prototype.initialize = function () {
 
 Wiz.PrefStorage.prototype.getPrefService = function () {
 	var prefs = Components.classes["@mozilla.org/preferences-service;1"]
-                    .getService(Components.interfaces.nsIPrefService).getBranch("extensions.wiz.webclipper.");
+                    .getService(Components.interfaces.nsIPrefService).getBranch("extensions.wiz.");
     return prefs;
 };
 
-Wiz.PrefStorage.prototype.getPref = function (name, type) {
-};
-
-Wiz.PrefStorage.prototype.setPref = function (name, value, type) {
+Wiz.PrefStorage.prototype.get = function (name, type) {
+	var value = null;
 	if (type) {
-
-		switch (type) {
-		case 'char':
-			this._prefSrv.setCharPref(name, value);
-			break;
-		case 'boolean':
-			this._prefSrv.setBoolPref(name, value);
-			break;
-		case 'int':
-			this._prefSrv.setIntPref(name, value);
-			break;
+		try{
+			switch (type) {
+			case 'char':
+				value = this._prefSrv.getCharPref(name);
+				break;
+			case 'boolean':
+				value = this._prefSrv.getBoolPref(name);
+				break;
+			case 'int':
+				value = this._prefSrv.getIntPref(name);
+				break;
+			}
+		} catch (err) {
+			//TODO log
 		}
 	}
+	return value;
+};
+
+Wiz.PrefStorage.prototype.set = function (name, value, type) {
+	if (type) {
+		try{
+			switch (type) {
+			case 'char':
+				this._prefSrv.setCharPref(name, value);
+				break;
+			case 'boolean':
+				this._prefSrv.setBoolPref(name, value);
+				break;
+			case 'int':
+				this._prefSrv.setIntPref(name, value);
+				break;
+			}
+		} catch (err) {
+			//TODO log
+		}
+	}
+};
+
+Wiz.PrefStorage.prototype.remove = function (name) {
+	try{
+		this._prefSrv.clearUserPref(name);
+	} catch (err) {
+		//TODO log
+	}
+};
+
+Wiz.PrefStorage.prototype.removeAll = function () {
+
 };

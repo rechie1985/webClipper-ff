@@ -7,7 +7,8 @@ if (typeof Wiz == "undefined") {
 		_remote : null,
         _cookieManager : null,
         _context : null,
-        _notificator : null
+        _notificator : null,
+        _preferenceStorage : null
     };
     Wiz.AUTH_COOKIE_URL = 'http://service.wiz.cn/web';
     Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";
@@ -61,12 +62,18 @@ Wiz.getContext = function () {
         this._context = new Wiz.Context();
     }
     return this._context;
-}
+};
 
 Wiz.setContext = function (context) {
     this._context = context;
-}
+};
 
+Wiz.getPrefereceStorage = function () {
+    if (!this._preferenceStorage) {
+        this._preferenceStorage = new Wiz.PrefStorage();
+    }
+    return this._preferenceStorage;
+};
 
 Wiz.setRemote = function (remote) {
 	this._remote = remote;
@@ -153,3 +160,4 @@ Wiz.__defineGetter__("remote", Wiz.getRemote);
 Wiz.__defineGetter__("cookieManager", Wiz.getCookieManager);
 Wiz.__defineGetter__("context", Wiz.getContext);
 Wiz.__defineGetter__("notificator", Wiz.getNotificator);
+Wiz.__defineGetter__("prefStorage", Wiz.getPrefereceStorage);

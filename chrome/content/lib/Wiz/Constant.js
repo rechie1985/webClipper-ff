@@ -13,3 +13,6 @@ Wiz.Api = {
 	GET_ALLTAGS : "tag.getList",
 	DOCUMENT_POSTSIMPLE : "document.postSimpleData"
 };
+Wiz.Pref = {
+	NOW_USER : "now_user"
+};

@@ -68,6 +68,7 @@ Wiz.NotePageControl.prototype.initNotePageInfo = function(evt) {
 	this.initLogoutLink();
 	this.initDefaultCategory();
 	this.initSubmitGroup();
+	this.initUserLink();
 
 	this.requestTitle();
 	this.requestCategory();
@@ -173,8 +174,12 @@ Wiz.NotePageControl.prototype.requestSubmit = function () {
 	this._popup.postDocument(docInfo);
 };
 
-Wiz.NotePageControl.prototype.initUserLink = function (token) {
-	// $('#header_username').html('(' + user_id + ')').bind('click', function (evt) {
-	// 	window.open(mainUrl + '/?t=' + token);
-	// });
+Wiz.NotePageControl.prototype.initUserLink = function () {
+	var nowUserName = Wiz.prefStorage.get(Wiz.Pref.NOW_USER, 'char'),
+		token = Wiz.getTokenCookie().value;
+	if (nowUserName && nowUserName.length > 0) {
+		$('#header_username').html('(' + nowUserName + ')').bind('click', function (evt) {
+			window.open(Wiz.AUTH_COOKIE_URL + '/?t=' + token);
+		});
+	}
 };

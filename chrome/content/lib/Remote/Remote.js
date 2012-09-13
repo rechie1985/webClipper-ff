@@ -27,6 +27,8 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 	var success = function(respJson) {
 		Wiz.saveAuthCookie(username + '*' + password ,rememberMe);
 		Wiz.saveTokenCookie(respJson.token);
+		//每次登陆成功后，重新写入now_user,方便以后显示或查看
+		Wiz.prefStorage.set(Wiz.Pref.NOW_USER, username, 'char');
 		callSuccess(respJson);
 	}
 	xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [postParams], success, callError);
@@ -89,7 +91,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 		var success = function () {
 			Wiz.notificator.showClipSuccess(docInfo.title);
 		}
-		
+
 		var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(token).replace(regexp,  '+') 
 							+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
 		ajax(Wiz.POST_DOCUMENT_URL, requestData, success, error);				
