@@ -3,7 +3,7 @@
  */
 // 'use strict';
 Wiz.FileLoggerImpl = function () {
-	this.initialize();
+	// this.initialize();
 };
 
 Wiz.inherit(Wiz.FileLoggerImpl, Wiz.LoggerImpl, true);

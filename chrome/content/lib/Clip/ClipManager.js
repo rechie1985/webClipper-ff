@@ -31,20 +31,32 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 	}
 };
 Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
-	var docContent = this._clipper.getFullpageHTML(this._tab),
-		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	try {
+		var docContent = this._clipper.getFullpageHTML(this._tab),
+			doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	} catch (err) {
+		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipFullpage() Error : ' + err);
+	}
 	this.postDocument(doc);
 };
 
 Wiz.ClipManager.prototype.contenxtMenuClipSelection = function () {
-	var docContent = this._clipper.getSelectedHTML(this._tab),
-		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	try {
+		var docContent = this._clipper.getSelectedHTML(this._tab),
+			doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);		
+	} catch (err) {
+		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipSelection() Error : ' + err);
+	}
 	this.postDocument(doc);
 };
 
 Wiz.ClipManager.prototype.contenxtMenuClipUrl = function () {
-	var docContent = this.getUrlBody(this._tab),
-		doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	try {
+		var docContent = this.getUrlBody(this._tab),
+			doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+	} catch (err) {
+		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipUrl() Error : ' + err);
+	}
 	this.postDocument(doc);
 };
 
@@ -60,26 +72,34 @@ Wiz.ClipManager.prototype.getUrlBody = function () {
 
 
 Wiz.ClipManager.prototype.getClipper = function () {
-	if (!this._clipper) {
-		this._clipper = new Wiz.ContentClipper();
+	try {
+		if (!this._clipper) {
+			this._clipper = new Wiz.ContentClipper();
+		}
+		return this._clipper;
+	} catch (err) {
+		Wiz.logger.error('Wiz.ClipManager.getClipper() Error : ' + err);
 	}
-	return this._clipper;
 };
 Wiz.ClipManager.prototype.getTab = function () {
 	return this._tab;
 };
 Wiz.ClipManager.prototype.getSender = function () {
-	if (!this._sender) {
-		this._sender = new Wiz.ClipSender();
+	try {
+		if (!this._sender) {
+			this._sender = new Wiz.ClipSender();
+		}
+		return this._sender;
+	} catch (err) {
+		Wiz.logger.error('Wiz.ClipManager.getSender() Error : ' + err);
 	}
-	return this._sender;
 };
 
 Wiz.ClipManager.prototype.getClipDocumentBody = function (type, preview) {
 	var body = null;
 	switch (type) {
 	case 'article':
-		body = this._clipper.getSelected(this._tab, preview);
+		body = this._clipper.getArticleHTML(this._tab, preview);
 		break;
 	case 'selection':
 		body = this._clipper.getSelectedHTML(this._tab);

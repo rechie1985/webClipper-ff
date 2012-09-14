@@ -24,7 +24,7 @@ $(document).ready( function() {
             wiz_initFFPopup();
         }
         else if ( initStartTime + initTimeout < new Date().getTime() ) {
-            alert( "FFPopup initialization timeout exceeding" );
+            Wiz.logger.error( "FFPopup initialization timeout exceeding" );
 
             clearInterval( initProc );
             initProc = null;

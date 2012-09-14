@@ -178,16 +178,6 @@ function PageInfo(tab) {"use strict";
 		return article;
 	}
 
-	function messageHandler(request, sender, sendResponse) {
-		var handlers = {
-			"getInfo" : getInfoRequestHandler,
-			"content_ready" : readyRequestHandler
-		}
-
-		if (request.name && handlers[request.name]) {
-			handlers[request.name](request, sender, sendResponse);
-		}
-	}
 
 	// Looks for selections in the current document and descendent (i)frames.
 	// Returns the *first* non-empty selection.

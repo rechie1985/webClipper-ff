@@ -13,9 +13,12 @@ Wiz.PrefStorage.prototype.initialize = function () {
 }
 
 Wiz.PrefStorage.prototype.getPrefService = function () {
-	var prefs = Components.classes["@mozilla.org/preferences-service;1"]
-                    .getService(Components.interfaces.nsIPrefService).getBranch("extensions.wiz.");
-    return prefs;
+	try {
+		var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.wiz.");
+	    return prefs;
+	} catch (err) {
+		Wiz.logger.error('Wiz.PrefStorage.getPrefService() Error : ' + err);
+	}
 };
 
 Wiz.PrefStorage.prototype.get = function (name, type) {
@@ -34,7 +37,7 @@ Wiz.PrefStorage.prototype.get = function (name, type) {
 				break;
 			}
 		} catch (err) {
-			//TODO log
+			Wiz.logger.error('Wiz.PrefStorage.get() Error : ' + err);
 		}
 	}
 	return value;
@@ -55,7 +58,7 @@ Wiz.PrefStorage.prototype.set = function (name, value, type) {
 				break;
 			}
 		} catch (err) {
-			//TODO log
+			Wiz.logger.error('Wiz.PrefStorage.set() Error : ' + err);
 		}
 	}
 };
@@ -64,7 +67,7 @@ Wiz.PrefStorage.prototype.remove = function (name) {
 	try{
 		this._prefSrv.clearUserPref(name);
 	} catch (err) {
-		//TODO log
+		Wiz.logger.error('Wiz.PrefStorage.remove() Error : ' + err);
 	}
 };
 

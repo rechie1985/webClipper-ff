@@ -8,26 +8,34 @@ Wiz.ContentClipper.prototype.initialize = function() {
 };
 
 Wiz.ContentClipper.prototype.getSelectedHTML = function(win) {
-	var doc = win.document;
-	var selection = doc.getSelection();
-	if (selection.rangeCount > 0) {
-		var range = selection.getRangeAt(0);
-		var html = range.commonAncestorContainer.ownerDocument.createElement("div");
-		html.appendChild(range.cloneContents());
-		return html.innerHTML;
-	} else {
-		return "";
+	try {
+		var doc = win.document;
+		var selection = doc.getSelection();
+		if (selection.rangeCount > 0) {
+			var range = selection.getRangeAt(0);
+			var html = range.commonAncestorContainer.ownerDocument.createElement("div");
+			html.appendChild(range.cloneContents());
+			return html.innerHTML;
+		} else {
+			return "";
+		}
+	} catch (err) {
+		Wiz.logger.error('Wiz.ContentClipper.getSelectedHTML() Error : ' + err);
 	}
 };
 
 Wiz.ContentClipper.prototype.getFullpageHTML = function(win) {
-	var doc = win.document;
-	var base = "<base href='" + win.location.protocol + "//" + win.location.host + "'/>";
-	var page_content = doc.getElementsByTagName("html")[0].innerHTML;
-	//TODO去除script标签
-	var index = page_content.indexOf("<head>");
-	var fullpage = page_content.substring(0, index + 6) + base + page_content.substring(index + 6);
-	return fullpage;
+	try {
+		var doc = win.document;
+		var base = "<base href='" + win.location.protocol + "//" + win.location.host + "'/>";
+		var page_content = doc.getElementsByTagName("html")[0].innerHTML;
+		//TODO去除script标签
+		var index = page_content.indexOf("<head>");
+		var fullpage = page_content.substring(0, index + 6) + base + page_content.substring(index + 6);
+		return fullpage;	
+	} catch (err) {
+		Wiz.logger.error('Wiz.ContentClipper.getFullpageHTML() Error : ' + err);
+	}
 };
 
 Wiz.ContentClipper.prototype.base64Encode = function (str) {
@@ -196,33 +204,37 @@ Wiz.ContentClipper.prototype.collectAllFrames = function(win) {//
 	return params;
 };
 
-Wiz.ContentClipper.prototype.getSelected = function (win, preview) {
-	this.collectAllFrames(win);
-	var params = "";
-	if ( typeof (win) == "object") {
-		var source_url = this.base64Encode(win.location.href);
-		var source_html = "";
-		var frame_url = source_url;
-		//var winsel = win.getSelection();
-		var winsel = preview.getArticleElement();
-		if (winsel == null || winsel.toString() == "") {
-			var activeFrame = this.getActiveFrame(win);
-			if (activeFrame != null) {
-				winsel = activeFrame.getSelection();
-				frame_url = this.base64Encode(activeFrame.location.href);
+Wiz.ContentClipper.prototype.getArticleHTML = function (win, preview) {
+	try {
+		this.collectAllFrames(win);
+		var params = "";
+		if ( typeof (win) == "object") {
+			var source_url = this.base64Encode(win.location.href);
+			var source_html = "";
+			var frame_url = source_url;
+			//var winsel = win.getSelection();
+			var winsel = preview.getArticleElement();
+			if (winsel == null || winsel.toString() == "") {
+				var activeFrame = this.getActiveFrame(win);
+				if (activeFrame != null) {
+					winsel = activeFrame.getSelection();
+					frame_url = this.base64Encode(activeFrame.location.href);
+				}
+			}
+			if (winsel == null || winsel == "") {
+				params = "";
+				return params;
+			} else {
+				var source_html = winsel.innerHTML;
+				if (source_html == null)
+					source_html = "";
+				params = source_html;
 			}
 		}
-		if (winsel == null || winsel == "") {
-			params = "";
-			return params;
-		} else {
-			var source_html = winsel.innerHTML;
-			if (source_html == null)
-				source_html = "";
-			params = source_html;
-		}
+		return params;
+	} catch (err) {
+		Wiz.logger.error('Wiz.ContentClipper.getArticleHTML() Error : ' + err);
 	}
-	return params;
 }
 
 Wiz.ContentClipper.prototype.openPopup = function () {

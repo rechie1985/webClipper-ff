@@ -62,7 +62,6 @@ Wiz.ContentPreview = function(tab) {"use strict";
 				}
 			}
 		}
-		console.log("Couldn't get a favicon for " + doc.location.href);
 	}
 
 	function previewUrl(title, url, favIconUrl) {

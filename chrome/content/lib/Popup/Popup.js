@@ -53,29 +53,41 @@ Wiz.FFPopup.prototype.getNotePageCtrl = function () {
 };
 
 Wiz.FFPopup.prototype.startPopup = function () {
-	var authCookie = Wiz.getAuthCookie();
-	Wiz.PopupView.localizePopup();
-	if(authCookie && authCookie.value) {
-		this._loginCtrl.autoLogin(authCookie);
-	} else {
-		Wiz.PopupView.showLogin();
+	try {
+		var authCookie = Wiz.getAuthCookie();
+		Wiz.PopupView.localizePopup();
+		if(authCookie && authCookie.value) {
+			this._loginCtrl.autoLogin(authCookie);
+		} else {
+			Wiz.PopupView.showLogin();
+		}
+	} catch (err) {
+		Wiz.logger.error('Wiz.FFPopup.startPopup() Error : ' + err);
 	}
 };
 
 Wiz.FFPopup.prototype.showAndInitNotePage = function () {
-	Wiz.PopupView.showNotePage();
-	this._preview.previewArticle();
-	this._notePageCtrl.initialize();
+	try {
+		Wiz.PopupView.showNotePage();
+		this._preview.previewArticle();
+		this._notePageCtrl.initialize();
+	} catch (err) {
+		Wiz.logger.error('Wiz.FFPopup.showAndInitNotePage() Error : ' + err);
+	}
 };
 
 Wiz.FFPopup.prototype.closePopup = function () {
-	this._preview.clear();
-	this._tab = null;
-	this._remote = null;
-	this._loginCtrl = null;
-	this._clipManager = null;
-	this._notePageCtrl = null;
-	window.close();
+	try {
+		this._preview.clear();
+		this._tab = null;
+		this._remote = null;
+		this._loginCtrl = null;
+		this._clipManager = null;
+		this._notePageCtrl = null;
+		window.close();
+	} catch (err) {
+		Wiz.logger.error('Wiz.FFPopup.closePopup() Error : ' + err);
+	}
 };
 
 Wiz.FFPopup.prototype.logout = function () {
@@ -98,19 +110,23 @@ Wiz.FFPopup.prototype.getTitle = function () {
 
 Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 	if (previewType) {
-		switch(previewType) {
-		case 'article' :
-			this._preview.previewArticle();
-			break;
-		case 'selection' : 
-			this._preview.previewSelection();
-			break;
-		case 'fullPage' :
-			this._preview.previewFullPage();
-			break;
-		case 'url' : 
-			this._preview.previewUrl();
-			break;
+		try {
+			switch(previewType) {
+			case 'article' :
+				this._preview.previewArticle();
+				break;
+			case 'selection' : 
+				this._preview.previewSelection();
+				break;
+			case 'fullPage' :
+				this._preview.previewFullPage();
+				break;
+			case 'url' : 
+				this._preview.previewUrl();
+				break;
+			}
+		} catch (err) {
+			Wiz.logger.error('Wiz.FFPopup.switchPreview() type = ' + previewType + ' Error : ' + err);
 		}
 	}
 };

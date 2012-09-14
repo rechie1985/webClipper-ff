@@ -8,33 +8,47 @@ Wiz.CookieManager.prototype.intialize = function () {
 };
 
 Wiz.CookieManager.prototype.set = function (url, name, value, expires) {
-	var cookie = this.createCookieObj(name, value, expires);
-	if (this._impl) {
-		this._impl.set(url, cookie);
+	try {
+		var cookie = this.createCookieObj(name, value, expires);
+		if (this._impl) {
+			this._impl.set(url, cookie);
+		}
+	} catch (err) {
+		Wiz.logger.error('Wiz.CookieManager.set() Error : ' + err);
 	}
-	return true;
 };
 
 Wiz.CookieManager.prototype.get = function (url, name) {
-	var cookie = null;
-	if (this._impl) {
-		cookie = this._impl.get(url, name);
+	try {
+		var cookie = null;
+		if (this._impl) {
+			cookie = this._impl.get(url, name);
+		}
+		return cookie;
+	} catch (err) {
+		Wiz.logger.error('Wiz.CookieManager.get() Error : ' + err);
+		return null;
 	}
-	return cookie;
 };
 
 Wiz.CookieManager.prototype.remove = function (url, name) {
-	if (this._impl) {
-		this._impl.remove(url, name);
+	try {
+		if (this._impl) {
+			this._impl.remove(url, name);
+		}
+	} catch (err) {
+		Wiz.logger.error('Wiz.CookieManager.remove() Error : ' + err);
 	}
-	return true;
 };
 
 Wiz.CookieManager.prototype.removeAll = function () {
-	if (this._impl) {
-		this._impl.removeAll();
+	try {
+		if (this._impl) {
+			this._impl.removeAll();
+		}
+	} catch (err) {
+		Wiz.logger.error('Wiz.CookieManager.removeAll() Error : ' + err);
 	}
-	return true;
 };
 Wiz.CookieManager.prototype.createCookieObj = function (name, value, expires) {
 	var cookieObj = {
