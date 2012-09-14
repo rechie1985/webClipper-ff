@@ -94,9 +94,10 @@ function ContentVeil(tab) {"use strict";
 		// Wiz.logger.debug('revealRect() : ' + JSON.stringfy(rect) + drawStroke.toString());
 
 		// Save this info.
+		var doc = tab.document;
 		currentlyShownRect = rect;
-		currentRectOffsetTop = doc.body.scrollTop;
-		currentRectOffsetLeft = doc.body.scrollLeft;
+		currentRectOffsetTop = tab.scrollY;
+		currentRectOffsetLeft = tab.scrollX;
 		currentlyStatic = staticView;
 
 		// We expand the rectangle for two reasons.
@@ -205,11 +206,10 @@ function ContentVeil(tab) {"use strict";
 				height : currentlyShownRect.height
 			};
 			var doc = tab.document;
-			var vert = doc.body.scrollTop - currentRectOffsetTop;
-			var horiz = doc.body.scrollLeft - currentRectOffsetLeft;
+			var vert = tab.scrollY - currentRectOffsetTop;
+			var horiz = tab.scrollX - currentRectOffsetLeft;
 
 			if (!vert && !horiz) {
-				alert(vert + '---' + horiz);
 				return;
 			}
 
