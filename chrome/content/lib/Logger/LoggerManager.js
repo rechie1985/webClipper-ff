@@ -4,6 +4,14 @@ Wiz.LoggerManager = function () {
 	this.__defineGetter__('fileLogger', this.getFileLogger);
 };
 
+Wiz.LoggerManager.DEBUG_LEVEL = 0;
+Wiz.LoggerManager.INFO_LEVEL = 1;
+Wiz.LoggerManager.WARN_LEVEL = 2;
+Wiz.LoggerManager.ERROR_LEVEL = 3;
+
+//发布之前需要修改
+Wiz.LoggerManager.prototype._level = Wiz.LoggerManager.INFO_LEVEL;
+
 Wiz.LoggerManager.prototype._mozillaLogger = null;
 Wiz.LoggerManager.prototype._fileLogger = null;
 
@@ -22,18 +30,26 @@ Wiz.LoggerManager.prototype.getFileLogger = function () {
 };
 
 Wiz.LoggerManager.prototype.debug = function (message) {
-	this.mozillaLogger.debug(message);
-	this.fileLogger.debug(message);
+	if (this._level <= this.constructor.DEBUG_LEVEL) {
+		this.mozillaLogger.debug(message);
+		this.fileLogger.debug(message);
+	}
 };
 Wiz.LoggerManager.prototype.info = function (message) {
-	this.mozillaLogger.info(message);
-	this.fileLogger.info(message);
+	if (this._level <= this.constructor.INFO_LEVEL) {
+		this.mozillaLogger.info(message);
+		this.fileLogger.info(message);
+	}
 };
 Wiz.LoggerManager.prototype.warn = function (message) {
-	this.mozillaLogger.warn(message);
-	this.fileLogger.warn(message);
+	if (this._level <= this.constructor.WARN_LEVEL) {
+		this.mozillaLogger.warn(message);
+		this.fileLogger.warn(message);
+	}
 };
 Wiz.LoggerManager.prototype.error = function (message) {
-	this.mozillaLogger.error(message);
-	this.fileLogger.error(message);
+	if (this._level <= this.constructor.ERROR_LEVEL) {
+		this.mozillaLogger.error(message);
+		this.fileLogger.error(message);
+	}
 };

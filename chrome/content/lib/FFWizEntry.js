@@ -15,6 +15,7 @@ function initOverlay() {
 }
 
 function contextPopupShowing(evt) {
+    Wiz.logger.debug('This is the test for Logger System');
 	var pageMenuitem = document.getElementById("webclipper-contextmenu-popup-clippage");
 	var selectionMenuitem = document.getElementById("webclipper-contextmenu-popup-clipsel");
 	var urlMenuitem = document.getElementById("webclipper-contextmenu-popup-clipurl");

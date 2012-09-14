@@ -8,7 +8,7 @@ Wiz.FileLoggerImpl = function () {
 
 Wiz.inherit(Wiz.FileLoggerImpl, Wiz.LoggerImpl, true);
 
-Wiz.FileLoggerImpl.ENABLED = false;
+Wiz.FileLoggerImpl.ENABLED = true;
 Wiz.FileLoggerImpl.LOG_FILE_NAME = 'ff_wiz.log';
 
 Wiz.FileLoggerImpl.prototype._file = null;
@@ -23,14 +23,12 @@ Wiz.FileLoggerImpl.prototype.initialize = function () {
 
         var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);		
 		// use 0x02 | 0x10 to open file for appending.
-		foStream.init(file, 0x02 | 0x08 | 0x20, 0666, 0); 
+		foStream.init(file, 0x02 | 0x08 | 0x10, 0666, 0); 
 
 		var converter = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream);
 		converter.init(foStream, "UTF-8", 0, 0);
 		this._file = converter;
-		this.constructor.ENABLED = true;
 	} catch(err) {
-		alert(err);
 		this.constructor.ENABLED = false;
 	}
 };
@@ -49,12 +47,17 @@ Wiz.FileLoggerImpl.prototype.error = function (message) {
 };
 
 Wiz.FileLoggerImpl.prototype.write = function (message) {
-	if (!this._file || !this.constructor.ENABLED ) {
+	this.initialize();
+	if (!this.constructor.ENABLED ) {
 		return;
 	}
 	var curTime = new Date(),
-		msg = curTime.toLocaleFormat() + message;
-	this._file.writeString(msg);
-	this._file.flush();
-	this._file.close();
+		msg = [curTime.toLocaleFormat(), " ", message, '\r\n'].join('');
+	try{
+		this._file.writeString(msg);
+		this._file.flush();
+		this._file.close();
+	} catch (err) {
+		this.constructor.ENABLED = false;
+	}
 };
