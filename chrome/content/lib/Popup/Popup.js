@@ -56,7 +56,6 @@ Wiz.FFPopup.prototype.startPopup = function () {
 	try {
 		var authCookie = Wiz.getAuthCookie();
 		Wiz.PopupView.localizePopup();
-    Wiz.logger.error(document.getElementsByTagName("html")[0].outerHTML);
 		if(authCookie && authCookie.value) {
 			this._loginCtrl.autoLogin(authCookie);
 		} else {

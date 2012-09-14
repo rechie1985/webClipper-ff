@@ -100,7 +100,6 @@ Wiz.ContentPreview = function(tab) {"use strict";
 		if (previewElement) {
 			var selectionFrame = pageInfo.getSelectionFrame();
 			if (selectionFrame) {
-
 				var rect = {
 					width : selectionFrame.width,
 					height : selectionFrame.height,
@@ -112,7 +111,8 @@ Wiz.ContentPreview = function(tab) {"use strict";
 				contentVeil.revealRect(contentVeil.expandRect(rect, -14), true);
 				contentVeil.show();
 			} else {
-				contentVeil.outlineElement(previewElement, true);
+				//不需要自动滚动网页，用户体验不好
+				contentVeil.outlineElement(previewElement, false);
 			}
 		} else {
 			previewFullPage();

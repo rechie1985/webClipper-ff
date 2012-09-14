@@ -44,6 +44,7 @@ function ContentVeil(tab) {"use strict";
 	}
 
 	function blank() {
+		// Wiz.logger.debug('contentVeil blank()');
 		veil.height = tab.innerHeight;
 		veil.width = tab.innerWidth;
 
@@ -90,6 +91,7 @@ function ContentVeil(tab) {"use strict";
 	}
 
 	function revealRect(rect, drawStroke, staticView) {
+		// Wiz.logger.debug('revealRect() : ' + JSON.stringfy(rect) + drawStroke.toString());
 
 		// Save this info.
 		currentlyShownRect = rect;
@@ -193,6 +195,7 @@ function ContentVeil(tab) {"use strict";
 	// If we're currently showing a rectangle, and it's not static, we'll redraw on scroll.
 	tab.addEventListener("scroll", function(e) {
 		if (currentlyShownRect && !currentlyStatic) {
+			// Wiz.logger.debug('scroll handler');
 			var rect = {
 				top : currentlyShownRect.top,
 				bottom : currentlyShownRect.bottom,
@@ -201,11 +204,12 @@ function ContentVeil(tab) {"use strict";
 				width : currentlyShownRect.width,
 				height : currentlyShownRect.height
 			};
-
+			var doc = tab.document;
 			var vert = doc.body.scrollTop - currentRectOffsetTop;
 			var horiz = doc.body.scrollLeft - currentRectOffsetLeft;
 
 			if (!vert && !horiz) {
+				alert(vert + '---' + horiz);
 				return;
 			}
 
@@ -216,7 +220,6 @@ function ContentVeil(tab) {"use strict";
 
 			//      console.log("[Event]top: %d, bottom: %d, left: %d, right: %d, width: %d, height: %d",
 			//              rect.top, rect.bottom, rect.left, rect.right, rect.width, rect.height);
-
 			blank();
 			revealRect(rect, true);
 		}
