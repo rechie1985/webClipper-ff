@@ -133,20 +133,18 @@ body.popup {
 }
 
 .submit-type {
-	margin-left: -60px;
-	height: 28px;
+	height: 30px;
+	margin-left: -50px;
 	z-index: 200;
-	appearance: button;
 	overflow: hidden;
 	outline: none;
-	text-indent: -500px;
-	oveflow: hidden;
+	text-indent: -5000px;
+	overflow:hidden;
 }
 
 .submit-type option {
 	color: #000000;
 	background-color: #FFFFFF;
-	margin-right: 10px;
 }
 
 .btn {
@@ -234,9 +232,9 @@ body.popup {
 }
 
 .submit-type, .submit-type:hover, .submit-type:active {
-	background-image: url(../../images/button-dropdown.png);
+	background-image: url(../../../../skin/images/button-dropdown.png);
 	background-repeat: no-repeat;
-	background-position: 90% 55%;
+	background-position: 80% 50%;
 	min-width: 82px;
 	max-width: 90px;
 }

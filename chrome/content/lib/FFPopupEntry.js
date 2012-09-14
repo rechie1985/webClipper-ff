@@ -4,7 +4,6 @@ function wiz_initFFPopup() {
 	var FFpopup = new Wiz.FFPopup(params);
 	Wiz.i18n = params.i18n;
 	window.focus();
-
 	$(window).blur(function () {
 		FFpopup.closePopup();
 	});
