@@ -40,7 +40,7 @@ Wiz.ContentPreview = function(tab) {"use strict";
 			// urlElement.style.marginLeft = (0 - w / 2) + "px";
 			urlElement.style.marginTop = (0 - h / 2) + "px";
 		}
-		setElementStyle(urlElement,{"position":"fixed", "padding":"20px", "top":"50%", "left":"45%","z-index":"2147483647", "max-width": "260px", "overflow": "hidden", "white-space":"nowrap" });
+		setElementStyle(urlElement,{"position":"fixed", "padding":"20px", "top":"50%", "left":"45%","z-index":"2147483647", "max-width": "350px", "overflow": "hidden", "text-overflow": "ellipsis", "white-space":"nowrap" });
 	}
 
 	function hideUrlElement() {

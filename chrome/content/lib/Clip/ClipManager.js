@@ -17,6 +17,7 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 	if (!contextMenuClipType || !cookie || !cookie.value) {
 		this._clipper.openPopup();
 	} else {
+		Wiz.notificator.showClipping(title);
 		switch (contextMenuClipType) {
 		case "CLIP_ACTION_FULL_PAGE":
 			this.contenxtMenuClipFullpage();
