@@ -136,8 +136,10 @@ Wiz.NotePageControl.prototype.switchCategoryTreeVisible = function() {
 	var visible = $('#ztree_container').is(':visible');
 	if (visible) {
 		$('#ztree_container').hide(500);
+    	Wiz.PopupView.setPopupHeight(300);
 	} else {
 		$('#ztree_container').show(500);
+    	Wiz.PopupView.setPopupHeight(480);
 	}
 };
 

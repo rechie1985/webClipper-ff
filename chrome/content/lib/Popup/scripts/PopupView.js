@@ -82,5 +82,14 @@ Wiz.PopupView = {
 
 		//默认文件夹
 		$('#category_info').html('/' + Wiz.i18n.getMessage('MyNotes') + '/').attr('location', '/My Notes/');
+	},
+	setPopupHeight : function (height_px) {
+        var frame = window.overlay.document.getElementById( "popupContent" );
+        if ( frame ) {
+            frame.style.height = (height_px + 10) + "px";
+            frame.style.width = (frame.style.width + 10) + "px";
+        }
+        window.sizeToContent();
+        window.overlay.sizeToContent();
 	}
 };

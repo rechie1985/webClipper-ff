@@ -26,6 +26,7 @@ function ZtreeController() {
 		var nodeLocation = treeNode.location,
 			displayLocation = treeNode.displayLocation;
 		$('#category_info').attr('location', nodeLocation);
+    	Wiz.PopupView.setPopupHeight(300);
 		Wiz.PopupView.hideCategoryTreeAfterSelect(displayLocation, 500);
 	}
 
