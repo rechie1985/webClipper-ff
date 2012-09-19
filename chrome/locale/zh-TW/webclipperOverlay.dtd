@@ -1,7 +1,4 @@
-<!ENTITY add_to_wiznote "新增至 Wiznote">
-<!ENTITY add_to_wiznote_tooltip "將選取的文字或整個頁面新增至 Wiznote 做為新的記事">
+<!ENTITY add_to_wiznote "新增至為知筆記">
+<!ENTITY add_to_wiznote_tooltip "將選取的文字或整個頁面新增至保存到為知筆記">
 
-<!ENTITY contextMenu_clip_this_page "擷取此頁面">
-<!ENTITY contextMenu_clip_selection "擷取選取項目">
-<!ENTITY contextMenu_clip_url "擷取 URL">
-<!ENTITY contextMenu_new_note "新記事">
+<!ENTITY contextMenu_clip_this_page "保存到為知筆記">

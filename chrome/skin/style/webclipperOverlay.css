@@ -1,9 +1,9 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-#webclipper-toolbar-button {
-  list-style-image:
-  url(chrome://webclipper/skin/images/logo/wiz16.png);
+.webclipper-toolbarbutton, .webclipper-contextMenu-item {
+	list-style-image:url(chrome://webclipper/skin/images/logo/wiz16.png);
 }
- 
+
+
 toolbar[iconsize="small"] #webclipper-toolbar-button {
   list-style-image: url(chrome://webclipper/skin/images/logo/wiz16.png);
 }
