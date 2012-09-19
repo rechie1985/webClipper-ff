@@ -55,7 +55,7 @@ Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
 
 Wiz.Remote.prototype.getAllCategory = function (callSuccess, callError) {
 	try {
-		var token = this.getToken();
+		var token = Wiz.context.token;
 		if (token !== null) {
 			var postParams = this.getPostObj();
 			postParams.token = token;

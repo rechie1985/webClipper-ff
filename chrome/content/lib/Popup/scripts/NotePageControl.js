@@ -178,7 +178,7 @@ Wiz.NotePageControl.prototype.requestSubmit = function () {
 
 Wiz.NotePageControl.prototype.initUserLink = function () {
 	var nowUserName = Wiz.prefStorage.get(Wiz.Pref.NOW_USER, 'char'),
-		token = Wiz.getTokenCookie().value;
+		token = Wiz.context.token;
 	if (nowUserName && nowUserName.length > 0) {
 		$('#header_username').html('(' + nowUserName + ')').bind('click', function (evt) {
 			window.open(Wiz.AUTH_COOKIE_URL + '/?t=' + token);

@@ -76,9 +76,12 @@ Wiz.PopupView = {
 		$('#fullPage').html(Wiz.i18n.getMessage('fullpage_save'));
 		$('#selection').html(Wiz.i18n.getMessage('select_save'));
 		$('#url').html(Wiz.i18n.getMessage('url_save'));
+		$('#native').html(Wiz.i18n.getMessage('save_more'));
 		//comment area
 		$('#comment_tip').html(Wiz.i18n.getMessage('comment_tip'));
 		$('#comment-info').attr('placeholder', Wiz.i18n.getMessage('add_comment'));
+		$('#save_to_native').html(Wiz.i18n.getMessage('save_to_native'));
+		$('#save_to_server').html(Wiz.i18n.getMessage('save_to_server'));
 
 		//默认文件夹
 		$('#category_info').html('/' + Wiz.i18n.getMessage('MyNotes') + '/').attr('location', '/My Notes/');
