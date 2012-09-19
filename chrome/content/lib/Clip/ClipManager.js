@@ -12,24 +12,29 @@ Wiz.ClipManager.prototype.initialize = function () {
 	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
 Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType) {
-	//if not contextMenu clicked, show preview and the popup
-	var cookie = Wiz.getTokenCookie();
-	if (!contextMenuClipType || !cookie || !cookie.value) {
-		this._clipper.openPopup();
-	} else {
-		Wiz.notificator.showClipping(this._tab.document.title);
-		switch (contextMenuClipType) {
-		case "CLIP_ACTION_FULL_PAGE":
-			this.contenxtMenuClipFullpage();
-			break;
-		case "CLIP_ACTION_SELECTION":
-			this.contenxtMenuClipSelection();
-			break;
-		case "CLIP_ACTION_URL":
-			this.contenxtMenuClipUrl();
-			break;
+
+
+	var token = Wiz.context.token;
+	//右键保存
+	if (contextMenuClipType === 'CLIP_ACTION_FULL_PAGE') {
+		if (Wiz.nativeClient && Wiz.nativeClient.bInstall()) {
+			Wiz.nativeClient.startClip();
+		} else {
+			if (token) {
+				this.contenxtMenuClipFullpage();
+			} else {
+				this._clipper.openPopup();
+			}
 		}
+		return ;
+	} else {
+		this._clipper.openPopup();
 	}
+
+	// //if not contextMenu clicked, show preview and the popup
+	// if (!contextMenuClipType || !cookie || !cookie.value) {
+	// 	this._clipper.openPopup();
+	// }
 };
 Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
 	try {

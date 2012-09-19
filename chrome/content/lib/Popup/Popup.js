@@ -54,10 +54,15 @@ Wiz.FFPopup.prototype.getNotePageCtrl = function () {
 
 Wiz.FFPopup.prototype.startPopup = function () {
 	try {
-		var authCookie = Wiz.getAuthCookie();
+		var authCookie = Wiz.getAuthCookie(),
+			token = Wiz.context.token;
 		Wiz.PopupView.localizePopup();
-		if(authCookie && authCookie.value) {
-			this._loginCtrl.autoLogin(authCookie);
+		if (authCookie && authCookie.value) {
+			if (!token) {
+				this._loginCtrl.autoLogin(authCookie);
+			} else {
+				this.showAndInitNotePage();
+			}
 		} else {
 			Wiz.PopupView.showLogin();
 		}

@@ -1,15 +1,6 @@
 "use strict";
 var wiznote_doAction = function( popupSrc, clipType ) {
-
-	try {
-		if (Wiz.nativeClient && Wiz.nativeClient.bInstall()) {
-			Wiz.nativeClient.startClip();
-		} else {
-			Wiz.clipManager.startClip( popupSrc, clipType );
-		}
-	} catch (err) {
-		alert('wiznote_doAction Error : ' + err);
-	}
+	Wiz.clipManager.startClip( popupSrc, clipType );
 }
 
 

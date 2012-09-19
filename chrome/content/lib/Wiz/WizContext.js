@@ -14,6 +14,12 @@ Wiz.Context.prototype._user = null;
 Wiz.Context.prototype._category = null;
 
 Wiz.Context.prototype.getToken = function () {
+	//token具有时效性，所以每次都需要重新获取，如果过期则不可使用
+	this._token = null;
+	var cookie = Wiz.getTokenCookie();
+	if (cookie && cookie.value) {
+		this._token = cookie.value;
+	}
 	return this._token;
 };
 
