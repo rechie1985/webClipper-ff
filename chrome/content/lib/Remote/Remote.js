@@ -26,6 +26,8 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 		postParams.user_id = username;
 		postParams.password = password;
 		var success = function(respJson) {
+			Wiz.logger.debug('Wiz.Remote.clientLogin : ' + JSON.stringfy(respJson));
+			
 			Wiz.saveAuthCookie(username + '*' + password ,rememberMe);
 			Wiz.saveTokenCookie(respJson.token);
 			//每次登陆成功后，重新写入now_user,方便以后显示或查看
@@ -40,7 +42,7 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 
 Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
 	try {
-		var token = this.getToken();
+		var token = Wiz.context.token;
 		if (token !== null) {
 			var postParams = this.getPostObj();
 			postParams.token = token;
@@ -68,7 +70,7 @@ Wiz.Remote.prototype.getAllCategory = function (callSuccess, callError) {
 
 Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
 	try {
-		var token = this.getToken();
+		var token = Wiz.context.token;
 		if (token !== null) {
 			var postParams = this.getPostObj();
 			postParams.token = token;
@@ -80,7 +82,7 @@ Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
 };
 
 Wiz.Remote.prototype.postDocument = function (docInfo) {
-	var token = this.getToken();
+	var token = Wiz.context.token;
 	if (token !== null) {
 		var error = function (err) {
 			try {
@@ -135,16 +137,3 @@ Wiz.Remote.prototype.autoLogin = function (cookie, callSuccess, callError) {
 		Wiz.logger.error('Wiz.Remote.autoLogin() Error : ' + err);
 	}
 };
-
-Wiz.Remote.prototype.getToken = function () {
-	try {
-		var cookie = Wiz.getTokenCookie();
-		if (cookie && cookie.value && cookie.value.length > 0) {
-			return cookie.value;
-		}
-		return null;
-	} catch (err) {
-		Wiz.logger.error('Wiz.Remote.getToken() Error : ' + err);
-	}
-};
-

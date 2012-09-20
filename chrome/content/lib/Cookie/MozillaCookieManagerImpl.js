@@ -17,7 +17,7 @@ Wiz.MozillaCookieManagerImpl.prototype.set = function (url, cookie) {
 		cookieString = (cookie.expires) ? (cookieString + "expires=" +  cookie.expires + ";") : cookieString;
 		this.cookieService.setCookieString(cookieURI, null, cookieString, null);
 	} catch (err) {
-		alert('Mozilla Set Cookie Error: ' + err);
+		Wiz.logger.error('Mozilla Set Cookie Error: ' + err);
 	}
 	return '';
 };
@@ -34,7 +34,7 @@ Wiz.MozillaCookieManagerImpl.prototype.get = function (url, name) {
 	        }
 	    }
 	} catch(err) {
-		alert('Mozilla Get Cookie Error: ' + err);
+		Wiz.logger.error('Mozilla Get Cookie Error: ' + err);
 	}
     return cookies;
 };
@@ -51,7 +51,7 @@ Wiz.MozillaCookieManagerImpl.prototype.getAll = function(url) {
 	        }
 	    }
 	} catch(err) {
-		alert('Mozilla Get All Cookie Error: ' + err);
+		Wiz.logger.error('Mozilla Get All Cookie Error: ' + err);
 	}
     return cookies;
 };
@@ -66,7 +66,7 @@ Wiz.MozillaCookieManagerImpl.prototype.remove = function(url, name) {
         this.cookieManagerService.remove( domain, name, path, false );
     }
     catch ( e ) {
-		alert('Mozilla Remove Cookie Error: ' + err);
+		Wiz.logger.error('Mozilla Remove Cookie Error: ' + err);
     }
     return '';
 };
