@@ -584,10 +584,11 @@ Wiz.MozillaNativeController = function () {
             //
             contentConfig += "\r\nCount=" + wiz_km_g_resourceFilesIndex;
             //
-            contentConfig += "\r\n[ExtraCommand]";
-            if (info && info.isAuto) {
+            if (info) {
+                contentConfig += "\r\n[ExtraCommand]";
                 contentConfig += addExtraParams(info);
             }
+            Wiz.logger.debug(contentConfig);
             //
             wiz_km_writeFileWithCharset(fileNameConfig, contentConfig, "utf-8");
             //
@@ -617,14 +618,16 @@ Wiz.MozillaNativeController = function () {
     }
     function addExtraParams(info) {
         try {
+            Wiz.logger.debug('Wiz.MozillaNativeController.addExtraParams ' + info.cmd);
             var comment = (info.comment) ? ('<div>' + info.comment.replace(/\n/gi, '<br />') + '</div>') : '',
-            params = ' save-command=' + info.cmd + ' userid="' + info.userid
-                + '" Title="' + info.title 
-                + '" Location="' + info.category 
-                + '" Comment="' + wiz_km_base64Encode(comment) + '"';
+            params = '\r\nSaveCommand=' + info.cmd + '\r\nUserId=' + info.userid
+                + '\r\nTitle=' + info.title 
+                + '\r\nLocation=' + info.category 
+                + '\r\nComments=' + wiz_km_base64Encode(comment);
+            Wiz.logger.debug(params);
             return params;
         } catch (err) {
-        //TODO        
+            Wiz.logger.error('MozillaNativeController.addExtraParams() Error: ' + err);
         }
     }
 

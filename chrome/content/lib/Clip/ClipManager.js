@@ -76,6 +76,7 @@ Wiz.ClipManager.prototype.saveClip = function (info) {
 	}
 };
 
+
 Wiz.ClipManager.prototype.postDocument = function (info) {
 	this._sender.postDocument(info);
 };
