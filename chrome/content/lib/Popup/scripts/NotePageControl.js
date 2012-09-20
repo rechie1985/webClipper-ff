@@ -4,7 +4,7 @@
 'use strict';
 Wiz.NotePageControl = function (popup) {
 	this._popup = popup;
-	$('wiz_clip_detail').show($.proxy(this.initialize, this));
+	// $('wiz_clip_detail').show($.proxy(this.initialize, this));
 };
 
 Wiz.NotePageControl.prototype._popup = null;
@@ -62,8 +62,10 @@ Wiz.NotePageControl.prototype.initSubmitGroup = function () {
 	$('#note_submit').html(type);
 };
 
-Wiz.NotePageControl.prototype.initNotePageInfo = function(evt) {
+Wiz.NotePageControl.prototype.initNotePageInfo = function() {
 	Wiz.PopupView.hideCreateDiv();
+
+	this.initNativeDiv();
 
 	this.initLogoutLink();
 	this.initDefaultCategory();
@@ -157,23 +159,77 @@ Wiz.NotePageControl.prototype.noteSubmit = function () {
 	this._popup.closePopup();
 };
 
-Wiz.NotePageControl.prototype.requestSubmit = function () {
-	var type = $('option:selected', '#submit-type').attr('id'),
-		title = $('#wiz_note_title').val(),
-		category = $('#category_info').attr('location'),
-		comment = $('#comment-info').val(),
-		selectedOption = $('option:selected', '#submit-type'),
-		cmd = selectedOption.attr('id'),
-		content = this._popup.getDocBody(cmd),
-		docInfo = {
-			title: title,
-			category: category,
-			comment: comment,
-			content: content
-		};
+Wiz.NotePageControl.prototype.initNativeDiv = function () {
+	var isWin = this.isWinPlatform();
+	if (isWin) {
+		// initSaveType();
+		$('#save_type_sel').change($.proxy(this.changeSaveTypehandler, this));
+	} else {
+		$('#save_type_sel').hide();
+		$('#native').remove();
+	}
+};
 
-	Wiz.notificator.showClipping(title);
-	this._popup.postDocument(docInfo);
+Wiz.NotePageControl.prototype.isWinPlatform = function () {
+	var platform = window.navigator.platform,
+		isMac = (platform.toLowerCase().indexOf('mac') === 0),//(platform === "Mac68K") || (platform === "MacPPC") || (platform === "Macintosh");
+		isLinux = (platform.toLowerCase().indexOf('linux') === 0);
+	if (isMac || isLinux) {
+		return false;
+	}
+	return true;
+};
+
+Wiz.NotePageControl.prototype.requestSubmit = function () {
+	var docInfo = prepareAndGetDocInfo();
+	if (docInfo) {
+		Wiz.notificator.showClipping(docInfo.title);
+		this._popup.requestSubmit(docInfo);
+	}
+};
+
+/**
+ * 准备文档数据，并返回
+ * @return {[type]} [description]
+ */
+Wiz.NotePageControl.prototype.prepareAndGetDocInfo = function () {
+	try {
+		var clipType = $('option:selected', '#submit-type').attr('id'),
+			saveType = $('option:selected', '#save_type_sel').attr('id'),
+			isNative = ('save_to_native' === saveType) ? true : false,
+			title = $('#wiz_note_title').val(),
+			category = $('#category_info').attr('location'),
+			comment = $('#comment-info').val(),
+			userid = Wiz.prefStorage.get(Wiz.Pref.NOW_USER, 'char'),
+			content = this._popup.getDocBody(clipType, isNative),
+			info = {
+				title: title,		//文档标题
+				category: category,	//文档目录
+				comment: comment,	//文档评论
+				content: content,	//文档内容 
+				saveType: saveType,	//保存类型
+				clipType: clipType,	//剪辑类型
+				isNative: isNative,	//是否本地保存
+				userid: userid		//当前用户名
+			};
+	} catch (err) {
+		Wiz.logger.error('Wiz.NotePageControl.prepareAndGetNoteInfo() Error : ' + err);
+		return null;
+	}
+	return info;
+};
+
+Wiz.NotePageControl.prototype.getNativeClient = function () {
+	var nativeClient = window.document.getElementById('wiz-local-app'),
+		version = nativeClient.Version;
+	alert(nativeClient);
+	Wiz.logger.debug('' + nativeClient);
+	Wiz.logger.debug('Wiz.NotePageControl.getNativeClient() ' + version);
+
+	if (version) {
+		return client;
+	}
+	return null;
 };
 
 Wiz.NotePageControl.prototype.initUserLink = function () {
@@ -184,4 +240,25 @@ Wiz.NotePageControl.prototype.initUserLink = function () {
 			window.open(Wiz.AUTH_COOKIE_URL + '/?t=' + token);
 		});
 	}
+};
+
+
+Wiz.NotePageControl.prototype.changeSaveTypehandler = function (evt) {
+	var selectedOption = $('option:selected', '#save_type_sel'),
+		type = selectedOption.attr('id'),
+		client = this.getNativeClient();
+	if ('save_to_native' === type) {
+		evt.preventDefault();
+		return ;
+	}
+	// setSaveType(type);
+};
+
+Wiz.NotePageControl.prototype.setSaveType = function (type) {
+	if (type === 'save_to_native') {
+		isNative = true;
+	} else if (type === 'save_to_server') {
+		isNative = false;
+	}
+	localStorage['saveType'] = type;
 };

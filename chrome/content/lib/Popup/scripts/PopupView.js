@@ -27,6 +27,7 @@ Wiz.PopupView = {
 	},
 	showLoginError : function (msg)
 	{
+		alert(msg);
 		$('#wiz_login').show();
 		$('#wiz_clip_detail').hide();
 		$('#div_error_validator').html(msg);

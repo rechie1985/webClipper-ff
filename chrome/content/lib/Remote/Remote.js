@@ -22,12 +22,14 @@ Wiz.Remote.prototype.getPostObj = function () {
 
 Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, callSuccess, callError) {
 	try {
+		Wiz.logger.debug('Wiz.Remote.clientLogin : ' + username + '---' + password);
+
 		var postParams = this.getPostObj();
 		postParams.user_id = username;
 		postParams.password = password;
 		var success = function(respJson) {
-			Wiz.logger.debug('Wiz.Remote.clientLogin : ' + JSON.stringfy(respJson));
-			
+			Wiz.logger.debug('Wiz.Remote.clientLogin() Success : ' + JSON.stringify(respJson));
+
 			Wiz.saveAuthCookie(username + '*' + password ,rememberMe);
 			Wiz.saveTokenCookie(respJson.token);
 			//每次登陆成功后，重新写入now_user,方便以后显示或查看

@@ -12,13 +12,11 @@ Wiz.ClipManager.prototype.initialize = function () {
 	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
 Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType) {
-
-
 	var token = Wiz.context.token;
 	//右键保存
 	if (contextMenuClipType === 'CLIP_ACTION_FULL_PAGE') {
-		if (Wiz.nativeClient && Wiz.nativeClient.bInstall()) {
-			Wiz.nativeClient.startClip();
+		if (Wiz.nativeManager && Wiz.nativeManager.bInstall()) {
+			Wiz.nativeManager.startNativeClip();
 		} else {
 			if (token) {
 				this.contenxtMenuClipFullpage();
@@ -30,11 +28,6 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 	} else {
 		this._clipper.openPopup();
 	}
-
-	// //if not contextMenu clicked, show preview and the popup
-	// if (!contextMenuClipType || !cookie || !cookie.value) {
-	// 	this._clipper.openPopup();
-	// }
 };
 Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
 	try {
@@ -43,7 +36,7 @@ Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
 	} catch (err) {
 		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipFullpage() Error : ' + err);
 	}
-	this.postDocument(doc);
+	this.postDocument(doc.getDocInfo());
 };
 
 Wiz.ClipManager.prototype.contenxtMenuClipSelection = function () {
@@ -53,7 +46,7 @@ Wiz.ClipManager.prototype.contenxtMenuClipSelection = function () {
 	} catch (err) {
 		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipSelection() Error : ' + err);
 	}
-	this.postDocument(doc);
+	this.postDocument(doc.getDocInfo());
 };
 
 Wiz.ClipManager.prototype.contenxtMenuClipUrl = function () {
@@ -63,11 +56,28 @@ Wiz.ClipManager.prototype.contenxtMenuClipUrl = function () {
 	} catch (err) {
 		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipUrl() Error : ' + err);
 	}
-	this.postDocument(doc);
+	this.postDocument(doc.getDocInfo());
 };
 
-Wiz.ClipManager.prototype.postDocument = function (doc) {
-	this._sender.postDocument(doc.getDocInfo());
+/**
+ * popup页面请求保存
+ * @param  {[type]} info [description]
+ * @return {[type]}      [description]
+ */
+Wiz.ClipManager.prototype.saveClip = function (info) {
+	if (!info) {
+		Wiz.logger.error('Wiz.ClipManager.saveClip() Error: can not find info obj');
+		return;
+	}
+	if (info.isNative === true) {
+		Wiz.nativeManager.startNativeClip(info);
+	} else {
+		this.postDocument(info);
+	}
+};
+
+Wiz.ClipManager.prototype.postDocument = function (info) {
+	this._sender.postDocument(info);
 };
 
 Wiz.ClipManager.prototype.getUrlBody = function () {
@@ -101,9 +111,9 @@ Wiz.ClipManager.prototype.getSender = function () {
 	}
 };
 
-Wiz.ClipManager.prototype.getClipDocumentBody = function (type, preview) {
+Wiz.ClipManager.prototype.getClipDocumentBody = function (clipType, preview) {
 	var body = null;
-	switch (type) {
+	switch (clipType) {
 	case 'article':
 		body = this._clipper.getArticleHTML(this._tab, preview);
 		break;

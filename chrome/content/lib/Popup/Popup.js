@@ -136,9 +136,13 @@ Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 	}
 };
 
-Wiz.FFPopup.prototype.getDocBody = function (type) {
+Wiz.FFPopup.prototype.getDocBody = function (clipType, isNative) {
+	if (isNative) {
+		//本地保存不需要获取文档内容，通过XPCOM处理
+		return "";
+	}
 	if (this._clipManager && this._preview) {
-		return this._clipManager.getClipDocumentBody(type, this._preview);
+		return this._clipManager.getClipDocumentBody(clipType, this._preview);
 	}
 	return "";
 };
@@ -147,7 +151,7 @@ Wiz.FFPopup.prototype.requestCategory = function (callSuccess, callError) {
 	this._remote.getAllCategory(callSuccess, callError);
 };
 
-Wiz.FFPopup.prototype.postDocument = function (docInfo) {
-	this._remote.postDocument(docInfo);
+Wiz.FFPopup.prototype.requestSubmit = function (docInfo) {
+	this._clipManager.saveClip(docInfo);
 };
 

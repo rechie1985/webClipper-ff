@@ -1,11 +1,12 @@
 'use strict';
-Wiz.NativeClient = function () {
+Wiz.MozillaNativeController = function () {
 
     var WIZ_SAP_HKEY_CLASSES_ROOT = 0;
     var WIZ_SAP_HKEY_CURRENT_CONFIG = 1;
     var WIZ_SAP_HKEY_CURRENT_USER = 2;
     var WIZ_SAP_HKEY_LOCAL_MACHINE = 3;
     var WIZ_SAP_HKEY_USERS = 4;
+    
 
     function wiz_km_getRegistryEntry(regRoot, regPath, regName) 
     {
@@ -484,7 +485,7 @@ Wiz.NativeClient = function () {
     	return null;
     }
 
-    function wiz_km_saveDocument()
+    function wiz_km_saveDocument(info)
     {
         var alertsSvc = null;
         try
@@ -575,13 +576,18 @@ Wiz.NativeClient = function () {
             //
             wiz_km_g_resourceFilesIndex = 0;
             //
-            contentConfig += "\r\n[Resources]"
+            contentConfig += "\r\n[Resources]";
             contentConfig += wiz_km_collectAllImages(tmpDir, doc, refURLObj);
             contentConfig += wiz_km_collectAllCSSs(tmpDir, doc, refURLObj);
             contentConfig += wiz_km_collectAllLinks(tmpDir, doc, refURLObj);
             contentConfig += wiz_km_collectAllFlash(tmpDir, doc, refURLObj);
             //
             contentConfig += "\r\nCount=" + wiz_km_g_resourceFilesIndex;
+            //
+            contentConfig += "\r\n[ExtraCommand]";
+            if (info && info.isAuto) {
+                contentConfig += addExtraParams(info);
+            }
             //
             wiz_km_writeFileWithCharset(fileNameConfig, contentConfig, "utf-8");
             //
@@ -609,11 +615,22 @@ Wiz.NativeClient = function () {
             throw err;
         }
     }
+    function addExtraParams(info) {
+        try {
+            var comment = (info.comment) ? ('<div>' + info.comment.replace(/\n/gi, '<br />') + '</div>') : '',
+            params = ' save-command=' + info.cmd + ' userid="' + info.userid
+                + '" Title="' + info.title 
+                + '" Location="' + info.category 
+                + '" Comment="' + wiz_km_base64Encode(comment) + '"';
+            return params;
+        } catch (err) {
+        //TODO        
+        }
+    }
 
-
-    function wiz_km_onWizSave()
+    function wiz_km_onWizSave(info)
     {
-        wiz_km_saveDocument();
+        wiz_km_saveDocument(info);
     }
 
     function bInstall() 
