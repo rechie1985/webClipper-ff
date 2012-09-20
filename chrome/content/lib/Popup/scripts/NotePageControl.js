@@ -146,7 +146,9 @@ Wiz.NotePageControl.prototype.switchCategoryTreeVisible = function() {
 };
 
 Wiz.NotePageControl.prototype.requestCategory = function() {
-	this._popup.requestCategory($.proxy(this.requestCategorySuccess, this));
+	this._popup.requestCategory($.proxy(this.requestCategorySuccess, this), function (err) {
+		Wiz.logger.error('Wiz.NotePageControl.requestCategory() Error: '+ err);
+	});
 };
 
 //加载目录成功回调函数
@@ -181,7 +183,7 @@ Wiz.NotePageControl.prototype.isWinPlatform = function () {
 };
 
 Wiz.NotePageControl.prototype.requestSubmit = function () {
-	var docInfo = prepareAndGetDocInfo();
+	var docInfo = this.prepareAndGetDocInfo();
 	if (docInfo) {
 		Wiz.notificator.showClipping(docInfo.title);
 		this._popup.requestSubmit(docInfo);
@@ -222,8 +224,6 @@ Wiz.NotePageControl.prototype.prepareAndGetDocInfo = function () {
 Wiz.NotePageControl.prototype.getNativeClient = function () {
 	var nativeClient = window.document.getElementById('wiz-local-app'),
 		version = nativeClient.Version;
-	alert(nativeClient);
-	Wiz.logger.debug('' + nativeClient);
 	Wiz.logger.debug('Wiz.NotePageControl.getNativeClient() ' + version);
 
 	if (version) {

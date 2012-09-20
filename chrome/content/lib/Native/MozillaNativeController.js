@@ -6,7 +6,7 @@ Wiz.MozillaNativeController = function () {
     var WIZ_SAP_HKEY_CURRENT_USER = 2;
     var WIZ_SAP_HKEY_LOCAL_MACHINE = 3;
     var WIZ_SAP_HKEY_USERS = 4;
-    
+
 
     function wiz_km_getRegistryEntry(regRoot, regPath, regName) 
     {
@@ -520,7 +520,7 @@ Wiz.MozillaNativeController = function () {
             }
             
             //
-            var win = document.commandDispatcher.focusedWindow.top;
+            var win = (info) ? (info.win) : (document.commandDispatcher.focusedWindow.top);
             var doc = win.document;
             //
             var refURLObj = Components.classes['@mozilla.org/network/standard-url;1'].createInstance(Components.interfaces.nsIURI);

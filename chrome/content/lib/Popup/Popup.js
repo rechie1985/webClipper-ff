@@ -1,9 +1,7 @@
 Wiz.FFPopup = function (params) {
 	this.__defineGetter__('clipManager', this.getClipManager);
-	this.__defineGetter__('preview', this.getPreview);
 	this.__defineGetter__('loginCtrl', this.getLoginCtrl);
 	this.__defineGetter__('notePageCtrl', this.getNotePageCtrl);
-	this.__defineGetter__('remote', this.getRemote);
 	this.initialize(params);
 };
 
@@ -24,6 +22,9 @@ Wiz.FFPopup.prototype.initialize = function (params) {
 };
 
 Wiz.FFPopup.prototype.getClipManager = function () {
+	if (!this._clipManager) {
+		this._clipManager = new Wiz.ClipManager();
+	}
 	return this._clipManager;
 };
 
@@ -152,6 +153,8 @@ Wiz.FFPopup.prototype.requestCategory = function (callSuccess, callError) {
 };
 
 Wiz.FFPopup.prototype.requestSubmit = function (docInfo) {
-	this._clipManager.saveClip(docInfo);
+	//popup页面提交时，必须传过去当前的win对象，否则无法获取内容
+	docInfo.win = this._tab;
+	this.clipManager.saveClip(docInfo);
 };
 

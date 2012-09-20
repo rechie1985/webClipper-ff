@@ -141,6 +141,7 @@ Wiz.getNativeManager = function () {
         try {
             this._nativeManager = new Wiz.NativeManager();
         } catch (err) {
+            Wiz.logger.error('Wiz.getNativeManager() Error: ' + err);
             return null;
         }
     } 
