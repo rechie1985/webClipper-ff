@@ -114,6 +114,8 @@ Wiz.ClipManager.prototype.getSender = function () {
 
 Wiz.ClipManager.prototype.getClipDocumentBody = function (clipType, preview) {
 	var body = null;
+	//获取页面信息之前首先要补全img的src路径，否则会无法保存图片
+	this._clipper.completeImgSrc(this._tab);
 	switch (clipType) {
 	case 'article':
 		body = this._clipper.getArticleHTML(this._tab, preview);
@@ -132,3 +134,4 @@ Wiz.ClipManager.prototype.getClipDocumentBody = function (clipType, preview) {
 	}
 	return body;
 };
+

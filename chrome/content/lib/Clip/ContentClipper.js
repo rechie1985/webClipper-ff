@@ -243,10 +243,21 @@ Wiz.ContentClipper.prototype.openPopup = function () {
 	params.i18n = Wiz.i18n;
 	params.content = content;
 	params.clipManager = Wiz.clipManager;
-	params.remote = Wiz.remote;
 	window.openDialog( "chrome://webclipper/content/FFPopup.xul", "",
                        "chrome, titlebar=no, left=" + popupPosition.left + ", top=" + popupPosition.top + ", resizable=no", params );
 };
 
-
+Wiz.ContentClipper.prototype.completeImgSrc = function (tab) {
+		try {
+			var imgList = tab.document.getElementsByTagName('img');
+			if (!imgList || imgList.length < 1) {
+				return ;
+			}
+			for (var index = 0, length = imgList.length; index < length; index++) {
+				imgList[index].src = imgList[index].src;
+			}
+		} catch (err) {
+			Wiz.logger.error('Wiz.ContentClipper.completeImgSrc() Error: ' + err);
+		}
+	}
 

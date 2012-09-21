@@ -146,14 +146,30 @@ Wiz.NotePageControl.prototype.switchCategoryTreeVisible = function() {
 };
 
 Wiz.NotePageControl.prototype.requestCategory = function() {
-	this._popup.requestCategory($.proxy(this.requestCategorySuccess, this), function (err) {
+	//获取目录信息
+	//1、首先判断是否有安装PC客户端，如果有，则从客户端获取信息
+	
+	var categoryStr = Wiz.nativeManager.getNativeCategoryStr();
+
+	if (categoryStr && categoryStr.length > 0) {
+		this.initCategoryTree(categoryStr);
+		return;
+	}
+	//2、未安装客户端，从localStorage或保存的其他地方获取，
+	//不能存到cookie中，否则过大造成无法访问(暂未实现，存储方式未定)
+	//3、如果都为获取到，则从服务器请求
+	this._popup.requestCategory($.proxy(this.initCategoryTree, this), function (err) {
 		Wiz.logger.error('Wiz.NotePageControl.requestCategory() Error: '+ err);
 	});
 };
 
-//加载目录成功回调函数
-Wiz.NotePageControl.prototype.requestCategorySuccess = function (resp) {
-	this.parseWizCategory(resp.categories);
+//根据目录信息初始化目录树
+Wiz.NotePageControl.prototype.initCategoryTree = function (params) {
+	if (params.categories) {
+		this.parseWizCategory(params.categories);
+	} else {
+		this.parseWizCategory(params);
+	}
 };
 
 Wiz.NotePageControl.prototype.noteSubmit = function () {
@@ -221,17 +237,6 @@ Wiz.NotePageControl.prototype.prepareAndGetDocInfo = function () {
 	return info;
 };
 
-Wiz.NotePageControl.prototype.getNativeClient = function () {
-	var nativeClient = window.document.getElementById('wiz-local-app'),
-		version = nativeClient.Version;
-	Wiz.logger.debug('Wiz.NotePageControl.getNativeClient() ' + version);
-
-	if (version) {
-		return client;
-	}
-	return null;
-};
-
 Wiz.NotePageControl.prototype.initUserLink = function () {
 	var nowUserName = Wiz.prefStorage.get(Wiz.Pref.NOW_USER, 'char'),
 		token = Wiz.context.token;
@@ -246,10 +251,13 @@ Wiz.NotePageControl.prototype.initUserLink = function () {
 Wiz.NotePageControl.prototype.changeSaveTypehandler = function (evt) {
 	var selectedOption = $('option:selected', '#save_type_sel'),
 		type = selectedOption.attr('id'),
-		client = this.getNativeClient();
+		hasNativeClient = Wiz.nativeManager.hasNativeClient();
 	if ('save_to_native' === type) {
 		evt.preventDefault();
 		return ;
+	}
+	if (hasNativeClient) {
+		alert('need pc client');
 	}
 	// setSaveType(type);
 };

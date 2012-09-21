@@ -88,13 +88,16 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 	if (token !== null) {
 		var error = function (err) {
 			try {
+				Wiz.logger.debug('Wiz.Remote.postDocument() callerror: ' + err);
 				var respJson = JSON.parse(err);
 				Wiz.notificator.showClipSuccess(docInfo.title);
 			} catch (err) {
 				Wiz.notificator.showError(err);
+				Wiz.logger.error('Wiz.Remote.postDocument() Error: ' + err);
 			}
 		}
-		var success = function () {
+		var success = function (info) {
+			Wiz.logger.debug('Wiz.Remote.postDocument() callsuccess: ' + info);
 			Wiz.notificator.showClipSuccess(docInfo.title);
 		}
 		try {

@@ -2,6 +2,7 @@ Wiz.FFPopup = function (params) {
 	this.__defineGetter__('clipManager', this.getClipManager);
 	this.__defineGetter__('loginCtrl', this.getLoginCtrl);
 	this.__defineGetter__('notePageCtrl', this.getNotePageCtrl);
+	this.__defineGetter__('remote', this.getRemote);
 	this.initialize(params);
 };
 
@@ -11,14 +12,17 @@ Wiz.FFPopup.prototype._loginCtrl = null;
 Wiz.FFPopup.prototype._notePageCtrl = null;
 Wiz.FFPopup.prototype._remote = null;
 Wiz.FFPopup.prototype._tab = null;
+Wiz.FFPopup.CLIENT_DOM_ID = 'wiz-local-app';
 
 Wiz.FFPopup.prototype.initialize = function (params) {
 	this._tab = params.content;
 	this._clipManager = new Wiz.ClipManager();
 	this._preview = new Wiz.ContentPreview(params.content);
-	this._remote = params.remote;
+	this._remote = new Wiz.Remote();
 	this._loginCtrl = new Wiz.LoginControl(this);
 	this._notePageCtrl = new Wiz.NotePageControl(this);
+
+	Wiz.nativeManager.initDOMNativeController(window, Wiz.FFPopup.CLIENT_DOM_ID);
 };
 
 Wiz.FFPopup.prototype.getClipManager = function () {
@@ -60,7 +64,7 @@ Wiz.FFPopup.prototype.startPopup = function () {
 		Wiz.PopupView.localizePopup();
 		if (authCookie && authCookie.value) {
 			if (!token) {
-				this._loginCtrl.autoLogin(authCookie);
+				this.loginCtrl.autoLogin(authCookie);
 			} else {
 				this.showAndInitNotePage();
 			}
@@ -76,7 +80,7 @@ Wiz.FFPopup.prototype.showAndInitNotePage = function () {
 	try {
 		Wiz.PopupView.showNotePage();
 		this._preview.previewArticle();
-		this._notePageCtrl.initialize();
+		this.notePageCtrl.initialize();
 	} catch (err) {
 		Wiz.logger.error('Wiz.FFPopup.showAndInitNotePage() Error : ' + err);
 	}
@@ -138,6 +142,8 @@ Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 };
 
 Wiz.FFPopup.prototype.getDocBody = function (clipType, isNative) {
+	//必须要将加入的信息去除，否则会截取到canvas标签
+	this._preview.clear();
 	if (isNative) {
 		//本地保存不需要获取文档内容，通过XPCOM处理
 		return "";

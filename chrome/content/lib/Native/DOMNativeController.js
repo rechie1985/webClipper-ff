@@ -6,8 +6,8 @@ Wiz.DOMNativeController = function (win, appId) {
 
 Wiz.DOMNativeController.prototype._nativeClient = null;
 
-Wiz.DOMNativeController.prototype.initialize = function (Win, appId) {
-	var nativeClient = win.document.getElementById(appId),
+Wiz.DOMNativeController.prototype.initialize = function (win, embedId) {
+	var nativeClient = win.document.getElementById(embedId),
 		version = nativeClient.Version;
 	if (version) {
 		this._nativeClient = nativeClient;
@@ -28,6 +28,7 @@ Wiz.DOMNativeController.prototype.getNativeCategory = function (userid) {
 			categoryStr = this._nativeClient.GetAllFolders(userid)
 		} catch (err) {
 			//获取不到，不做处理
+			Wiz.logger.error('Wiz.DOMNativeController.getNativeCategory() Error: ' + err);
 		}
 	}
 	return categoryStr;
