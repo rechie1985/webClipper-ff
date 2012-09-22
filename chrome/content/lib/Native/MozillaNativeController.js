@@ -597,19 +597,25 @@ Wiz.MozillaNativeController = function () {
             //
             wiz_km_writeFileWithCharset(fileNameHTMLSel, contentHTMLSel, "utf-8");
             //
-            var fileNameExe = wiz_km_getWizAppPath() + "WizWebCaptureResourceToDocument.exe";
+            var fileNameExe = wiz_km_getWizAppPath() + "Wiz.exe";
             //
             var exeFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
             exeFile.initWithPath(fileNameExe);
             //
-            var cmdLineText = fileNameConfig.path;
-            cmdLineText = wiz_km_unicodeToBytes(cmdLineText, "utf-8");
-            cmdLineText = wiz_km_base64Encode(cmdLineText);
-        	cmdLineText = "/FileName=" + cmdLineText
+            var dllFileName = wiz_km_getWizAppPath() + "NPWizWebCapture.dll";
+            var functionName = "WizKMResourceToDocument";
             //
-            var cmdLineExe = [cmdLineText];
+            var params = fileNameConfig.path;
+            params = wiz_km_unicodeToBytes(params, "utf-8");
+            params = wiz_km_base64Encode(params);
+            params = "/FileName=" + params;
+            params = params.replace(/\r/gi, "");
+            params = params.replace(/\n/gi, "");
+            //
+            var cmdLineExe = [dllFileName, functionName, params];
             //
             wiz_km_runExeFile(exeFile, cmdLineExe, false);
+
         }
         catch (err)
         {
