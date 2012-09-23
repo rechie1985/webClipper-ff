@@ -8,6 +8,7 @@ Wiz.NotePageControl = function (popup) {
 };
 
 Wiz.NotePageControl.prototype._popup = null;
+Wiz.NotePageControl.STORAGE_SAVE_TYPE = 'save_type';
 
 Wiz.NotePageControl.prototype.initialize = function () {
 	this.initNotePageListener();
@@ -180,12 +181,16 @@ Wiz.NotePageControl.prototype.noteSubmit = function () {
 Wiz.NotePageControl.prototype.initNativeDiv = function () {
 	var isWin = this.isWinPlatform();
 	if (isWin) {
-		// initSaveType();
+		// this.initSaveType();
 		$('#save_type_sel').change($.proxy(this.changeSaveTypehandler, this));
 	} else {
 		$('#save_type_sel').hide();
 		$('#native').remove();
 	}
+};
+
+Wiz.NotePageControl.prototype.initSaveType = function () {
+	Wiz.logger.debug('Wiz.NotePageControl.initSaveType(): ' + saveType);
 };
 
 Wiz.NotePageControl.prototype.isWinPlatform = function () {
@@ -252,14 +257,12 @@ Wiz.NotePageControl.prototype.changeSaveTypehandler = function (evt) {
 	var selectedOption = $('option:selected', '#save_type_sel'),
 		type = selectedOption.attr('id'),
 		hasNativeClient = Wiz.nativeManager.hasNativeClient();
-	if ('save_to_native' === type) {
+	if ('save_to_native' === type && !hasNativeClient) {
 		evt.preventDefault();
-		return ;
+		this.nativeConfirem();
+		// return ;
 	}
-	if (hasNativeClient) {
-		alert('need pc client');
-	}
-	// setSaveType(type);
+	this.setSaveType(type);
 };
 
 Wiz.NotePageControl.prototype.setSaveType = function (type) {
@@ -268,5 +271,4 @@ Wiz.NotePageControl.prototype.setSaveType = function (type) {
 	} else if (type === 'save_to_server') {
 		isNative = false;
 	}
-	localStorage['saveType'] = type;
 };

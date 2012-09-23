@@ -3,7 +3,7 @@ Wiz.Default = {
 	DOC_TITLE: "no title",
 	COOKIE_EXPIRE_SEC: 14 * 24 * 60 * 60,
 	TOKEN_EXPIRE_SEC: 3 * 60,
-	REFRESH_TOKEN_TIME_MS: 4 * 60 * 1000;
+	REFRESH_TOKEN_TIME_MS: 4 * 60 * 1000
 };
 
 Wiz.Api = {
