@@ -10,6 +10,7 @@ function initOverlay() {
 		Wiz.i18n.setStringBundle(i18n.stringBundle);
 	}
 	Wiz.init(content);
+	Wiz.remote.autoLogin();
 	var menu = document.getElementById("contentAreaContextMenu");
 	menu.addEventListener("popupshowing", contextPopupShowing, false);
 }

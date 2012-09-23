@@ -630,7 +630,6 @@ Wiz.MozillaNativeController = function () {
                 + '\r\nTitle=' + info.title 
                 + '\r\nLocation=' + info.category 
                 + '\r\nComments=' + wiz_km_base64Encode(comment);
-            Wiz.logger.debug(params);
             return params;
         } catch (err) {
             Wiz.logger.error('MozillaNativeController.addExtraParams() Error: ' + err);

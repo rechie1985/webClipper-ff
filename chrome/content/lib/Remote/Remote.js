@@ -11,7 +11,7 @@ Wiz.Remote.prototype.initCommon = function () {
 
 };
 
-Wiz.Remote.prototype.getPostObj = function () {
+Wiz.Remote.getPostObj = function () {
 	var data = {
 		'client_type' : 'web3',
 		'api_version' : 3,
@@ -24,17 +24,21 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 	try {
 		Wiz.logger.debug('Wiz.Remote.clientLogin : ' + username + '---' + password);
 
-		var postParams = this.getPostObj();
+		var postParams = Wiz.Remote.getPostObj();
 		postParams.user_id = username;
 		postParams.password = password;
-		var success = function(respJson) {
+		var success = function (respJson) {
+			//登陆成功后，集中处理需要的信息
 			Wiz.logger.debug('Wiz.Remote.clientLogin() Success : ' + JSON.stringify(respJson));
 
-			Wiz.saveAuthCookie(username + '*' + password ,rememberMe);
+			Wiz.saveAuthCookie(username + '*' + password, rememberMe);
 			Wiz.saveTokenCookie(respJson.token);
 			//每次登陆成功后，重新写入now_user,方便以后显示或查看
 			Wiz.prefStorage.set(Wiz.Pref.NOW_USER, username, 'char');
 			callSuccess(respJson);
+			
+			//自动保持token在线
+			setInterval(Wiz.remote.keepAlive, Wiz.Default.REFRESH_TOKEN_TIME_MS);
 		}
 		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [postParams], success, callError);
 	} catch (err) {
@@ -43,10 +47,19 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 };
 
 Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
+	Wiz.logger.debug('Wiz.Remote.keepAlive(): start keepAlive');
+	callSuccess = function () {
+		Wiz.logger.debug('Wiz.Remote.keepAlive(): ' + Wiz.context.token);
+	};
+	callError = function (errorMsg) {
+		//保持失败，自动登陆
+		this.autoLogin();
+		Wiz.logger.error('Wiz.Remote.keepAlive() Error: ' + errorMsg);
+	};
 	try {
 		var token = Wiz.context.token;
 		if (token !== null) {
-			var postParams = this.getPostObj();
+			var postParams = Wiz.Remote.getPostObj();
 			postParams.token = token;
 			xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_KEEPALIVE, [postParams], callSuccess, callError);
 		} else {
@@ -61,9 +74,9 @@ Wiz.Remote.prototype.getAllCategory = function (callSuccess, callError) {
 	try {
 		var token = Wiz.context.token;
 		if (token !== null) {
-			var postParams = this.getPostObj();
+			var postParams = Wiz.Remote.getPostObj();
 			postParams.token = token;
-			xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllCATEGORIES, [postParams], callSuccess, callError)
+			xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllCATEGORIES, [postParams], callSuccess, callError);
 		}	
 	} catch (err) {
 		Wiz.logger.error('Wiz.Remote.getAllCategory() Error : ' + err);
@@ -74,9 +87,9 @@ Wiz.Remote.prototype.getAllTag = function (callSuccess, callError) {
 	try {
 		var token = Wiz.context.token;
 		if (token !== null) {
-			var postParams = this.getPostObj();
+			var postParams = Wiz.Remote.getPostObj();
 			postParams.token = token;
-			xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllTAGS, [postParams], callSuccess, callError)
+			xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.GET_AllTAGS, [postParams], callSuccess, callError);
 		}
 	} catch (err) {
 		Wiz.logger.error('Wiz.Remote.getAllTag() Error : ' + err);
@@ -91,23 +104,23 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 				Wiz.logger.debug('Wiz.Remote.postDocument() callerror: ' + err);
 				var respJson = JSON.parse(err);
 				Wiz.notificator.showClipSuccess(docInfo.title);
-			} catch (err) {
-				Wiz.notificator.showError(err);
-				Wiz.logger.error('Wiz.Remote.postDocument() Error: ' + err);
+			} catch (e) {
+				Wiz.notificator.showError(e);
+				Wiz.logger.error('Wiz.Remote.postDocument() Error: ' + e);
 			}
-		}
-		var success = function (info) {
+		},
+			success = function (info) {
 			Wiz.logger.debug('Wiz.Remote.postDocument() callsuccess: ' + info);
 			Wiz.notificator.showClipSuccess(docInfo.title);
-		}
+		};
 		try {
-			var regexp = /%20/g, 
-				title = docInfo.title, 
-				category = docInfo.category, 
-				comment = docInfo.comment, 
+			var regexp = /%20/g,
+				title = docInfo.title,
+				category = docInfo.category,
+				comment = docInfo.comment,
 				body = docInfo.content;
 			  
-			if (comment && comment.trim() != '') {
+			if (comment && comment.trim() !== '') {
 				body = comment + '<hr>' + body;
 			}
 			
@@ -131,7 +144,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
  * @param  {[type]} callError   [description]
  * @return {[type]}             [description]
  */
-Wiz.Remote.prototype.autoLogin = function (cookie, callSuccess, callError) {
+Wiz.Remote.prototype.loginByCookie = function (cookie, callSuccess, callError) {
 	try {
 		var info = cookie.value,
 			split_count = info.indexOf('*md5'),
@@ -139,6 +152,20 @@ Wiz.Remote.prototype.autoLogin = function (cookie, callSuccess, callError) {
 			password = info.substring(split_count + 1);
 		this.clientLogin(user_id, password, true, callSuccess, callError);
 	} catch (err) {
-		Wiz.logger.error('Wiz.Remote.autoLogin() Error : ' + err);
+		Wiz.logger.error('Wiz.Remote.loginByCookie() Error : ' + err);
+	}
+};
+
+Wiz.Remote.prototype.autoLogin = function () {
+	var authCookie = Wiz.getAuthCookie(),
+		success = function (resp) {
+			Wiz.logger.info('Wiz.Remote.autoLogin()');
+		},
+		error = function (errorMsg) {
+			//自动登陆错误暂不做错误处理,记录日志
+			Wiz.logger.error('Wiz.Remote.autoLogin() Error: ' + errosMsg);
+		};
+	if (authCookie && authCookie.value) {	
+		this.loginByCookie(authCookie, success, error);
 	}
 };

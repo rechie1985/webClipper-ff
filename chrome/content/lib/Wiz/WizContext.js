@@ -20,6 +20,7 @@ Wiz.Context.prototype.getToken = function () {
 	if (cookie && cookie.value) {
 		this._token = cookie.value;
 	}
+	Wiz.logger.debug('Wiz.Context.getToken(): ' + this._token);
 	return this._token;
 };
 
