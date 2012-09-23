@@ -27,7 +27,6 @@ Wiz.PopupView = {
 	},
 	showLoginError : function (msg)
 	{
-		alert(msg);
 		$('#wiz_login').show();
 		$('#wiz_clip_detail').hide();
 		$('#div_error_validator').html(msg);
@@ -77,7 +76,7 @@ Wiz.PopupView = {
 		$('#fullPage').html(Wiz.i18n.getMessage('fullpage_save'));
 		$('#selection').html(Wiz.i18n.getMessage('select_save'));
 		$('#url').html(Wiz.i18n.getMessage('url_save'));
-		$('#native').html(Wiz.i18n.getMessage('save_more'));
+		// $('#native').html(Wiz.i18n.getMessage('save_more'));
 		//comment area
 		$('#comment_tip').html(Wiz.i18n.getMessage('comment_tip'));
 		$('#comment-info').attr('placeholder', Wiz.i18n.getMessage('add_comment'));

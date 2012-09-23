@@ -30,10 +30,10 @@ function ZtreeController() {
 		//收起后需要自动调整高度
     	Wiz.PopupView.setPopupHeight(300);
 		Wiz.PopupView.hideCategoryTreeAfterSelect(displayLocation, 500);
-		
-		Wiz.logger.debug(prefCategory);
+			
+		// Wiz.logger.debug('ZtreeController.zTreeOnClick(): ' + prefCategory);
 
-		Wiz.prefStorage.set(Wiz.Pref.DEFAULT_CATEGORY, prefCategory, 'char');
+		// Wiz.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.Pref.DEFAULT_CATEGORY, prefCategory);
 	}
 
 	/**

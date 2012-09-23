@@ -96,12 +96,13 @@ Wiz.NotePageControl.prototype.requestTitle = function () {
 };
 
 Wiz.NotePageControl.prototype.initDefault = function () {
-	this.initDefaultCategory();
+	// this.initDefaultCategory();
 	this.initDefaultSaveType();
 };
 
 Wiz.NotePageControl.prototype.initDefaultCategory = function () {
-	var defaultCategory = Wiz.prefStorage.get(Wiz.Pref.DEFAULT_CATEGORY, 'char');
+	var defaultCategory = Wiz.cookieManager.get(Wiz.AUTH_COOKIE_URL, Wiz.Pref.DEFAULT_CATEGORY);
+	Wiz.logger.debug('Wiz.NotePageControl.initDefaultCategory(): ' + defaultCategory);
 	if ((typeof defaultCategory === 'string') && defaultCategory.length > 0) {
 		
 		Wiz.logger.debug(defaultCategory);

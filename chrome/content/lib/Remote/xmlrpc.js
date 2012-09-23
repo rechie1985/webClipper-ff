@@ -54,6 +54,7 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
                         ret = xmlrpc.parseResponse(request.responseXML);
                     }
                     else{
+                        callErr(request.responseText);
                         throw request.responseText;
                     }
                 } catch (err) {
@@ -74,7 +75,8 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
                     callFinal();
             }
         }
-        catch (err) {
+        catch (err) {                        
+            callErr(err);
         }
     };
     request.send(sending);

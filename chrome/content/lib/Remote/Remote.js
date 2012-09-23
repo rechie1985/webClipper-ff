@@ -39,7 +39,9 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 			
 			//自动保持token在线
 			setInterval(Wiz.remote.keepAlive, Wiz.Default.REFRESH_TOKEN_TIME_MS);
-		}
+		},
+			callError = callError || function(){};
+
 		xmlrpc(Wiz.XMLRPC_URL, Wiz.Api.ACCOUNT_LOGIN, [postParams], success, callError);
 	} catch (err) {
 		Wiz.logger.error('Wiz.Remote.clientLogin() Error : ' + err);
@@ -110,9 +112,9 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 			}
 		},
 			success = function (info) {
-			Wiz.logger.debug('Wiz.Remote.postDocument() callsuccess: ' + info);
-			Wiz.notificator.showClipSuccess(docInfo.title);
-		};
+				Wiz.logger.debug('Wiz.Remote.postDocument() callsuccess: ' + info);
+				Wiz.notificator.showClipSuccess(docInfo.title);
+			};
 		try {
 			var regexp = /%20/g,
 				title = docInfo.title,

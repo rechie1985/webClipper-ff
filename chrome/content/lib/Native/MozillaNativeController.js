@@ -622,14 +622,15 @@ Wiz.MozillaNativeController = function () {
             throw err;
         }
     }
+
     function addExtraParams(info) {
         try {
             Wiz.logger.debug('Wiz.MozillaNativeController.addExtraParams ' + info.cmd);
-            var comment = (info.comment) ? ('<div>' + info.comment.replace(/\n/gi, '<br />') + '</div>') : '',
-            params = '\r\nSaveCommand=' + info.cmd + '\r\nUserId=' + info.userid
+            // var comment = (info.comment) ? ('<div>' + info.comment.replace(/\n/gi, '<br />') + '</div>') : '',
+            var params = '\r\nSaveCommand=' + info.cmd + '\r\nUserId=' + info.userid
                 + '\r\nTitle=' + info.title 
                 + '\r\nLocation=' + info.category 
-                + '\r\nComments=' + wiz_km_base64Encode(comment);
+                + '\r\nComments=' + wiz_km_base64Encode(wiz_km_unicodeToBytes(info.comment, 'utf-8'));
             return params;
         } catch (err) {
             Wiz.logger.error('MozillaNativeController.addExtraParams() Error: ' + err);

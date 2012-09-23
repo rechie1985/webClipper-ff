@@ -243,7 +243,7 @@ Wiz.ContentClipper.prototype.openPopup = function () {
 	params.i18n = Wiz.i18n;
 	params.content = content;
 	params.clipManager = Wiz.clipManager;
-	window.openDialog( "chrome://webclipper/content/FFPopup.xul", "",
+	window.openDialog( "chrome://webclipper/content/FFPopup.xul", "wiz-ff-popup",
                        "chrome, titlebar=no, left=" + popupPosition.left + ", top=" + popupPosition.top + ", resizable=no", params );
 };
 
