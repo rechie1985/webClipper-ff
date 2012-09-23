@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 Wiz.NativeManager = function () {
 	this.__defineGetter__('mozillaCtrl', this.getMozillaClient);
 };

@@ -1,7 +1,7 @@
 /**
  * @author rechie
  */
-'use strict';
+// 'use strict';
 Wiz.NotePageControl = function (popup) {
 	this._popup = popup;
 	// $('wiz_clip_detail').show($.proxy(this.initialize, this));

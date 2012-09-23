@@ -1,7 +1,7 @@
 /**
  * @author rechie
  */
-'use strict';
+// 'use strict';
 Wiz.LoginControl = function (popup) {
 	this._popup = popup;
 	this.initialize();

@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 Wiz.User = function (username) {
 	this.initialize(username);
 	this.__defineGetter__('name', this.getUserName);

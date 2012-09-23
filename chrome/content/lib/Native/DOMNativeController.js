@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 //主要用来获取本地客户端的目录信息
 Wiz.DOMNativeController = function (win, appId) { 
 	this.initialize(win, appId);

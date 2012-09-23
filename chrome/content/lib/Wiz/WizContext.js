@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 Wiz.Context = function () {
 	this.__defineSetter__('token', this.setToken);

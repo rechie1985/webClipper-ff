@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 Wiz.MozillaNativeController = function () {
 
     var WIZ_SAP_HKEY_CLASSES_ROOT = 0;

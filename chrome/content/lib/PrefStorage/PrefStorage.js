@@ -1,7 +1,7 @@
 /**
  * 用来存放简单的配置，如：当前用户、用户当前选项的内容(暂未添加)
  */
-'use strict';
+// 'use strict';
 Wiz.PrefStorage = function () {
 	this.__defineGetter__('prefService', this.getPrefService);
 	this.initialize();
