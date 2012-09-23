@@ -144,10 +144,10 @@ Wiz.FFPopup.prototype.switchPreview = function (previewType) {
 Wiz.FFPopup.prototype.getDocBody = function (clipType, isNative) {
 	//必须要将加入的信息去除，否则会截取到canvas标签
 	this._preview.clear();
-	if (isNative) {
-		//本地保存不需要获取文档内容，通过XPCOM处理
-		return "";
-	}
+	// if (isNative) {
+	// 	//本地保存不需要获取文档内容，通过XPCOM处理
+	// 	return "";
+	// }
 	if (this._clipManager && this._preview) {
 		return this._clipManager.getClipDocumentBody(clipType, this._preview);
 	}

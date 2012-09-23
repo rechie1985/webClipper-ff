@@ -69,7 +69,8 @@ Wiz.NotePageControl.prototype.initNotePageInfo = function() {
 	this.initNativeDiv();
 
 	this.initLogoutLink();
-	this.initDefaultCategory();
+
+	this.initDefault();
 	this.initSubmitGroup();
 	this.initUserLink();
 
@@ -77,6 +78,7 @@ Wiz.NotePageControl.prototype.initNotePageInfo = function() {
 	this.requestCategory();
 	//TODO save category
 };
+
 
 Wiz.NotePageControl.prototype.initLogoutLink = function () {
 	var logoutText = Wiz.i18n.getMessage('logout');
@@ -90,14 +92,35 @@ Wiz.NotePageControl.prototype.cmdLogout = function () {
 
 Wiz.NotePageControl.prototype.requestTitle = function () {
 	var title = this._popup.getTitle();
-	this.setTitle(title);
+	Wiz.PopupView.setDocTitle(title);
 };
 
-Wiz.NotePageControl.prototype.setTitle = function (title) {
-	$('#wiz_note_title').val(title);
+Wiz.NotePageControl.prototype.initDefault = function () {
+	this.initDefaultCategory();
+	this.initDefaultSaveType();
 };
 
 Wiz.NotePageControl.prototype.initDefaultCategory = function () {
+	var defaultCategory = Wiz.prefStorage.get(Wiz.Pref.DEFAULT_CATEGORY, 'char');
+	if ((typeof defaultCategory === 'string') && defaultCategory.length > 0) {
+		
+		Wiz.logger.debug(defaultCategory);
+
+		var array = defaultCategory.split('*'),
+			displayName = array[0],
+			location = array[1];
+		$('#category_info').html(displayName).attr('location', location);
+	}
+};
+
+Wiz.NotePageControl.prototype.initDefaultSaveType = function () {
+	var defaultSavetype = Wiz.prefStorage.get(Wiz.Pref.DEFAULT_SAVETYPE, 'char');
+	//暂时只有本地或服务端保存类型
+	// if ((typeof defaultSavetype === 'string') && defaultSavetype.length > 0) {
+	if ('save_to_native' === defaultSavetype) {
+		$('#save_type_sel')[0].options[1].selected = true;
+	}
+	// }
 };
 
 
@@ -262,13 +285,5 @@ Wiz.NotePageControl.prototype.changeSaveTypehandler = function (evt) {
 		this.nativeConfirem();
 		// return ;
 	}
-	this.setSaveType(type);
-};
-
-Wiz.NotePageControl.prototype.setSaveType = function (type) {
-	if (type === 'save_to_native') {
-		isNative = true;
-	} else if (type === 'save_to_server') {
-		isNative = false;
-	}
+	Wiz.prefStorage.set(Wiz.Pref.DEFAULT_SAVETYPE, type, 'char');
 };

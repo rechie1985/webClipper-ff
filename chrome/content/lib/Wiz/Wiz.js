@@ -2,15 +2,15 @@
 
 if (typeof Wiz == "undefined") {
     var Wiz = {
-		_clipManager : null,
-		_preview : null,
-		_remote : null,
-        _cookieManager : null,
-        _context : null,
-        _notificator : null,
-        _preferenceStorage : null,
-        _loggerManager : null,
-        _nativeManager : null
+		_clipManager : null,          //负责剪辑相关操作
+		_preview : null,              //预览相关操作
+		_remote : null,               //和服务器交互
+        _cookieManager : null,        //cookie相关操作
+        _context : null,              //上下文，保存token user等信息
+        _notificator : null,          //提示
+        _preferenceStorage : null,    //firefox提供的preference System,存放默认保存类型等配置信息
+        _loggerManager : null,        //日志操作
+        _nativeManager : null         //本地客户端相关操作
     };
     Wiz.AUTH_COOKIE_URL = 'http://service.wiz.cn/web';
     Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";

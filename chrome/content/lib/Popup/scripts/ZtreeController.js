@@ -24,10 +24,16 @@ function ZtreeController() {
 
 	function zTreeOnClick(event, treeId, treeNode) {
 		var nodeLocation = treeNode.location,
-			displayLocation = treeNode.displayLocation;
+			displayLocation = treeNode.displayLocation,
+			prefCategory = displayLocation + '*' + nodeLocation;
 		$('#category_info').attr('location', nodeLocation);
+		//收起后需要自动调整高度
     	Wiz.PopupView.setPopupHeight(300);
 		Wiz.PopupView.hideCategoryTreeAfterSelect(displayLocation, 500);
+		
+		Wiz.logger.debug(prefCategory);
+
+		Wiz.prefStorage.set(Wiz.Pref.DEFAULT_CATEGORY, prefCategory, 'char');
 	}
 
 	/**

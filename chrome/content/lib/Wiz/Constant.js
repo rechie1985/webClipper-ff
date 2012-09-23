@@ -15,5 +15,7 @@ Wiz.Api = {
 	DOCUMENT_POSTSIMPLE: "document.postSimpleData"
 };
 Wiz.Pref = {
-	NOW_USER: "now_user"
+	NOW_USER: "now_user",
+	DEFAULT_CATEGORY: 'default-category',
+	DEFAULT_SAVETYPE: 'default-savetype'
 };

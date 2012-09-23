@@ -95,5 +95,8 @@ Wiz.PopupView = {
         }
         window.sizeToContent();
         window.overlay.sizeToContent();
+	},
+	setDocTitle : function (title) {
+		$('#wiz_note_title').val(title);
 	}
 };

@@ -31,7 +31,7 @@ Wiz.NativeManager.prototype.getCmdByClipType = function (cliptype) {
 		cmd = Wiz.NativeManager.SAVE_FULLPAGE;
 		break;
 	case 'article' :
-		cmd = Wiz.NativeManager.SAVE_CONTEN;
+		cmd = Wiz.NativeManager.SAVE_CONTENT;
 		break;
 	case 'selection' :
 		cmd = Wiz.NativeManager.SAVE_SELECTION ;
