@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 /*
   This file is a collection of globally accessible utility functions. They're intended to be used from anywhere you 
   might need them, which could be in various extension pages, or in content scripts, etc. This is design ed to be a
@@ -8,7 +8,7 @@
 
 var GlobalUtils = {};
 (function(){
-  "use strict";
+  // "use strict";
 
   var urlMatcher = /^(.*?):\/\/((www\.)?(.*?))(:\d+)?(\/.*?)(\?.*)?$/;
 

@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.CookieManager = function () {
 	this.intialize();
 };

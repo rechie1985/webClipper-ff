@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.Remote = function () {
 	this.initialize();
 };

@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.CookieManagerImpl = function CookieManagerImpl() {};
 
 Wiz.CookieManagerImpl.prototype.set = function () {};

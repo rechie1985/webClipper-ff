@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.Document = function () {
 	this.__defineSetter__("title", this.setDocTitle);
 	this.__defineSetter__("content", this.setDocContent); 

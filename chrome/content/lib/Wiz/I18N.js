@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.i18n = {
 	_stringBundle : null,
 	getMessage : function(key) {

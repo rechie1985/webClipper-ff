@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.MozillaCookieManagerImpl = function MozillaCookieManagerImpl() {
 	this.__defineGetter__("ioService", this.getIoService);
 	this.__defineGetter__("cookieManagerService", this.getCookieManagerService);

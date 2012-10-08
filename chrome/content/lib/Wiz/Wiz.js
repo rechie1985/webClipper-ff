@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 if (typeof Wiz == "undefined") {
     var Wiz = {

@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 var wiznote_doAction = function( popupSrc, clipType ) {
 	Wiz.clipManager.startClip( popupSrc, clipType );
 }

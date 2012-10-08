@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.ClipSender = function (clipManager) {
 	this._clipManager = clipManager;
 	this.initialize();

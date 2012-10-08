@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.ClipManager = function() {
 	this.__defineGetter__("sender", this.getSender);
 	this.__defineGetter__("clipper", this.getClipper);

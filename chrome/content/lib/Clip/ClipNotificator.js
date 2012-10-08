@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 Wiz.ClipNotificator = function(clipManager) {
 	this.initialize();
 	this._clipManager = clipManager;
