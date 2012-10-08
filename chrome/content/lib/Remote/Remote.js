@@ -38,7 +38,7 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 			callSuccess(respJson);
 			
 			//自动保持token在线
-			setInterval(Wiz.remote.keepAlive, Wiz.Default.REFRESH_TOKEN_TIME_MS);
+			setInterval(Wiz.Remote.keepAlive, Wiz.Default.REFRESH_TOKEN_TIME_MS);
 		},
 			callError = callError || function(){};
 
