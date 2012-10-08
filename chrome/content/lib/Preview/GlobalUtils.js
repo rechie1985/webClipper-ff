@@ -100,16 +100,28 @@ var GlobalUtils = {};
   GlobalUtils.createUrlClipContent = function(title, url, favIcoUrl) {
     var titleAttr = (title) ? GlobalUtils.escapeXML(title) : "";
     var style = "font-size: 12pt; line-height: 18px; display: inline; background : white; border: 4px solid #CACA17; border-radius:5px; padding: 2px;";
-    var content = "<a title=\"" + titleAttr + "\" style=\"" + style + "\" href=\"" + url + "\">" + url + "</a>";
+    var content = "<a title=\"" + titleAttr + "\" style=\"" + style + "\" href=\"" + GlobalUtils.escapeHTML(url) + "\">" + GlobalUtils.escapeHTML(url) + "</a>";
     if (favIcoUrl && !BAD_FAV_ICON_URLS[favIcoUrl.toLowerCase()]) {
       var imgStyle = "display:inline;border: none; width: 16px; height: 16px; padding: 0px; margin: 0px 8px -2px 0px;";
-      content = "<span><img title=\"" + titleAttr + "\" style=\"" + imgStyle + "\" src=\"" + favIcoUrl + "\"/>" + 
+      content = "<span><img title=\"" + titleAttr + "\" style=\"" + imgStyle + "\" src=\"" + GlobalUtils.escapeHTML(favIcoUrl) + "\"/>" + 
         content + "</span>"
     } else {
       content = "<span>" + content + "</span>";
     }
     return content;
   };
+
+  //innerHTML with HTML Escaping
+  GlobalUtils.escapeHTML = function (str) {
+    if (!str || typeof str !== 'string')  {
+      return;
+    }
+    var returnValue = str.replace(/[&"<>]/g, function (m) {
+      return GlobalUtils.escapeHTML.replacements[m];
+    });
+    return returnValue;
+  }
+  GlobalUtils.escapeHTML.replacements = { "&": "&amp;", '"': "&quot", "<": "&lt;", ">": "&gt;" };
 
   Object.preventExtensions(GlobalUtils);
 })();

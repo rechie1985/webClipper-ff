@@ -116,6 +116,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 				Wiz.notificator.showClipSuccess(docInfo.title);
 			};
 		try {
+			Wiz.logger.debug('Wiz.Remote.postDocument start token = ' + Wiz.context.token);
 			var regexp = /%20/g,
 				title = docInfo.title,
 				category = docInfo.category,
