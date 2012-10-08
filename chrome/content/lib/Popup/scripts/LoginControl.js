@@ -56,7 +56,7 @@ Wiz.LoginControl.prototype.checkEmail = function () {
 	var email = $('#user_id').val(),
 		valid = this.verifyEmail(email);
 	if (!valid) {
-		$('#userid_error_tip').html(Wiz.i18n.getMessage('userid_error')).show(100);
+		$('#userid_error_tip').text(Wiz.i18n.getMessage('userid_error')).show(100);
 	}
 	return valid;
 
@@ -74,7 +74,7 @@ Wiz.LoginControl.prototype.checkPassword = function () {
 	$('#password_error_tip').hide();
 	var password = $('#password').val();
 	if (password.trim().length < 1) {
-		$('#password_error_tip').html(Wiz.i18n.getMessage('password_error')).show(100);
+		$('#password_error_tip').text(Wiz.i18n.getMessage('password_error')).show(100);
 		return false;
 	}
 	return true;
@@ -82,7 +82,7 @@ Wiz.LoginControl.prototype.checkPassword = function () {
 
 Wiz.LoginControl.prototype.initCreateAccountLink = function () {
 	var createAccount = $('#create_acount');
-	createAccount.html(Wiz.i18n.getMessage('create_account_link'));
+	createAccount.text(Wiz.i18n.getMessage('create_account_link'));
 	createAccount.show();
 	createAccount.bind('click', function (evt) {
 		window.open('http://service.wiz.cn/wizkm/a/signup');

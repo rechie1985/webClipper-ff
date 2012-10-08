@@ -60,7 +60,7 @@ Wiz.NotePageControl.prototype.initSubmitGroup = function () {
 		$('#submit-type option[id="article"]').attr('disabled', '');
 	}
 	var type = $('#submit-type').val();
-	$('#note_submit').html(type);
+	$('#note_submit').text(type);
 };
 
 Wiz.NotePageControl.prototype.initNotePageInfo = function() {
@@ -83,7 +83,7 @@ Wiz.NotePageControl.prototype.initNotePageInfo = function() {
 Wiz.NotePageControl.prototype.initLogoutLink = function () {
 	var logoutText = Wiz.i18n.getMessage('logout');
 	$('#header_user').show();
-	$('#logout_control').html(logoutText).bind('click', $.proxy(this.cmdLogout, this));
+	$('#logout_control').text(logoutText).bind('click', $.proxy(this.cmdLogout, this));
 };
 
 Wiz.NotePageControl.prototype.cmdLogout = function () {
@@ -110,7 +110,7 @@ Wiz.NotePageControl.prototype.initDefaultCategory = function () {
 		var array = defaultCategory.split('*'),
 			displayName = array[0],
 			location = array[1];
-		$('#category_info').html(displayName).attr('location', location);
+		$('#category_info').text(displayName).attr('location', location);
 	}
 };
 
@@ -270,7 +270,7 @@ Wiz.NotePageControl.prototype.initUserLink = function () {
 	var nowUserName = Wiz.prefStorage.get(Wiz.Pref.NOW_USER, 'char'),
 		token = Wiz.context.token;
 	if (nowUserName && nowUserName.length > 0) {
-		$('#header_username').html('(' + nowUserName + ')').bind('click', function (evt) {
+		$('#header_username').text('(' + nowUserName + ')').bind('click', function (evt) {
 			window.open(Wiz.AUTH_COOKIE_URL + '/?t=' + token);
 		});
 	}

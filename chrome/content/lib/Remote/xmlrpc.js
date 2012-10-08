@@ -37,7 +37,7 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
     var request = window.XMLHttpRequest ? new XMLHttpRequest()
         : new ActiveXObject("MSXML2.XMLHTTP.3.0");
     request.open("POST", server, true);
-    // request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.onreadystatechange = function() {
         Wiz.logger.debug('xmlrpc.ajx() onreadystatechange request.state: ' + request.readyState + ' request.status: ' + request.status + ' request.responseText: ' + request.responseText);
         if (request.readyState != 4)

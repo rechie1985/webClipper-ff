@@ -3,7 +3,7 @@ Wiz.PopupView = {
 	changeSubmitDisplayByType : function () 
 	{
 		var type = $('#submit-type').val();
-		$('#note_submit').html(type);
+		$('#note_submit').text(type);
 	},
 	showCategoryTreeFromLoading : function (animate_time_ms) 
 	{
@@ -13,7 +13,7 @@ Wiz.PopupView = {
 	showCategoryLoading : function (msg)
 	{
 		$('#category_loading').show();
-		$('#category_loading label').html(msg);
+		$('#category_loading label').text(msg);
 	},
 	hideCategoryLoading : function()
 	{
@@ -22,20 +22,20 @@ Wiz.PopupView = {
 	showClipFailure : function (msg)
 	{
 		$('#waiting_div').hide();
-		$('#errorpage_tip label').html(msg);
+		$('#errorpage_tip label').text(msg);
 		$('#errorpage_tip').show();
 	},
 	showLoginError : function (msg)
 	{
 		$('#wiz_login').show();
 		$('#wiz_clip_detail').hide();
-		$('#div_error_validator').html(msg);
+		$('#div_error_validator').text(msg);
 		$('#waiting').hide();
 	},
 	showWaiting : function (msg)
 	{	
 		$('#waiting').show();
-		$('#waiting-label').html(msg);
+		$('#waiting-label').text(msg);
 		$('#wiz_login').hide();
 		$('#wiz_clip_detail').hide();
 	},
@@ -53,38 +53,38 @@ Wiz.PopupView = {
 	},
 	hideCategoryTreeAfterSelect : function (display, delay_ms)
 	{
-		$("#category_info").html(display);
+		$("#category_info").text(display);
 		$("#ztree_container").hide(delay_ms);
 	},
 	hideCreateDiv : function () {
 		$('#loginoff_div').hide();
 	},
 	localizePopup : function () {
-		$('#waiting-label').html(Wiz.i18n.getMessage('popup_wating'));
+		$('#waiting-label').text(Wiz.i18n.getMessage('popup_wating'));
 
 		//login page
-		$('#user_id_tip').html(Wiz.i18n.getMessage('user_id_tip'));
-		$('#password_tip').html(Wiz.i18n.getMessage('password_tip'));
-		$('#keep_password_tip').html(Wiz.i18n.getMessage('keep_password_tip'));
-		$('#login_button').html('&nbsp;' + Wiz.i18n.getMessage('login_msg') + '&nbsp;');
+		$('#user_id_tip').text(Wiz.i18n.getMessage('user_id_tip'));
+		$('#password_tip').text(Wiz.i18n.getMessage('password_tip'));
+		$('#keep_password_tip').text(Wiz.i18n.getMessage('keep_password_tip'));
+		$('#login_button').text(' ' + Wiz.i18n.getMessage('login_msg') + ' ');
 
 		//note info page
-		$('#note_title_tip').html(Wiz.i18n.getMessage('note_title_tip'));
-		$('#category_tip').html(Wiz.i18n.getMessage('category_tip'));
+		$('#note_title_tip').text(Wiz.i18n.getMessage('note_title_tip'));
+		$('#category_tip').text(Wiz.i18n.getMessage('category_tip'));
 		//submit type
-		$('#article').html(Wiz.i18n.getMessage('article_save'));
-		$('#fullPage').html(Wiz.i18n.getMessage('fullpage_save'));
-		$('#selection').html(Wiz.i18n.getMessage('select_save'));
-		$('#url').html(Wiz.i18n.getMessage('url_save'));
-		// $('#native').html(Wiz.i18n.getMessage('save_more'));
+		$('#article').text(Wiz.i18n.getMessage('article_save'));
+		$('#fullPage').text(Wiz.i18n.getMessage('fullpage_save'));
+		$('#selection').text(Wiz.i18n.getMessage('select_save'));
+		$('#url').text(Wiz.i18n.getMessage('url_save'));
+		// $('#native').text(Wiz.i18n.getMessage('save_more'));
 		//comment area
-		$('#comment_tip').html(Wiz.i18n.getMessage('comment_tip'));
+		$('#comment_tip').text(Wiz.i18n.getMessage('comment_tip'));
 		$('#comment-info').attr('placeholder', Wiz.i18n.getMessage('add_comment'));
-		$('#save_to_native').html(Wiz.i18n.getMessage('save_to_native'));
-		$('#save_to_server').html(Wiz.i18n.getMessage('save_to_server'));
+		$('#save_to_native').text(Wiz.i18n.getMessage('save_to_native'));
+		$('#save_to_server').text(Wiz.i18n.getMessage('save_to_server'));
 
 		//默认文件夹
-		$('#category_info').html('/' + Wiz.i18n.getMessage('MyNotes') + '/').attr('location', '/My Notes/');
+		$('#category_info').text('/' + Wiz.i18n.getMessage('MyNotes') + '/').attr('location', '/My Notes/');
 	},
 	setPopupHeight : function (height_px) {
         var frame = window.overlay.document.getElementById( "popupContent" );
