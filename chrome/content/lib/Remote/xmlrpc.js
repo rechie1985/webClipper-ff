@@ -39,7 +39,7 @@ var ajax = function(server, sending, callback, callErr, callFinal) {
     request.open("POST", server, true);
     request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     request.onreadystatechange = function() {
-        Wiz.logger.debug('xmlrpc.ajx() onreadystatechange request.state: ' + request.readyState + ' request.status: ' + request.status + ' request.responseText: ' + request.responseText);
+        Wiz.logger.debug('xmlrpc.ajax() onreadystatechange request.state: ' + request.readyState + ' request.status: ' + request.status + ' request.responseText: ' + request.responseText);
         if (request.readyState != 4)
             return; // TODO: callbacks?
         try {

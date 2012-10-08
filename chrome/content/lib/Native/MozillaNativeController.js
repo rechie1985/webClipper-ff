@@ -520,7 +520,7 @@ Wiz.MozillaNativeController = function () {
             }
             
             //
-            var win = (info) ? (info.win) : (document.commandDispatcher.focusedWindow.top);
+            var win = (info && info.win) ? (info.win) : (document.commandDispatcher.focusedWindow.top);
             var doc = win.document;
             //
             var refURLObj = Components.classes['@mozilla.org/network/standard-url;1'].createInstance(Components.interfaces.nsIURI);

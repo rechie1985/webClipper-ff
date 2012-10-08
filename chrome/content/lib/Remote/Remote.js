@@ -105,7 +105,12 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 			try {
 				Wiz.logger.debug('Wiz.Remote.postDocument() callerror: ' + err);
 				var respJson = JSON.parse(err);
-				Wiz.notificator.showClipSuccess(docInfo.title);
+				if (respJson.return_code != 200) {
+					Wiz.notificator.showError(respJson.return_message);
+					this.autoLogin();
+				} else {
+					Wiz.notificator.showClipSuccess(docInfo.title);
+				}
 			} catch (e) {
 				Wiz.notificator.showError(e);
 				Wiz.logger.error('Wiz.Remote.postDocument() Error: ' + e);
@@ -133,7 +138,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 
 			var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(token).replace(regexp,  '+') 
 								+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
-			ajax(Wiz.POST_DOCUMENT_URL, requestData, success, error);				
+			ajax(Wiz.POST_DOCUMENT_URL, requestData, success, error);
 		} catch (err) {
 			Wiz.logger.error('Wiz.Remote.postDocument() Error : ' + err);
 		}

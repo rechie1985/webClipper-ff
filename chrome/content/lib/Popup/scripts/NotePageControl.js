@@ -198,8 +198,8 @@ Wiz.NotePageControl.prototype.initCategoryTree = function (params) {
 };
 
 Wiz.NotePageControl.prototype.noteSubmit = function () {
-	this.requestSubmit();
 	this._popup.closePopup();
+	this.requestSubmit();
 };
 
 Wiz.NotePageControl.prototype.initNativeDiv = function () {
@@ -231,7 +231,11 @@ Wiz.NotePageControl.prototype.requestSubmit = function () {
 	var docInfo = this.prepareAndGetDocInfo();
 	if (docInfo) {
 		Wiz.notificator.showClipping(docInfo.title);
-		this._popup.requestSubmit(docInfo);
+		//TODO 解决popup页面关闭导致ajax被中止，造成无法显示成功或失败信息的问题
+		//暂时用该方法解决，应改为使用firefox Sandboxed Http Connections来处理
+		//https://developer.mozilla.org/en-US/docs/Creating_Sandboxed_HTTP_Connections
+		window.overlay.arguments[0].clipManager.saveClip(docInfo);
+		// this._popup.requestSubmit(docInfo);
 	}
 };
 
