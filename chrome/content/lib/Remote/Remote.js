@@ -48,7 +48,7 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 	}
 };
 
-Wiz.Remote.prototype.keepAlive = function (callSuccess, callError) {
+Wiz.Remote.keepAlive = function (callSuccess, callError) {
 	Wiz.logger.debug('Wiz.Remote.keepAlive(): start keepAlive');
 	callSuccess = function () {
 		Wiz.logger.debug('Wiz.Remote.keepAlive(): ' + Wiz.context.token);
