@@ -19,7 +19,7 @@ Wiz.FileLoggerImpl.prototype.initialize = function () {
 
 		 
 		var file = Components.classes[ "@mozilla.org/file/local;1" ].createInstance( Components.interfaces.nsILocalFile );
-        file.initWithPath(profilePath + '\\' + this.constructor.LOG_FILE_NAME);
+        file.initWithPath(profilePath + Wiz.SLASH + this.constructor.LOG_FILE_NAME);
 
         var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);		
 		// use 0x02 | 0x10 to open file for appending.

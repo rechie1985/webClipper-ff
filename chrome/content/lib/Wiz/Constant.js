@@ -1,3 +1,6 @@
+// 'use strict';
+Wiz.IS_WINDOWS = (navigator.platform.indexOf( "Win" ) != -1);
+Wiz.SLASH = (Wiz.IS_WINDOWS) ? "\\" : "/";
 Wiz.Default = {
 	DOC_CATEGORY: "/My Notes/",
 	DOC_TITLE: "no title",
