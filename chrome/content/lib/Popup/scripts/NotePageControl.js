@@ -198,8 +198,10 @@ Wiz.NotePageControl.prototype.initCategoryTree = function (params) {
 };
 
 Wiz.NotePageControl.prototype.noteSubmit = function () {
-	this._popup.closePopup();
 	this.requestSubmit();
+	//顺序不能乱，应该先提交申请，后关闭popup页面
+	//否则关闭页面后，页面内所有object被设为null，无法正确获取文档内容
+	this._popup.closePopup();
 };
 
 Wiz.NotePageControl.prototype.initNativeDiv = function () {
