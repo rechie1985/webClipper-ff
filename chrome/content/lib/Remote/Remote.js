@@ -55,7 +55,7 @@ Wiz.Remote.keepAlive = function (callSuccess, callError) {
 	};
 	callError = function (errorMsg) {
 		//保持失败，自动登陆
-		this.autoLogin();
+		Wiz.remote.autoLogin();
 		Wiz.logger.error('Wiz.Remote.keepAlive() Error: ' + errorMsg);
 	};
 	try {
@@ -107,7 +107,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 				var respJson = JSON.parse(err);
 				if (respJson.return_code != 200) {
 					Wiz.notificator.showError(respJson.return_message);
-					this.autoLogin();
+					Wiz.remote.autoLogin();
 				} else {
 					Wiz.notificator.showClipSuccess(docInfo.title);
 				}
@@ -165,6 +165,7 @@ Wiz.Remote.prototype.loginByCookie = function (cookie, callSuccess, callError) {
 };
 
 Wiz.Remote.prototype.autoLogin = function () {
+	Wiz.logger.error('Wiz.Remote.autoLogin() Start ');
 	var authCookie = Wiz.getAuthCookie(),
 		success = function (resp) {
 			Wiz.logger.info('Wiz.Remote.autoLogin()');
