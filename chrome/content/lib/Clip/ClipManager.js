@@ -19,7 +19,12 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 			Wiz.nativeManager.startNativeClip();
 		} else {
 			if (token) {
-				this.contenxtMenuClipFullpage();
+				//右键菜单保存时，无本地客户端，要判断用户是否手动选择
+				if (this.tab.document.getSeleciton()) {
+					this.contenxtMenuClipSelection();
+				} else {
+					this.contenxtMenuClipFullpage();
+				}
 			} else {
 				this._clipper.openPopup();
 			}
