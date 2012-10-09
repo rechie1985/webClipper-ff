@@ -21,19 +21,19 @@ Wiz.ClipNotificator.prototype.showNotification = function (notifiImage, notifiTi
 };
 
 Wiz.ClipNotificator.prototype.showClipping = function (docTitle) {
-	var clippingImageUrl = 'chrome://webclipper/skin/images/scissors.png',
+	var clippingImageUrl = 'chrome://wiznote-webclipper/skin/images/scissors.png',
 		clippingTitle = Wiz.i18n.getMessage('clipResult_clipping');
 	this.showNotification(clippingImageUrl, clippingTitle, docTitle);
 };
 
 Wiz.ClipNotificator.prototype.showError = function (errorMsg) {
-	var errorImageUrl = 'chrome://webclipper/skin/images/warning.png',
+	var errorImageUrl = 'chrome://wiznote-webclipper/skin/images/warning.png',
 		errorTitle = Wiz.i18n.getMessage('clipResult_error');
 	this.showNotification(errorImageUrl, errorTitle, errorMsg);
 };
 
 Wiz.ClipNotificator.prototype.showClipSuccess = function (docTitle) {
-	var clippingImageUrl = 'chrome://webclipper/skin/images/check.png',
+	var clippingImageUrl = 'chrome://wiznote-webclipper/skin/images/check.png',
 		clippingTitle = Wiz.i18n.getMessage('clipResult_success');
 	this.showNotification(clippingImageUrl, clippingTitle, docTitle);
 };

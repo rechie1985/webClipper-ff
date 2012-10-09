@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://webclipper/skin/style/webclipperOverlay.css" ?>
-<?xml-stylesheet href="chrome://webclipper/skin/style/contentpreview.css" ?>
-<!DOCTYPE prefwindow SYSTEM "chrome://webclipper/locale/webclipperOverlay.dtd">
+<?xml-stylesheet href="chrome://wiznote-webclipper/skin/style/webclipperOverlay.css" ?>
+<?xml-stylesheet href="chrome://wiznote-webclipper/skin/style/contentpreview.css" ?>
+<!DOCTYPE prefwindow SYSTEM "chrome://wiznote-webclipper/locale/webclipperOverlay.dtd">
 
 <overlay id="webclipperOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Wiz.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/WizContext.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/I18N.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/Constant.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/PopupPosition.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Wiz/ScriptLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/LoggerLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/PrefStorage/PrefStorage.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/ModalLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/CookieLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/UtilLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/PreviewLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/RemoteLoader.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/ClipLoader.js"/> 
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Loader/NativeLoader.js"/> 
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Wiz/Wiz.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Wiz/WizContext.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Wiz/I18N.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Wiz/Constant.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Wiz/PopupPosition.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Wiz/ScriptLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/LoggerLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/PrefStorage/PrefStorage.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/ModalLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/CookieLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/UtilLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/PreviewLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/RemoteLoader.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/ClipLoader.js"/> 
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Loader/NativeLoader.js"/> 
 
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/Clip.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/Clip/ClipManager.js"/>
-  <script type="text/javascript" src="chrome://webclipper/content/lib/FFWizEntry.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Clip/Clip.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/Clip/ClipManager.js"/>
+  <script type="text/javascript" src="chrome://wiznote-webclipper/content/lib/FFWizEntry.js"/>
 
     <!-- This is for the toolbar in Web -->
     <toolbarpalette id="BrowserToolbarPalette">
@@ -36,8 +36,8 @@
 
       <!-- This is for the Tools menu -->
     <menupopup id="menu_ToolsPopup">
-        <menuseparator id="webclipper-menu-sep"/>
-        <menuitem id="webclipper-menu"
+        <menuseparator id="wiznote-webclipper-menu-sep"/>
+        <menuitem id="wiznote-webclipper-menu"
                   label="&add_to_wiznote;"
                   oncommand="wiznote_doAction( null );"/>
 
@@ -45,8 +45,8 @@
 
     <!-- This is for the context menu -->
     <popup id="contentAreaContextMenu">
-        <menuseparator id="webclipper-contextmenu-sep"/>
-        <menuitem id="webclipper-contextmenu-popup-clippage"
+        <menuseparator id="wiznote-webclipper-contextmenu-sep"/>
+        <menuitem id="wiznote-webclipper-contextmenu-popup-clippage"
                   label="&contextMenu_clip_this_page;" 
                   class="menuitem-iconic webclipper-contextMenu-item" 
                   oncommand="wiznote_doAction( document.popupNode, 'CLIP_ACTION_FULL_PAGE' );"/>
@@ -54,6 +54,6 @@
 
 
     <stringbundleset id="stringbundleset">
-        <stringbundle id="wiznote_i18n" src="chrome://webclipper/locale/webclipper.properties"/>
+        <stringbundle id="wiznote_i18n" src="chrome://wiznote-webclipper/locale/webclipper.properties"/>
     </stringbundleset>
 </overlay>
