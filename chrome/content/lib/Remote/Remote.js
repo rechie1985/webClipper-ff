@@ -20,6 +20,11 @@ Wiz.Remote.getPostObj = function () {
 	return data;
 };
 
+Wiz.Remote.autoKeepAliveProc = null;
+Wiz.Remote.autoLoginTimes = 0;
+Wiz.Remote.autoLoginLimit = 3;
+
+
 Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, callSuccess, callError) {
 	try {
 		Wiz.logger.debug('Wiz.Remote.clientLogin : ' + username + '---' + password);
@@ -29,16 +34,24 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 		postParams.password = password;
 		var success = function (respJson) {
 			//登陆成功后，集中处理需要的信息
-			Wiz.logger.debug('Wiz.Remote.clientLogin() Success : ' + JSON.stringify(respJson));
+			try {
+				Wiz.logger.debug('Wiz.Remote.clientLogin() Success : ' + JSON.stringify(respJson));
 
-			Wiz.saveAuthCookie(username + '*' + password, rememberMe);
-			Wiz.saveTokenCookie(respJson.token);
-			//每次登陆成功后，重新写入now_user,方便以后显示或查看
-			Wiz.prefStorage.set(Wiz.Pref.NOW_USER, username, 'char');
-			callSuccess(respJson);
-			
-			//自动保持token在线
-			setInterval(Wiz.Remote.keepAlive, Wiz.Default.REFRESH_TOKEN_TIME_MS);
+				Wiz.saveAuthCookie(username + '*' + password, rememberMe);
+				Wiz.saveTokenCookie(respJson.token);
+				//每次登陆成功后，重新写入now_user,方便以后显示或查看
+				Wiz.prefStorage.set(Wiz.Pref.NOW_USER, username, 'char');
+				callSuccess(respJson);
+				
+				//自动保持token在线
+				//需要判断是否已经自动keep alive
+				//否则会造成死循环
+				if (!Wiz.Remote.autoKeepAliveProc) {
+					Wiz.Remote.autoKeepAliveProc = setInterval(Wiz.Remote.keepAlive, 10000);//Wiz.Default.REFRESH_TOKEN_TIME_MS);
+				}
+			} catch (err) {
+				Wiz.logger.error('Wiz.Remote.clientLogin callbackSuccess Error: ' + err);
+			}
 		},
 			callError = callError || function(){};
 
@@ -55,8 +68,23 @@ Wiz.Remote.keepAlive = function (callSuccess, callError) {
 	};
 	callError = function (errorMsg) {
 		//保持失败，自动登陆
-		Wiz.remote.autoLogin();
-		Wiz.logger.error('Wiz.Remote.keepAlive() Error: ' + errorMsg);
+		//重试3次
+		try {
+			if (Wiz.Remote.autoLoginTimes < Wiz.Remote.autoLoginLimit) {
+				Wiz.Remote.autoLoginTimes ++;
+				Wiz.remote.autoLogin();
+				Wiz.logger.debug('Wiz.remote.autoLoginTimes: ' + Wiz.Remote.autoLoginTimes);
+			} else {
+				//重试超过3次，关闭自动keep alive
+				if (Wiz.Remote.autoKeepAliveProc) {
+					clearInterval(Wiz.Remote.autoKeepAliveProc);
+					Wiz.logger.error('Wiz.Remote.autoLogin Time out');
+				}
+			}
+			Wiz.logger.error('Wiz.Remote.keepAlive() Error: ' + errorMsg);
+		} catch (err) {
+			Wiz.logger.error('Wiz.Remote.keepAlive() callError Error: ' + err);
+		}
 	};
 	try {
 		var token = Wiz.context.token;
@@ -107,7 +135,11 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 				var respJson = JSON.parse(err);
 				if (respJson.return_code != 200) {
 					Wiz.notificator.showError(respJson.return_message);
-					Wiz.remote.autoLogin();
+
+					if (Wiz.Remote.autoLoginTimes < Wiz.Remote.autoLoginLimit) {
+						Wiz.Remote.autoLoginTimes ++;
+						Wiz.remote.autoLogin();
+					}
 				} else {
 					Wiz.notificator.showClipSuccess(docInfo.title);
 				}
