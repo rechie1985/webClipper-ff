@@ -13,7 +13,7 @@ Wiz.Remote.prototype.initCommon = function () {
 
 Wiz.Remote.getPostObj = function () {
 	var data = {
-		'client_type' : 'web3',
+		'client_type' : 'webclip_firefox',
 		'api_version' : 3,
 	    'program_type' : 'normal'
 	};
