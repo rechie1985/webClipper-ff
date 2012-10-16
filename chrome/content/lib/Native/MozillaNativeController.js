@@ -616,12 +616,31 @@ Wiz.MozillaNativeController = function () {
             var cmdLineExe = [dllFileName, functionName, params];
             //
             wiz_km_runExeFile(exeFile, cmdLineExe, false);
-
+            getLocaleCharset();
         }
         catch (err)
         {
             throw err;
         }
+    }
+
+    function getLocaleCharset() {
+        try {
+            const cc = Components.classes;
+            const ci = Components.interfaces;
+            var localeService = cc["@mozilla.org/intl/nslocaleservice;1"].getService(ci.nsILocaleService);
+            var charset = localeService.getSystemLocale().getCategory('NSILOCALE_MESSAGES');
+            alert(charset);
+        } catch (err) {
+            alert(err);
+        }
+        // NSILOCALE_COLLATE - Collation order. How strings are sorted.
+        // NSILOCALE_CTYPE - Character classification and case conversion.
+        // NSILOCALE_MONETARY - Monetary formatting.
+        // NSILOCALE_NUMERIC - Numeric, non-monetary formatting.
+        // NSILOCALE_TIME - Date and time formats.
+        // NSILOCALE_MESSAGES - Related to fonts, character encodings and so on.
+
     }
 
     function addExtraParams(info) {
