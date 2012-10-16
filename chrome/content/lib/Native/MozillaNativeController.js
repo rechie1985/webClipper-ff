@@ -612,6 +612,7 @@ Wiz.MozillaNativeController = function () {
             params = params.replace(/\r/gi, "");
             params = params.replace(/\n/gi, "");
             //
+            dllFileName = wiz_km_unicodeToBytes(dllFileName, "gb2312");
             var cmdLineExe = [dllFileName, functionName, params];
             //
             wiz_km_runExeFile(exeFile, cmdLineExe, false);
