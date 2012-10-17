@@ -22,3 +22,61 @@ Wiz.Pref = {
 	DEFAULT_CATEGORY: 'default-category',
 	DEFAULT_SAVETYPE: 'default-savetype'
 };
+
+Wiz.CHARSETMAP = {
+	"ar-sa": 'Arabic',
+
+	"eu": 'ANSI',
+
+	"ca": 'ANSI',
+
+	"zh-cn": 'GB2312',
+
+	"zh-tw": 'Chinese-Big 5',
+
+	"cs": 'Eastern European',
+
+	"da": 'ANSI',
+
+	"n": 'ANSI',
+
+	"en-us": 'ANSI',
+
+	"fi": 'ANSI',
+
+	"fr": 'ANSI',
+
+	"de": 'ANSI',
+
+	"e": 'Greek',
+
+	"he": 'Hebrew',
+
+	"hu": 'Eastern European',
+
+	"it": 'ANSI',
+
+	"ja": 'Shift-JIS',
+
+	"ko": 'Johab',
+
+	"no": 'ANSI',
+
+	"p": 'Eastern European',
+
+	"pt": 'ANSI',
+
+	"pt-br": 'ANSI',
+
+	"ru": 'Russian',
+
+	"sk": 'Eastern European',
+
+	"s": 'Eastern European',
+
+	"es": 'ANSI',
+
+	"sv": 'ANSI',
+
+	"tr": 'Turkish'
+} 

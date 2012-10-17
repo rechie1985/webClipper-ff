@@ -612,7 +612,11 @@ Wiz.MozillaNativeController = function () {
             params = params.replace(/\r/gi, "");
             params = params.replace(/\n/gi, "");
             //
-            dllFileName = wiz_km_unicodeToBytes(dllFileName, "gb2312");
+            //2012-10-17nslProcess传入cmdLineExe必须要使用本地字符集编码
+            //从注册表中获取的目录信息是unicode
+            var httpCharset = getLocaleCharset().toLowerCase();
+            dllFileName = wiz_km_unicodeToBytes(dllFileName, Wiz.CHARSETMAP[httpCharset]);
+            //
             var cmdLineExe = [dllFileName, functionName, params];
             //
             wiz_km_runExeFile(exeFile, cmdLineExe, false);
@@ -624,15 +628,19 @@ Wiz.MozillaNativeController = function () {
         }
     }
 
+    /**
+     * 获取本地字符集
+     * @return {[type]} [description]
+     */
     function getLocaleCharset() {
         try {
             const cc = Components.classes;
             const ci = Components.interfaces;
             var localeService = cc["@mozilla.org/intl/nslocaleservice;1"].getService(ci.nsILocaleService);
-            var charset = localeService.getSystemLocale().getCategory('NSILOCALE_MESSAGES');
-            alert(charset);
+            var charset = localeService.getSystemLocale().getCategory('NSILOCALE_CTYPE');
+            return charset;
         } catch (err) {
-            alert(err);
+            throw err;
         }
         // NSILOCALE_COLLATE - Collation order. How strings are sorted.
         // NSILOCALE_CTYPE - Character classification and case conversion.
