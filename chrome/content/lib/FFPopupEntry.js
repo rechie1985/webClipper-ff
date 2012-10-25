@@ -1,13 +1,17 @@
 // 'use strict';
 function wiz_initFFPopup() {
-	var params = window.overlay.arguments[0];
-	var FFpopup = new Wiz.FFPopup(params);
-	Wiz.i18n = params.i18n;
-	window.focus();
-	$(window).blur(function () {
-		FFpopup.closePopup();
-	});
-	FFpopup.startPopup();
+    try { 
+    	var params = window.overlay.arguments[0];
+    	var FFpopup = new Wiz.FFPopup(params);
+    	Wiz.i18n = params.i18n;
+    	window.focus();
+    	$(window).blur(function () {
+    		FFpopup.closePopup();
+    	});
+    	FFpopup.startPopup();
+    } catch (err) {
+        Wiz.logger.error('FFpopupEntry.wiz_initFFPopup() Error: ' + err);
+    }
 }
 
 $(document).ready( function() {

@@ -22,8 +22,11 @@ Wiz.FFPopup.prototype.initialize = function (params) {
 	this._loginCtrl = new Wiz.LoginControl(this);
 	this._notePageCtrl = new Wiz.NotePageControl(this);
 
-	Wiz.nativeManager.initDOMNativeController(window, Wiz.FFPopup.CLIENT_DOM_ID);
+	if (Wiz.nativeManager.bInstall()) {
+		Wiz.nativeManager.initDOMNativeController(window, Wiz.FFPopup.CLIENT_DOM_ID);
+	}
 };
+
 
 Wiz.FFPopup.prototype.getClipManager = function () {
 	if (!this._clipManager) {

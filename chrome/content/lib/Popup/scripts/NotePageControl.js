@@ -283,14 +283,22 @@ Wiz.NotePageControl.prototype.initUserLink = function () {
 };
 
 
+
 Wiz.NotePageControl.prototype.changeSaveTypehandler = function (evt) {
 	var selectedOption = $('option:selected', '#save_type_sel'),
 		type = selectedOption.attr('id'),
-		hasNativeClient = Wiz.nativeManager.hasNativeClient();
+		hasNativeClient = Wiz.nativeManager.bInstall();
 	if ('save_to_native' === type && !hasNativeClient) {
 		evt.preventDefault();
-		this.nativeConfirem();
+		this.nativeConfirm();
 		// return ;
 	}
 	Wiz.prefStorage.set(Wiz.Pref.DEFAULT_SAVETYPE, type, 'char');
 };
+
+Wiz.NotePageControl.prototype.nativeConfirm = function () {
+	var installNotifyMsg = Wiz.i18n.getMessage('install_client_notify');
+	if (window.confirm(installNotifyMsg)) {
+		window.open(updateClientUrl);
+	}
+}

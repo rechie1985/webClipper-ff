@@ -238,13 +238,17 @@ Wiz.ContentClipper.prototype.getArticleHTML = function (win, preview) {
 }
 
 Wiz.ContentClipper.prototype.openPopup = function () {
-	var popupPosition = new Wiz.PopupPositioner("webclipper-toolbar-button", 500, 300).getPosition(),
-		params = {};
-	params.i18n = Wiz.i18n;
-	params.content = content;
-	params.clipManager = Wiz.clipManager;
-	window.openDialog( "chrome://wiznote-webclipper/content/FFPopup.xul", null,
-                       "chrome, titlebar=no, left=" + popupPosition.left + ", top=" + popupPosition.top + ", resizable=no", params );
+	try { 
+		var popupPosition = new Wiz.PopupPositioner("webclipper-toolbar-button", 500, 300).getPosition(),
+			params = {};
+		params.i18n = Wiz.i18n;
+		params.content = content;
+		params.clipManager = Wiz.clipManager;
+		window.openDialog( "chrome://wiznote-webclipper/content/FFPopup.xul", 'wiz-ff-popup',
+	                       "chrome, titlebar=no, left=" + popupPosition.left + ", top=" + popupPosition.top + ", resizable=no", params );
+	} catch (err) {
+		Wiz.logger.error('Wiz.ContentClipper.openPopup() Error: ' + err);
+	}
 };
 
 Wiz.ContentClipper.prototype.completeImgSrc = function (tab) {
