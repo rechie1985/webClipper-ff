@@ -28,7 +28,7 @@
     <!-- This is for the toolbar in Web -->
     <toolbarpalette id="BrowserToolbarPalette">
         <toolbarbutton id="webclipper-toolbar-button" label="&add_to_wiznote;"
-                       class="webclipper-toolbarbutton"
+                       class="webclipper-toolbar-button"
                        tooltiptext="&add_to_wiznote_tooltip;"
                        oncommand="wiznote_doAction( null );">
         </toolbarbutton>
