@@ -9,7 +9,6 @@ Wiz.ClipManager = function() {
 Wiz.ClipManager.prototype.initialize = function () {
 	this._clipper = new Wiz.ContentClipper();
 	this._sender = new Wiz.ClipSender(this);
-	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
 Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType) {
 	Wiz.logger.debug('Wiz.ClipManager.startClip start. rootElement: ' + rootElement + '---' + 'contextMenuClipType' + contextMenuClipType);
@@ -23,7 +22,7 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 			if (token) {
 				//右键菜单保存时，无本地客户端，要判断用户是否手动选择
 				try {
-					if (this.tab.document.getSelection()) {
+					if (this.tab.getSelection() && this.tab.getSelection().rangeCount > 0 && this.tab.getSelection().getRangeAt(0).toString() !== '') {
 						Wiz.logger.debug('Wiz.ClipManager.startClip clip selection');
 						this.contenxtMenuClipSelection();
 					} else {
@@ -44,8 +43,8 @@ Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType
 };
 Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
 	try {
-		var docContent = this._clipper.getFullpageHTML(this._tab),
-			doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+		var docContent = this._clipper.getFullpageHTML(this.tab),
+			doc = Wiz.Document.createContextMenuDoc(this.tab, docContent);
 	} catch (err) {
 		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipFullpage() Error : ' + err);
 	}
@@ -54,8 +53,8 @@ Wiz.ClipManager.prototype.contenxtMenuClipFullpage = function () {
 
 Wiz.ClipManager.prototype.contenxtMenuClipSelection = function () {
 	try {
-		var docContent = this._clipper.getSelectedHTML(this._tab),
-			doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);		
+		var docContent = this._clipper.getSelectedHTML(this.tab),
+			doc = Wiz.Document.createContextMenuDoc(this.tab, docContent);		
 	} catch (err) {
 		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipSelection() Error : ' + err);
 	}
@@ -64,8 +63,8 @@ Wiz.ClipManager.prototype.contenxtMenuClipSelection = function () {
 
 Wiz.ClipManager.prototype.contenxtMenuClipUrl = function () {
 	try {
-		var docContent = this.getUrlBody(this._tab),
-			doc = Wiz.Document.createContextMenuDoc(this._tab, docContent);
+		var docContent = this.getUrlBody(this.tab),
+			doc = Wiz.Document.createContextMenuDoc(this.tab, docContent);
 	} catch (err) {
 		Wiz.logger.error('Wiz.ClipManager.contenxtMenuClipUrl() Error : ' + err);
 	}
@@ -95,7 +94,7 @@ Wiz.ClipManager.prototype.postDocument = function (info) {
 };
 
 Wiz.ClipManager.prototype.getUrlBody = function () {
-	var url = this._tab.location.href,
+	var url = this.tab.location.href,
 		docContent = "<a href='" + url + "'>" + url + "</a>";
 	return docContent;
 };
@@ -112,6 +111,7 @@ Wiz.ClipManager.prototype.getClipper = function () {
 	}
 };
 Wiz.ClipManager.prototype.getTab = function () {
+	this._tab = (content) ? content : window.overlay.arguments[0].content;
 	return this._tab;
 };
 Wiz.ClipManager.prototype.getSender = function () {
@@ -128,19 +128,19 @@ Wiz.ClipManager.prototype.getSender = function () {
 Wiz.ClipManager.prototype.getClipDocumentBody = function (clipType, preview) {
 	var body = null;
 	//获取页面信息之前首先要补全img的src路径，否则会无法保存图片
-	this._clipper.completeImgSrc(this._tab);
+	this._clipper.completeImgSrc(this.tab);
 	switch (clipType) {
 	case 'article':
-		body = this._clipper.getArticleHTML(this._tab, preview);
+		body = this._clipper.getArticleHTML(this.tab, preview);
 		break;
 	case 'selection':
-		body = this._clipper.getSelectedHTML(this._tab);
+		body = this._clipper.getSelectedHTML(this.tab);
 		break;
 	case 'fullPage':
-		body = this._clipper.getFullpageHTML(this._tab);
+		body = this._clipper.getFullpageHTML(this.tab);
 		break;
 	case 'url':
-		body = this.getUrlBody(this._tab);
+		body = this.getUrlBody(this.tab);
 		break;
 	default : 
 		body = "";

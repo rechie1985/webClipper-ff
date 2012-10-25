@@ -170,7 +170,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
 
 			var requestData = 'title=' + encodeURIComponent(title).replace(regexp,  '+') + '&token_guid=' + encodeURIComponent(token).replace(regexp,  '+') 
 								+ '&body=' + encodeURIComponent(body).replace(regexp,  '+') + '&category=' + encodeURIComponent(category).replace(regexp,  '+');
-			Wiz.logger.debug('postDocument requestData: ' + requestData);
+			// Wiz.logger.debug('postDocument requestData: ' + requestData);
 			ajax(Wiz.POST_DOCUMENT_URL, requestData, success, error);
 		} catch (err) {
 			Wiz.logger.error('Wiz.Remote.postDocument() Error : ' + err);
@@ -186,6 +186,7 @@ Wiz.Remote.prototype.postDocument = function (docInfo) {
  * @return {[type]}             [description]
  */
 Wiz.Remote.prototype.loginByCookie = function (cookie, callSuccess, callError) {
+	Wiz.logger.debug('Wiz.Remote.loginByCookie() Start ');
 	try {
 		var info = cookie.value,
 			split_count = info.indexOf('*md5'),
@@ -198,15 +199,16 @@ Wiz.Remote.prototype.loginByCookie = function (cookie, callSuccess, callError) {
 };
 
 Wiz.Remote.prototype.autoLogin = function () {
-	Wiz.logger.error('Wiz.Remote.autoLogin() Start ');
+	Wiz.logger.debug('Wiz.Remote.autoLogin() Start ');
 	var authCookie = Wiz.getAuthCookie(),
 		success = function (resp) {
-			Wiz.logger.info('Wiz.Remote.autoLogin()');
+			Wiz.logger.info('Wiz.Remote.autoLogin() success: ' + resp.return_code + ';return_message: '+ resp.return_message);
 		},
 		error = function (errorMsg) {
 			//自动登陆错误暂不做错误处理,记录日志
 			Wiz.logger.error('Wiz.Remote.autoLogin() Error: ' + errosMsg);
 		};
+	Wiz.logger.debug('Wiz.Remote.autoLogin() authCookie: ' + authCookie);
 	if (authCookie && authCookie.value) {	
 		this.loginByCookie(authCookie, success, error);
 	}

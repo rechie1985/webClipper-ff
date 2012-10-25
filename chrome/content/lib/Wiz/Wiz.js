@@ -13,7 +13,7 @@ if (typeof Wiz == "undefined") {
         _nativeManager : null         //本地客户端相关操作
     };
     Wiz.AUTH_COOKIE_URL = 'http://service.wiz.cn/web';
-    Wiz.SERVICE_URL = "http://service.wiz.cn/wizkm";
+    Wiz.SERVICE_URL = "http://webclip.openapi.wiz.cn/wizkm";
     Wiz.XMLRPC_URL = Wiz.SERVICE_URL + "/xmlrpc";
     Wiz.POST_DOCUMENT_URL = Wiz.SERVICE_URL + "/a/web/post?";
     Wiz.EXTENSIOD_ID = "wizbrother@wiz.cn";
@@ -91,9 +91,9 @@ Wiz.getAuthCookie = function () {
 
 Wiz.saveAuthCookie = function (value, isRememberMe) {
     if(isRememberMe) {
-        this.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
+        Wiz.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME, value, Wiz.Default.COOKIE_EXPIRE_SEC);
     } else {
-        this.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME, value);
+        Wiz.cookieManager.set(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME, value);
     }
 };
 
@@ -109,11 +109,11 @@ Wiz.getTokenCookie = function () {
     return null;
 };
 Wiz.removeTokenCookie = function () {
-    var cookie = Wiz.cookieManager.get(Wiz.AUTH_COOKIE_URL, 'auth-token');  
+    var cookie = Wiz.cookieManager.remove(Wiz.AUTH_COOKIE_URL, 'auth-token');  
 };
 
 Wiz.removeAuthCookie = function () {
-    this.cookieManager.remove(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME);
+    Wiz.cookieManager.remove(Wiz.AUTH_COOKIE_URL, Wiz.AUTHENTICATION_NAME);
 };
 
 Wiz.getCookieManager = function () {
