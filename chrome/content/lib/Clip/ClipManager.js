@@ -2,7 +2,7 @@
 Wiz.ClipManager = function() {
 	this.__defineGetter__("sender", this.getSender);
 	this.__defineGetter__("clipper", this.getClipper);
-	this.__defineGetter__("tab", this.getClipper);
+	this.__defineGetter__("tab", this.getTab);
 	this.initialize();
 };
 
@@ -12,18 +12,26 @@ Wiz.ClipManager.prototype.initialize = function () {
 	this._tab = (content) ? content : window.overlay.arguments[0].content;
 };
 Wiz.ClipManager.prototype.startClip = function (rootElement, contextMenuClipType) {
+	Wiz.logger.debug('Wiz.ClipManager.startClip start. rootElement: ' + rootElement + '---' + 'contextMenuClipType' + contextMenuClipType);
 	var token = Wiz.context.token;
 	//右键保存
 	if (contextMenuClipType === 'CLIP_ACTION_FULL_PAGE') {
 		if (Wiz.nativeManager && Wiz.nativeManager.bInstall()) {
 			Wiz.nativeManager.startNativeClip();
 		} else {
+			Wiz.logger.debug('Wiz.ClipManager.startClip token: ' + token);
 			if (token) {
 				//右键菜单保存时，无本地客户端，要判断用户是否手动选择
-				if (this.tab.document.getSeleciton()) {
-					this.contenxtMenuClipSelection();
-				} else {
-					this.contenxtMenuClipFullpage();
+				try {
+					if (this.tab.document.getSelection()) {
+						Wiz.logger.debug('Wiz.ClipManager.startClip clip selection');
+						this.contenxtMenuClipSelection();
+					} else {
+						Wiz.logger.debug('Wiz.ClipManager.startClip clip fullpage');
+						this.contenxtMenuClipFullpage();
+					}
+				} catch (err) {
+					Wiz.logger.error('Wiz.ClipManager.startClip() Error: ' + err);
 				}
 			} else {
 				this._clipper.openPopup();

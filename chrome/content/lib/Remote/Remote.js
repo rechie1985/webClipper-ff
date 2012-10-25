@@ -47,7 +47,7 @@ Wiz.Remote.prototype.clientLogin = function (username, password, rememberMe, cal
 				//需要判断是否已经自动keep alive
 				//否则会造成死循环
 				if (!Wiz.Remote.autoKeepAliveProc) {
-					Wiz.Remote.autoKeepAliveProc = setInterval(Wiz.Remote.keepAlive, 10000);//Wiz.Default.REFRESH_TOKEN_TIME_MS);
+					Wiz.Remote.autoKeepAliveProc = setInterval(Wiz.Remote.keepAlive, Wiz.Default.REFRESH_TOKEN_TIME_MS);
 				}
 			} catch (err) {
 				Wiz.logger.error('Wiz.Remote.clientLogin callbackSuccess Error: ' + err);
