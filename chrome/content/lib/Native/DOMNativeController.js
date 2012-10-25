@@ -7,11 +7,11 @@ Wiz.DOMNativeController = function (win, appId) {
 Wiz.DOMNativeController.prototype._nativeClient = null;
 
 Wiz.DOMNativeController.prototype.initialize = function (win, embedId) {
-	// var nativeClient = win.document.getElementById(embedId),
-	// 	version = nativeClient.Version;
-	// if (version) {
-	// 	this._nativeClient = nativeClient;
-	// }
+	var nativeClient = win.document.getElementById(embedId),
+		version = nativeClient.Version;
+	if (version) {
+		this._nativeClient = nativeClient;
+	}
 };
 
 Wiz.DOMNativeController.prototype.hasNativeClient = function () {

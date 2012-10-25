@@ -23,9 +23,19 @@ Wiz.FFPopup.prototype.initialize = function (params) {
 	this._notePageCtrl = new Wiz.NotePageControl(this);
 
 	if (Wiz.nativeManager.bInstall()) {
+		this.insertEmbed(Wiz.FFPopup.CLIENT_DOM_ID);
 		Wiz.nativeManager.initDOMNativeController(window, Wiz.FFPopup.CLIENT_DOM_ID);
 	}
 };
+
+Wiz.FFPopup.prototype.insertEmbed = function (id) {
+	var embed = document.createElement('embed');
+	embed.style.height = 0;
+	embed.style.width = 0;
+	embed.id = id;
+	embed.type = "application/x-wizbrother-wiz-ax";
+	document.body.appendChild(embed);
+}
 
 
 Wiz.FFPopup.prototype.getClipManager = function () {
